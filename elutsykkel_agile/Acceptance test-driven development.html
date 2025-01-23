@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceptance Test-Driven Development</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        pre {
+            background-color: #e6e6e6;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Acceptance Test-Driven Development (ATDD)</h1>
+
+    <div class="content">
+        <h2>Acceptance Test-Driven Development</h2>
+        <p>
+            Acceptance Test-Driven Development (ATDD) on tarkvara arendusmeetod, kus testid kirjutatakse enne arendust,
+            et tagada, et valitud funktsionaalsus vastab äri- ja kasutusnõuetele. ATDD keskendub vastuvõtu testide koostamisele
+            koostöös äripoolte ja arendustiimiga, et tagada, et loodud lahendused vastavad kõikidele nõudmistele enne koodi kirjutamist.
+        </p>
+
+        <h2>Arendustsüklid ja Meetodid</h2>
+
+        <h3>1. Acceptance Test-Driven Development (ATDD)</h3>
+
+        <h4>1.1 Kirjeldus</h4>
+        <p>
+            ATDD-l on sarnasus TDD-ga, kuid selle keskmes on mitte üksikud testid, vaid kogu süsteemi või funktsiooni
+            vastuvõtutingimuste testimine. Eesmärgiks on koostada aktsepteerimistestid koostöös arendusmeeskonna ja äripooltega,
+            mis määravad, millised on funktsionaalsuse nõuded ja ootused. Need testid kirjutatakse enne arendust, et tagada,
+            et lõpp-produkt vastab algsetele ärinõuetele.
+        </p>
+
+        <h4>1.2 Joonis: Acceptance Test-Driven Development tsükkel</h4>
+       <img src="https://www.collidu.com/media/catalog/product/img/f/0/f084be39b93f16ebd46f3b2de428495c6af39a6070c6d254ddefbe7576f85069/acceptance-test-driven-development-slide2.png">
+
+        <h4>1.3 Head ja Vead</h4>
+        <h5>Head:</h5>
+        <ul>
+            <li><strong>Kõrge kvaliteet:</strong> ATDD aitab tagada, et kõik loodud funktsioonid vastavad täpselt ärinõuetele ja kasutajate ootustele.</li>
+            <li><strong>Äripoolte kaasamine:</strong> ATDD nõuab tihedat koostööd arendajate ja äripoolte vahel, mis tagab, et kõik nõuded on õigesti mõistetud ja täidetud.</li>
+            <li><strong>Selge ja testitav määratlus:</strong> ATDD võimaldab luua selge arusaama, mis peab olema valmis ja kuidas süsteem peaks käituma.</li>
+        </ul>
+
+        <h5>Vead:</h5>
+        <ul>
+            <li><strong>Aeglasem algus:</strong> Aktsepteerimistestide koostamine enne koodimist võib alguses tunduda aeganõudvam.</li>
+            <li><strong>Kõrge oskuste nõudlus:</strong> ATDD nõuab arendajatelt oskust testide koostamises, mis ei pruugi algajatele olla loomulik.</li>
+            <li><strong>Üksiku testi liialdamine:</strong> Kui aktsepteerimistestide määratlus muutub liiga kitsaks, võib see piirata süsteemi arendamise paindlikkust.</li>
+        </ul>
+
+        <h4>1.4 Näide tööriistast: <strong>Cucumber</strong></h4>
+        <p>
+            <strong>Cucumber</strong> on tööriist, mis toetab ATDD-d ja võimaldab arendajatel kirjutada aktsepteerimisteste kasutades
+            lihtsat, loetavat keelt (Gherkin). Cucumber testide kirjutamine on mõeldud koostööks kõikide meeskonnaliikmete ja
+            äripooltega, et testid oleksid loetavad ja arusaadavad ka mitte-tehnilistele isikutele.
+        </p>
+
+        <h5>Kuidas see aitab meeskonnatöös:</h5>
+        <ul>
+            <li>Cucumber pakub visuaalseid ja loetavaid testide kirjeldusi, mis aitavad arendajatel ja äripooltel mõista nõudeid ja neid täita.</li>
+            <li>See võimaldab meeskonnaliikmetel mõista, kas tarkvara vastab kõigile aktsepteerimisnõuetele juba arendusprotsessi varases etapis.</li>
+        </ul>
+    </div>
+
+</body>
+</html>
