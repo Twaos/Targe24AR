@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agiilne Arendus ja Continuous TDD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        pre {
+            background-color: #e6e6e6;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Agiilne Arendus ja Continuous Test-Driven Development (TDD)</h1>
+
+    <div class="content">
+        <h2>Agiilne Arendus</h2>
+        <p>
+            Agiilne arendus on paindlik ja iteratiivne lähenemisviis tarkvara arendusele, kus keskendutakse kiirele reageerimisele
+            muutuvatele nõudmistele, tihedale koostööle kliendi ja arendusmeeskonna vahel, ning lühikeste arenduse tsüklite kasutamisele.
+            Agiilne arendus võimaldab pidevat täiustamist ja kohanemist arendusprotsessi käigus. Üks tuntumaid agiilseid meetodeid on Scrum,
+            kuid on ka teisi nagu Kanban, Lean jne.
+        </p>
+
+        <h2>Arendustsüklid ja Meetodid</h2>
+
+        <h3>1. Continuous Test-Driven Development (TDD)</h3>
+
+        <h4>1.1 Kirjeldus</h4>
+        <p>
+            Continuous TDD tähistab pidevat testimise ja arenduse tsüklit. Põhimõtteks on see, et arendaja kirjutab kõigepealt testjuhtumi (mis kirjeldab soovitud käitumist),
+            seejärel kirjutab vajalik kood, et test mööduks, ning lõpuks refaktoreerib koodi, et see oleks puhtam ja tõhusam. Seda tsüklit korratakse pidevalt iga uue funktsionaalsuse arendamisel.
+        </p>
+
+        <h4>1.2 Joonis: Continuous TDD tsükkel</h4>
+        <img src="https://images.spiceworks.com/wp-content/uploads/2022/09/29095630/How-TDD-Works.png">
+
+        <h4>1.3 Head ja Vead</h4>
+        <h5>Head:</h5>
+        <ul>
+            <li><strong>Kvaliteedi tagamine:</strong> Kuna testid kirjutatakse enne koodi, siis on kogu kood pidevalt testitud, mis tagab selle kvaliteedi.</li>
+            <li><strong>Varajane viga avastamine:</strong> Vigade avastamine toimub juba varases arendusfaasis, kuna testid käivitatakse pidevalt.</li>
+            <li><strong>Refaktorimine:</strong> Pidev refaktoreerimine hoiab koodi puhtana ja lihtsustab hooldust.</li>
+        </ul>
+
+        <h5>Vead:</h5>
+        <ul>
+            <li><strong>Aeglane algus:</strong> Testide kirjutamine enne koodi võib arendamise alguses tunduda aeganõudev.</li>
+            <li><strong>Kõrge õppimiskõver:</strong> Algajatel võib olla keeruline harjuda testide kirjutamisega enne koodimist.</li>
+            <li><strong>Testide liialdamine:</strong> Kui testide kirjutamine muutub liiga põhjalikuks, võib see arenduse kiiruselt maha jääda.</li>
+        </ul>
+
+        <h4>1.4 Näide tööriistast: <strong>JUnit</strong></h4>
+        <p>
+            <strong>JUnit</strong> on Java programmeerimiskeele jaoks mõeldud testimise raamistik, mis toetab TDD praktikat. See võimaldab arendajatel kirjutada teste enne koodi ning automatiseerida nende testide käivitamise iga uue koodimuudatuse järel.
+            JUnit aitab meeskonnal tagada, et iga kirjutatud koodiosa toimib ootuspäraselt, ja toob esile probleemid, kui need ilmnevad.
+        </p>
+
+        <h5>Kuidas see aitab meeskonnatöös:</h5>
+        <ul>
+            <li>Meeskonnaliikmed saavad jagada ühiseid testide kogumeid ja kirjutada testjuhtumeid koostöös.</li>
+            <li>TDD tsüklite järgimine aitab vältida suuri koodibaasi vigade kuhjumist, pakkudes samal ajal arendajatelt tagasisidet arenduse varajases staadiumis.</li>
+        </ul>
+    </div>
+
+</body>
+</html>
