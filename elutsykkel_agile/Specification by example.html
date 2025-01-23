@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="et">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Specification by Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 20px;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        h1 {
+            text-align: center;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        pre {
+            background-color: #e6e6e6;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Specification by Example</h1>
+
+    <div class="content">
+        <h2>Specification by Example</h2>
+        <p>
+            Specification by Example (SbE) on tarkvara arendamise praktika, kus süsteemi nõuded määratletakse ja valideeritakse
+            reaalsete näidete kaudu, mitte abstraktsete kirjelduste või tekstiliste nõuete kaudu. SbE põhineb ideel, et ärinõuded
+            peaksid olema selged, testitavad ja mõistetavad kõigile meeskonnaliikmetele ning et need tuleb defineerida ja arutada
+            konkreetsete näidete kaudu, mis kajastavad tegelikku süsteemi käitumist.
+        </p>
+
+        <h2>Arendustsüklid ja Meetodid</h2>
+
+        <h3>1. Specification by Example</h3>
+
+        <h4>1.1 Kirjeldus</h4>
+        <p>
+            Specification by Example keskendub sellele, et ärinõuded ja funktsionaalsuse kirjeldused tehakse konkreetselt
+            testitavate näidete kaudu. Selle praktika abil saavad kõik meeskonnaliikmed (äripooled, arendajad, testijad) töötada
+            ühiselt süsteemi nõuete täpsustamiseks ja valideerimiseks. Näited, mis on esitatud arendusprotsessi alguses, toimivad
+            nii ärimudeli kui ka koodinäidistena, pakkudes meeskonnale selget arusaama nõuete täitmise kohta.
+        </p>
+
+        <h4>1.2 Joonis: Specification by Example tsükkel</h4>
+        <img src="https://tech.edreamsodigeo.com/wp-content/uploads/sites/34/2017/04/specification-by-example.jpg">>
+
+        <h4>1.3 Head ja Vead</h4>
+        <h5>Head:</h5>
+        <ul>
+            <li><strong>Selged nõuded:</strong> SbE aitab tagada, et kõik meeskonnaliikmed saavad ühtse arusaama süsteemi nõuetest ja käitumisest, kuna need on määratletud läbi konkreetsete näidete.</li>
+            <li><strong>Paranenud koostöö:</strong> SbE soodustab tihedat koostööd arendajate, testijate ja äripoolte vahel, kuna kõik osapooled arutavad ja töötavad koos süsteemi käitumise määratlemisel.</li>
+            <li><strong>Kõrge kvaliteet ja usaldusväärsus:</strong> Näited aitavad tagada, et arendatud süsteem täidab täpselt määratletud ärinõuded ja et kood ei sisalda ebatäpsusi ega vigu.</li>
+        </ul>
+
+        <h5>Vead:</h5>
+        <ul>
+            <li><strong>Algse määratluse keerukus:</strong> Alguses võib olla raske täpselt määratleda kõiki vajalikke näiteid ja parameetreid, mis võivad põhjustada arendusprotsessi viivitusi.</li>
+            <li><strong>Hoolikas hooldus:</strong> Kuna SbE sõltub konkreetsest näidetest, võib süsteemi muutumine nõuda pidevat testide ja näidete uuendamist, et need kajastaksid süsteemi uue käitumise.</li>
+            <li><strong>Kõrge algne töökoormus:</strong> Esialgne töö, et koostada täpsed ja testitavad näited, võib võtta rohkem aega ja ressursse kui tavapärased nõuded või kirjeldused.</li>
+        </ul>
+
+        <h4>1.4 Näide tööriistast: <strong>FitNesse</strong></h4>
+        <p>
+            <strong>FitNesse</strong> on tööriist, mis toetab Specification by Example praktikat, võimaldades meeskondadel koostada ja
+            käivitada nõudeid testivaid näiteid. FitNesse abil saavad kõik meeskonnaliikmed kirjutada testide määratlusi, mis kajastavad
+            süsteemi käitumist vastavalt nõuetele, ning seejärel neid testida, et tagada, et süsteem vastab ootustele.
+        </p>
+
+        <h5>Kuidas see aitab meeskonnatöös:</h5>
+        <ul>
+            <li>FitNesse võimaldab meeskonnaliikmetel jagada ja arutada näiteid, mis on arusaadavad kõigile, sealhulgas mitte-tehnilistele osapooltele.</li>
+            <li>Testide läbiviimine koos näidete ja äripooltega aitab tagada, et kõik nõuded on täidetud, ja kõik meeskonnaliikmed saavad tagasisidet süsteemi käitumisest.</li>
+        </ul>
+    </div>
+
+</body>
+</html>
