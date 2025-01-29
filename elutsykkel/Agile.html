@@ -3,71 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agile arendusmudel</title>
+    <title>Agile Arendusmudel</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            background-color: #2a9d8f;
+            color: white;
+            padding: 20px 0;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #e76f51;
+            margin-top: 20px;
+        }
+        p {
+            max-width: 800px;
+            margin: auto;
+            font-size: 1.1em;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #264653;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background-color: #e76f51;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        footer {
+            background-color: #2a9d8f;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #264653;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #1d3a40;
+        }
+    </style>
 </head>
 <body>
-    <p>
-        <!--pealkiri -->
-        <!--lühike omasõnaline kirjeldus -->
-        <!--etappide täpsem kirjeldus -->
-        <!--visuaalne joonis -->
-        <!--tabel mis loetleb head ja vead() -->
-        <!--kustkohast sain info(linkide kujul) -->
-    </p>
-    <ul>
-    <h1>Agile arendusmudel</h1>
-    <p>Agile on paindlik tarkvaraarendusmeetod, mis keskendub kiiretele iteratsioonidele, koostööle ja pidevale täiustamisele. Selles mudelis jagatakse töö väiksemateks ülesanneteks, mida tiim lahendab lühikeste tsüklitena(sprintidena).Pidev tagasiside klientidelt ja meeskonnaliikmetelt aitab kohaneda muutustega ja tagada, et projekt vastab lõppkasutaja vajadustele.</p>
-    </ul>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h2>Agile mudel</h2>
-    <img src="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-agile-model.png">
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <style>
-        table {font-family:arial, sans-serif;
-                border:1px solid #000000;
-                width:100%
-
-        }
-        td, th {
-  border: 1px solid #000000;
-  text-align: left;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
-    </style>
-    <table>
-        <tr>
-            <td><b>Agile plus</b></td>
-            <td><b>Agile vead</b></td>
-        </tr>
-        <tr>
-            <td>Paindlikus</td>
-            <td>Projekt võib muutuda raskesti hallatav </td>
-        </tr>
-        <tr>
-            <td>Tihe koostöö</td>
-            <td>Nõuab tugevat omavahelist suhtlust</td>
-        </tr>
-        <tr>
-            <td>Lühikesed arendustsüklid</td>
-            <td>Liigne keskendumine lühiajalistele eesmärkidele võib unustada pikaajalise visiooni</td>
-        </tr>
-
-
-    </table>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h3>Link kasutatud allikatele</h3>
-    <ul>
-        <li><a href="https://aguayo-co.s3.amazonaws.com/public/images/Agile-methodology-user-experience.width-490.png">Joonis</a></li>
-        <li><a href="https://www.javatpoint.com/software-engineering-agile-model">Agile</a></li>
-    </ul>
-    <a href="../elutsykkel_agile/Agiilsed programmeerimisstiilid.html" type="button" class="btn btn-outline-secondary">Low rohkem</a>
-
-
-
-
+    <header>
+        <h1>Agile Arendusmudel</h1>
+    </header>
+    <main style="padding: 20px;">
+        <p>Agile on paindlik tarkvaraarendusmeetod, mis keskendub kiiretele iteratsioonidele, koostööle ja pidevale täiustamisele...</p>
+        <h2>Agile Mudel</h2>
+        <img src="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-agile-model.png" alt="Agile Arendusmudel">
+        <h2>Agile plussid ja miinused</h2>
+        <table>
+            <tr>
+                <th>Agile Plus</th>
+                <th>Agile Vead</th>
+            </tr>
+            <tr>
+                <td>Paindlikkus</td>
+                <td>Projekt võib muutuda raskesti hallatavaks</td>
+            </tr>
+            <tr>
+                <td>Tihe koostöö</td>
+                <td>Nõuab tugevat omavahelist suhtlust</td>
+            </tr>
+        </table>
+        <h3>Kasulikud lingid</h3>
+        <ul>
+            <li><a href="#">Joonis</a></li>
+            <li><a href="#">Agile metoodika</a></li>
+        </ul>
+        <a href="../elutsykkel_agile/Agiilsed programmeerimisstiilid.html" class="btn">Loe rohkem</a>
+    </main>
+    <footer>
+        <p>&copy; 2024 Freddie Turulinn</p>
+    </footer>
 </body>
 </html>

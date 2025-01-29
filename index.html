@@ -4,62 +4,125 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minu Tarkvara Arendusprotsessi Ainemapp</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+        header {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 20px 0;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        main {
+            padding: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        ul li {
+            background-color: #ff5722;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 8px;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        ul li:hover {
+            background-color: #e64a19;
+        }
+        ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #00bcd4;
+            color: white;
+        }
+        footer {
+            background-color: #6a1b9a;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 20px;
+        }
+        .github {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #333;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .github:hover {
+            background: #555;
+        }
+    </style>
 </head>
 <body>
-    <h1>Tarkvara Arendusprotsessi Tehtud tööde konspekt</h1>
-    <br/>
-    <ul>
-        <li><a href="elutsykkel/waterfall.html">Waterfall arendusmudel</a></li>
-    </ul>
-    <ul>
-        <li><a href="elutsykkel/Inkrementaalne arendusmudel.html">Inkrementaalne arendusmudel</a></li>
-    </ul>
-    <ul>
-        <li><a href="elutsykkel/Spiraalmudel.html">Spiraalmudel</a></li>
-    </ul>
-    <ul>    
-        <li><a href="elutsykkel/Prototüüpimine.html">Prototüüpimine</a></li>
-    </ul>
-    <ul>    
-        <li><a href="elutsykkel/Agile.html">Agile</a></li>
-    </ul>
-    <ul>    
-        <li><a href="elutsykkel/Big%20Bang.html">BigBang</a></li>
-    </ul>
-    <ul>    
-        <li><a href="elutsykkel/DevOps.html">DevOps</a></li>
-    </ul>
-    <ul>    
-        <li><a href="elutsykkel/Extreme%20Programming.html">Extreme programming</a></li>
-    </ul>
-    <ul>    
-        <li><a href="elutsykkel/V-model.html">V-model</a></li>
-    </ul>
-    <ul>    
-        <li><a href="http://127.0.0.1:5500/UMLDiagrams/UMLMAIN.html">UML</a></li>
-    </ul>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    ----------------------------
-    <h2>Minust</h2>
-    <table>
-        <tr>
-            <td>Nimi</td>
-            <td>Mida teen</td>
-            <td>Kust tulen</td>
-            <td>Pilt</td>
-        </tr> 
-        <tr>
-            <td>Freddie Turulinn</td>
-            <td>Õpin/töötan</td>
-            <td>Tallinnast</td>
-            <td>Pilt</td>
-        </tr>
-        <tr>
-            <td colspan="4"><a href="https://github.com/Twaos">Siin on minu githubi profiil</a></td>
-        </tr>
-    </table>
+    <header>
+        <h1>Tarkvara Arendusprotsessi Tehtud Tööde Konspekt</h1>
+    </header>
+    <main>
+        <ul>
+            <li><a href="elutsykkel/waterfall.html">Waterfall arendusmudel</a></li>
+            <li><a href="elutsykkel/Inkrementaalne arendusmudel.html">Inkrementaalne arendusmudel</a></li>
+            <li><a href="elutsykkel/Spiraalmudel.html">Spiraalmudel</a></li>
+            <li><a href="elutsykkel/Prototüüpimine.html">Prototüüpimine</a></li>
+            <li><a href="elutsykkel/Agile.html">Agile</a></li>
+            <li><a href="elutsykkel/Big%20Bang.html">Big Bang</a></li>
+            <li><a href="elutsykkel/DevOps.html">DevOps</a></li>
+            <li><a href="elutsykkel/Extreme%20Programming.html">Extreme Programming</a></li>
+            <li><a href="elutsykkel/V-model.html">V-model</a></li>
+            <li><a href="http://127.0.0.1:5500/UMLDiagrams/UMLMAIN.html">UML</a></li>
+        </ul>
+        <h2>Minust</h2>
+        <table>
+            <tr>
+                <th>Nimi</th>
+                <th>Mida teen</th>
+                <th>Kust tulen</th>
+            </tr>
+            <tr>
+                <td>Freddie Turulinn</td>
+                <td>Õpin/töötan</td>
+                <td>Tallinnast</td>
+            </tr>
+            <tr>
+                <td colspan="3"><a class="github" href="https://github.com/Twaos">Minu GitHub profiil</a></td>
+            </tr>
+        </table>
+    </main>
+    <footer>
+        <p>&copy; 2024 Freddie Turulinn</p>
+    </footer>
 </body>
 </html>

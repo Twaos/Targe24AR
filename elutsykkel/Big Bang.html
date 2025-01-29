@@ -4,64 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agile arendusmudel</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Hele hall taust */
+            color: #333;
+        }
+        header {
+            background-color: #6a1b9a; /* Sügav lilla */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #ff5722; /* Erikmaine oranž */
+            margin-top: 20px;
+        }
+        p {
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #00bcd4; /* Elektriroheline */
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            background-color: #ff5722; /* Erikmaine oranž */
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+        footer {
+            background-color: #6a1b9a; /* Sügav lilla */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <p>
-        <!--pealkiri -->
-        <!--lühike omasõnaline kirjeldus -->
-        <!--etappide täpsem kirjeldus -->
-        <!--visuaalne joonis -->
-        <!--tabel mis loetleb head ja vead() -->
-        <!--kustkohast sain info(linkide kujul) -->
-    </p>
-    <ul>
-    <h1>Big Bang arendusmudel</h1>
-    <p>Big Bang on paindlik tarkvaraarendus mudel, kus kogu süsteemi arendust tehakse korraga ilma vaheetappide ja pideva testimiseta. Arendus algab minimaalse planeerimisega ning kõik osad arendatakse ja testitakse korraga lõpus. See lähenemine on riskantne, sest kui lõpptulemuses on vigu või see ei vasta ootustele, võib projekt vajada olulisi ümberkorraldusi. Big Bang sobib väiksematele projektidele, kus nõuded pole alguses kindlalt paika pandud või kiiret tulemust pole vaja</p>
-    </ul>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h2>Big Bang mudel</h2>
-    <img src="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-big-bang-model.png">
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <style>
-        table {font-family:arial, sans-serif;
-                border:1px solid #000000;
-                width:100%
-
-        }
-        td, th {
-  border: 1px solid #000000;
-  text-align: left;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
-    </style>
-    <table>
-        <tr>
-            <td><b>Big Bangi plussid</b></td>
-            <td><b>Big Bangi vead</b></td>
-        </tr>
-        <tr>
-            <td>lihtne ja kiire alustamine</td>
-            <td>Kõrge risk </td>
-        </tr>
-        <tr>
-            <td>Sobib väikestele ja eksperimentaalsetele projektidele</td>
-            <td>Vähene vahepealne testimine võib jätta avastamata olulised vead</td>
-        </tr>
-        
-    </table>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h3>Link kasutatud allikatele</h3>
-    <ul>
-        <li><a href="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-big-bang-model.png">Joonis</a></li>
-        <li><a href="https://www.javatpoint.com/software-engineering-agile-model">Big Bang</a></li>
-    </ul>
-
-
-
-
+    <header>
+        <h1>Big Bang arendusmudel</h1>
+    </header>
+    <main style="padding: 20px;">
+        <p>
+            Big Bang on paindlik tarkvaraarendus mudel, kus kogu süsteemi arendust tehakse korraga ilma vaheetappide ja pideva testimiseta. Arendus algab minimaalse planeerimisega ning kõik osad arendatakse ja testitakse korraga lõpus. See lähenemine on riskantne, sest kui lõpptulemuses on vigu või see ei vasta ootustele, võib projekt vajada olulisi ümberkorraldusi. Big Bang sobib väiksematele projektidele, kus nõuded pole alguses kindlalt paika pandud või kiiret tulemust pole vaja.
+        </p>
+        <h2>Big Bang mudel</h2>
+        <img src="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-big-bang-model.png" alt="Big Bang mudel">
+        <table>
+            <tr>
+                <th>Big Bangi plussid</th>
+                <th>Big Bangi vead</th>
+            </tr>
+            <tr>
+                <td>Lihtne ja kiire alustamine</td>
+                <td>Kõrge risk</td>
+            </tr>
+            <tr>
+                <td>Sobib väikestele ja eksperimentaalsetele projektidele</td>
+                <td>Vähene vahepealne testimine võib jätta avastamata olulised vead</td>
+            </tr>
+        </table>
+        <h3>Link kasutatud allikatele</h3>
+        <ul>
+            <li><a href="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-big-bang-model.png">Joonis</a></li>
+            <li><a href="https://www.javatpoint.com/software-engineering-agile-model">Big Bang</a></li>
+        </ul>
+    </main>
+    <footer>
+        <p>&copy; 2024 Freddie Turulinn</p>
+    </footer>
 </body>
 </html>
