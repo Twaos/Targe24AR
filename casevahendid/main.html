@@ -1,67 +1,118 @@
-<!--Mis on case vahendid-->
-<!--mille jaoks neid kasutatakse-->
-<!-- kuidas jaotatakse case vahendeid
-            - uppercase lehe link
-            - lowercase lehe link-->
-<!--milliseid vahendeid saab kasutada x* arendusmudeli elutsüklis-->
-<!--milliseid vahendeid olen ise juba kasutanud-->
-<!--X* valite juba tuttavast neljast arendustsüklist ühe tsükli ning
-    annate näite igas arendustsükli etapis ühest tööriistast mida seal kasutada võib-->
-    <!--viited juurde igale lehele kust saadud on-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASE-vahendid</title>
+    <title>CASE-vahendid – Dark Glass</title>
+
+    <style>
+        /* Tume taust gradient */
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+        }
+
+        /* Tume klaasi efekt */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45); /* tume sinakas-must */
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd; /* pehme helesinine */
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1; /* helehall tekst */
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ol {
+            margin-left: 20px;
+        }
+    </style>
 </head>
+
 <body>
-    <h2>Mis on case vahendid?</h2>
+<div class="glass-box">
+
+    <h2>Mis on CASE-vahendid?</h2>
     <p>
-        CASE-vahendid on tarkvara arendus- ja haldusprotsessi toetavad programmid. Need hõlbustavad arendusprotsessi erinevaid etappe, sealhulgas analüüsi,
-        projekteerimist ja teostust. Case-vahendid jagunevad ülemise taseme (analüüsiks ja projekteerimiseks) ja alumise taseme (teostuseks ja testimiseks) vahenditeks.
-        Lisaks võivad nad olla integreeritud terviklahenduseks, mis ühendavad erinevad arendusetapid. Näiteks võimaldavad nad pöörprojekteerimist, kus koodist saab taastada
-        süsteemi ülesehitust.
+        CASE-vahendid on tarkvara arendus- ja haldusprotsessi toetavad programmid, 
+        mis hõlbustavad analüüsi, projekteerimist ja teostust. Need jagunevad ülemise 
+        taseme (analüüs ja projekteerimine) ning alumise taseme (teostus ja testimine) vahenditeks.
     </p>
-    <h2>Mille jaokse neid kasutatakse?</h2>
+
+    <h2>Mille jaoks neid kasutatakse?</h2>
     <p>
-        CASE-vahendeid kasutatakse tarkvaraarenduse protsessi kiirendamiseks ja tõhustamiseks, pakkudes tuge süsteemi analüüsimisel, projekteerimisel ja koodi kirjutamisel.
-        Need võimaldavad automatiseerida erinevaid arendusetappe, parandada dokumentatsiooni ja suurendada arenduse täpsust ning ühtsust. Lisaks aitavad nad tagada koodis ühtlase stiili ja lihtsustada koostööd arendustiimides.
+        CASE-vahendid aitavad kiirendada arendust, parandada dokumentatsiooni kvaliteeti, 
+        ühtlustada koodi stiili ja toetada meeskonnatööd. Paljud neist automatiseerivad olulisi 
+        arendusprotsesse.
     </p>
-    <h2>Kuidas jaotatakse case vahendeid?</h2>
+
+    <h2>Kuidas jaotatakse CASE-vahendeid?</h2>
     <p>
-        CASE-vahendeid jaotatakse vastavalt nende kasutuseesmärkidele ja tarkvaraarenduse etappidele. Peamised kategooriad hõlmavad ülemise taseme vahendeid (nt analüüs ja projekteerimine), alumise taseme vahendeid (nt kodeerimine ja testimine) ning integreeritud terviklahendusi, mis katavad kogu arendusprotsessi.
-        <br/>
-        <br/>
-        <li>
-            <a href="uppercase.html">uppercase lehe link</a>
+        CASE-vahendeid kasutatakse erinevates arendusetappides: nõuete analüüsis, protsesside 
+        modelleerimisel, dokumentatsiooni loomisel, versioonihalduses ja prototüüpide genereerimisel.
+        Need jagatakse kahte põhirühma:
+        <br><br>
+        <li><a href="uppercase.html">Upper-CASE vahendid</a></li>
+        <li><a href="lowercase.html">Lower-CASE vahendid</a></li>
+        <br>
+        Paljud tööriistad ühendavad mõlema taseme funktsioone.
+    </p>
+
+    <h2>Milliseid vahendeid kasutatakse Agile arendusmudelis?</h2>
+    <p>Agile mudelis kasutatakse mitmeid tööriistu iteratiivse ja paindliku arenduse toetamiseks:</p>
+    <ol>
+        <li><b>Planeerimise tööriistad</b>
+            <p>Trello, Jira – ülesannete haldus ja sprintide planeerimine.</p>
         </li>
-        <li>
-            <a href="lowercase.html">lowercase lehe link</a>
+
+        <li><b>Koodi ja versioonihalduse tööriistad</b>
+            <p>Git, GitHub – muudatuste jälgimine ja meeskonnatöö.</p>
         </li>
-    </p>
-    <h2>Milliseid vahendeid saab kasutada Agile arendusmudeli elutsüklis? </h2>
+
+        <li><b>Koostöövahendid</b>
+            <p>Slack, Microsoft Teams – tiimitöö ja suhtlus.</p>
+        </li>
+
+        <li><b>Automatiseeritud testimine</b>
+            <p>Selenium, JUnit – pidev kvaliteedikontroll.</p>
+        </li>
+    </ol>
+
+    <h2>Milliseid vahendeid olen ise kasutanud?</h2>
     <p>
-        Agile arendusmudeli elutsüklis saab kasutada mitmeid vahendeid, et toetada paindlikkust ja kiiret iteratsiooni. Näiteks:
-        <ol>
-        <li><b>Planeerimise vahendeid</b></li>   
-         <p>Nagu Jira või trello, aitavad ülesandeid hallata ja töövoogu jälgimist.</p>
-           <li> <b>Koodi kirjutamise ja versioonihalduse tööriistad</b></li>
-            <p>Näiteks Git või GitHub, mis toetavad meeskonnatööd ja muudatuste jälgimist.</p>
-            <li><b>Koostöö ja suhtlusvahendid</b></li>
-            <p>Slacck või Microsoft Teams aitavad tiimiliikmetel suhelda.</p>
-            <li><b>Automatiseeritud testimisevahendid</b></li>
-            <p>Selenium või JUnit tagavad pidevad kvaliteedikontrolli</p>
-        </ol>
+        Olen kasutanud Trellot ülesannete haldamiseks, GitHubi versioonihalduseks ning 
+        Microsoft Teamsi suhtluseks ja meeskonnatööks.
     </p>
-    <h2>Milliseid vahendeid olen ise juba kasutanud?</h2>
-    <p>Mul on juba kogemust Trellos, kus siis saab ülesandeid hallata ja planeerida sprinte. GitHub ja Microsoft Teams, meeskonna suhtlemiseks ja koostööks.</p>
+
+</div>
 </body>
 </html>
-
-
-
-
-
-
-

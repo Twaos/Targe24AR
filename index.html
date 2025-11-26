@@ -1,97 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minu Tarkvara Arendusprotsessi Ainemapp</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
+            font-family: 'Segoe UI', sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
-            color: #333;
+            background: linear-gradient(135deg, #0d0d0f, #1a1a1d);
+            color: #eee;
         }
+
         header {
-            background-color: #6a1b9a;
-            color: white;
-            padding: 20px 0;
+            backdrop-filter: blur(15px);
+            background: rgba(30, 30, 35, 0.5);
+            padding: 25px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
         }
+
         h1 {
             margin: 0;
             font-size: 2.5em;
+            color: #fff;
         }
+
         main {
-            padding: 20px;
+            padding: 30px;
         }
+
+        /* CARD LIST */
         ul {
             list-style: none;
             padding: 0;
-            max-width: 600px;
-            margin: 20px auto;
+            max-width: 750px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
         }
+
         ul li {
-            background-color: #ff5722;
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
             transition: 0.3s;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
+
         ul li:hover {
-            background-color: #e64a19;
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
         }
+
         ul li a {
             text-decoration: none;
-            color: white;
-            font-weight: bold;
+            color: #ffffff;
+            font-size: 1.1em;
+            font-weight: 600;
         }
+
+        h2 {
+            margin-top: 40px;
+            font-size: 2em;
+            color: #fff;
+        }
+
+        /* TABLE GLASS STYLE */
         table {
             width: 80%;
-            margin: 20px auto;
+            margin: 25px auto;
             border-collapse: collapse;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
             overflow: hidden;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
+
         th, td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
+            padding: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
+
         th {
-            background: #00bcd4;
-            color: white;
+            background: rgba(255,255,255,0.12);
+            font-weight: bold;
         }
-        footer {
-            background-color: #6a1b9a;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 20px;
+
+        tr:last-child td {
+            border-bottom: none;
         }
+
         .github {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 10px;
             padding: 10px 20px;
-            background: #333;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(6px);
             color: white;
-            border-radius: 5px;
+            border-radius: 8px;
             text-decoration: none;
             transition: 0.3s;
+            border: 1px solid rgba(255,255,255,0.15);
         }
+
         .github:hover {
-            background: #555;
+            background: rgba(255,255,255,0.2);
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px 0;
+            background: rgba(20,20,25,0.5);
+            backdrop-filter: blur(10px);
+            color: #bbb;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Tarkvara Arendusprotsessi Tehtud Tööde Konspekt</h1>
     </header>
+
     <main>
+
+        <!-- 👇 MINUST OSA ON NÜÜD ÜLEVAL -->
+        <h2>Minust</h2>
+        <table>
+            <tr>
+                <th>Nimi</th>
+                <th>Mida teen</th>
+                <th>Kust tulen</th>
+            </tr>
+
+            <tr>
+                <td>Freddie Turulinn</td>
+                <td>Õpin/töötan</td>
+                <td>Tallinnast</td>
+            </tr>
+
+            <tr>
+                <td colspan="3"><a class="github" href="https://github.com/Twaos">Minu GitHub profiil</a></td>
+            </tr>
+        </table>
+
+        <!-- 👇 KAARDID ALLPOOL -->
         <ul>
             <li><a href="elutsykkel/waterfall.html">Waterfall arendusmudel</a></li>
             <li><a href="elutsykkel/Inkrementaalne arendusmudel.html">Inkrementaalne arendusmudel</a></li>
@@ -104,23 +167,9 @@
             <li><a href="elutsykkel/V-model.html">V-model</a></li>
             <li><a href="http://127.0.0.1:5500/UMLDiagrams/UMLMAIN.html">UML</a></li>
         </ul>
-        <h2>Minust</h2>
-        <table>
-            <tr>
-                <th>Nimi</th>
-                <th>Mida teen</th>
-                <th>Kust tulen</th>
-            </tr>
-            <tr>
-                <td>Freddie Turulinn</td>
-                <td>Õpin/töötan</td>
-                <td>Tallinnast</td>
-            </tr>
-            <tr>
-                <td colspan="3"><a class="github" href="https://github.com/Twaos">Minu GitHub profiil</a></td>
-            </tr>
-        </table>
+
     </main>
+
     <footer>
         <p>&copy; 2024 Freddie Turulinn</p>
     </footer>
