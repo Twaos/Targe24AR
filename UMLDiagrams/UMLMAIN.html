@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ERD-diagrammid | Modernne klaasiline stiil</title>
+    <title>UML Diagrammid | Modernne klaasiline stiil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -59,7 +59,7 @@
             box-shadow: 0 12px 40px rgba(31, 38, 135, 0.2);
         }
         
-        h1, h2 {
+        h1, h2, h3 {
             color: var(--primary-color);
             margin-bottom: 20px;
             font-weight: 700;
@@ -87,6 +87,12 @@
             margin-top: 30px;
         }
         
+        h3 {
+            font-size: 1.4rem;
+            color: var(--secondary-color);
+            margin-top: 25px;
+        }
+        
         p {
             margin-bottom: 15px;
             color: var(--text-secondary);
@@ -99,8 +105,8 @@
         }
         
         li {
-            margin-bottom: 20px;
-            padding-left: 30px;
+            margin-bottom: 15px;
+            padding-left: 25px;
             position: relative;
         }
         
@@ -188,24 +194,50 @@
             margin: 0 auto;
         }
         
-        .key-list {
+        .diagram-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
         }
         
-        .key-item {
-            padding: 20px;
+        .diagram-card {
+            padding: 25px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            border-left: 4px solid var(--accent-color);
+            border-top: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
         }
         
-        .key-item b {
-            display: block;
+        .diagram-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(31, 38, 135, 0.15);
+        }
+        
+        .diagram-card h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .diagram-icon {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .element-list {
+            margin-top: 15px;
+            padding-left: 20px;
+        }
+        
+        .element-list li {
             margin-bottom: 10px;
-            font-size: 1.2rem;
+            padding-left: 20px;
+        }
+        
+        .element-list li::before {
+            content: '•';
+            color: var(--secondary-color);
         }
         
         @media (max-width: 768px) {
@@ -221,11 +253,15 @@
                 font-size: 1.5rem;
             }
             
+            h3 {
+                font-size: 1.2rem;
+            }
+            
             .header h1 {
                 font-size: 2.2rem;
             }
             
-            .key-list {
+            .diagram-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -237,93 +273,250 @@
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
+        
+        .index-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .index-item {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .index-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+        
+        .index-item h3 {
+            margin-bottom: 10px;
+        }
+        
+        .special-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .special-link {
+            padding: 12px 20px;
+            background: rgba(94, 114, 228, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .special-link a {
+            padding: 0;
+            background: none;
+            border: none;
+        }
+        
+        .special-link a:hover {
+            background: none;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .uml-intro {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>ERD-diagrammid</h1>
-            <p>Entiteedi-seose diagrammid andmebaasi kujundamiseks ja dokumenteerimiseks</p>
+            <h1>UML Diagrammid</h1>
+            <p>Unified Modeling Language - standardiseeritud modelleerimiskeel tarkvara süsteemide visuaalseks kujutamiseks</p>
         </div>
         
         <div class="glass-card">
-            <h1>Mis on ERD-diagrammid?</h1>
-            <p>ERD (Entity-Relationship Diagram) on diagramm, mida kasutatakse andmebaasi struktuuri visuaalseks kirjeldamiseks. ERD esitab objektid (Entity) ja nendevahelised suhted (relationships). Seda kasutatakse eelkõige süsteemi disainimisel ja modelleerimisel, et määratleda, kuidas andmed on seotud ja organiseeritud.</p>
-        </div>
-        
-        <div class="glass-card">
-            <h2>Kus neid kasutatakse?</h2>
-            <ul>
-                <li><p><b>Andmebaasi projekteerimine</b> - Enne andmebaasi loomist kaardistatakse tabelid ja nendevahelised seosed.</p></li>
-                <li><p><b>Infosüsteemide arendamine</b> - ERD aitab mõista süsteemi struktuuri ja andmevoogu.</p></li>
-                <li><p><b>Andmete analüüs ja optimeerimine</b> - Kasutatakse andmebaasi struktuuri analüüsimiseks ja andmete korrastamiseks.</p></li>
-                <li><p><b>Koolitus ja dokumentatsioon</b> - ERD-diagrammid lihtsustavad andmebaasi dokumentatsiooni ja koolitusi.</p></li>
-            </ul>
-        </div>
-        
-        <div class="glass-card">
-            <h1>Ühenduselemendid ERD-s</h1>
-            <p>ERD kasutab visuaalseid elemente nagu entiteedid, atribuudid ja seosed, mis on kujutatud erinevate kujunditega:</p>
-            <div class="key-list">
-                <div class="key-item">
-                    <b>Entiteedid</b>
-                    <p>Andmed, mida hoitakse (nt tabelid andmebaasis). Tavaliselt kujutatud ristkülikutena.</p>
-                </div>
-                <div class="key-item">
-                    <b>Atribuudid</b>
-                    <p>Entiteetide omadused või andmed (nt veerud tabelis). Kujutatud ovaalidega.</p>
-                </div>
-                <div class="key-item">
-                    <b>Seosed</b>
-                    <p>Näitavad, kuidas entiteedid on omavahel seotud. Kujutatud rombidega.</p>
-                </div>
-            </div>
-            
-            <div class="image-container">
-                <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn-cashy-static-assets.lucidchart.com%2Fmarketing%2Fblog%2F2022Q3%2Ftypes-of-entity-relationship-diagrams%2FEntity-relationship-diagram-example-template.png&f=1&nofb=1&ipt=370891ebb0f0a81de35d3fd32f91b7f9c326739294f5f531a839ede9219c1e9d&ipo=images" alt="ERD diagrammi näide">
+            <h1>Mis on Unified Modeling Language (UML)?</h1>
+            <div class="uml-intro">
+                <p><b>UML (Unified Modeling Language)</b> on standardiseeritud modelleerimiskeel, mida kasutatakse tarkvara süsteemide visuaalseks kujutamiseks, spetsifitseerimiseks, ehitamiseks ja dokumenteerimiseks.</p>
+                <p>UML pakub standardseid diagrammitüüpe, mis võimaldavad süsteemi erinevaid aspekte modelleerida: struktuur, käitumine ja interaktsioon. Seda kasutatakse laialdaselt objektorienteeritud tarkvaraarenduses, et luua visuaalseid mudeleid, mis aitavad mõista, kavandada ja suhelda süsteemi arhitektuurist.</p>
+                <p>UML loodi 1990ndatel aastatel ja seda hallatakse Object Management Group (OMG) poolt.</p>
             </div>
         </div>
         
         <div class="glass-card">
-            <h2>Mis on Primary Key, Foreign Key, Composite Key ja lihtsalt Key?</h2>
-            <div class="key-list">
-                <div class="key-item">
-                    <b>Primary Key</b>
-                    <p>Veerg või veergude kombinatsioon, mis unikaalselt identifitseerib tabeli rea. (Nt TÖÖTAJA_ID tabelis TÖÖTAJA).</p>
+            <h2>Spetsiifilised UML diagrammid</h2>
+            <div class="special-links">
+                <div class="special-link">
+                    <a href="ERD.html"><i class="fas fa-project-diagram icon"></i>ERD (Entity-Relationship Diagram)</a>
                 </div>
-                <div class="key-item">
-                    <b>Foreign Key</b>
-                    <p>Viide ühe tabeli atribuudile teise tabeli Primary Key väljal, et luua seos kahe tabeli vahel. (Nt DEPARTEMENDI_ID tabelis TÖÖTAJA viitab DEPARTEMENDI tabeli primaarvõtmele).</p>
-                </div>
-                <div class="key-item">
-                    <b>Composite Key</b>
-                    <p>Koosneb kahest või enamast veerust, mis üheskoos määravad unikaalse väärtuse tabelis. (Nt LEND tabel, kus primaarvõti koosneb ATRIBUUDIST LEND_ID ja LENDU_AEG).</p>
-                </div>
-                <div class="key-item">
-                    <b>Simple Key</b>
-                    <p>Üksik atribuut, mis unikaalselt identifitseerib tabeli rea.</p>
+                <div class="special-link">
+                    <a href="flowchart.html"><i class="fas fa-stream icon"></i>Vooskeem / Activity Diagram</a>
                 </div>
             </div>
         </div>
         
         <div class="glass-card">
-            <h2>Viited</h2>
+            <h2>UML diagrammide tüübid</h2>
+            <div class="diagram-grid">
+                
+                <div class="diagram-card">
+                    <h3><i class="fas fa-user-circle diagram-icon"></i> Use Case Diagram</h3>
+                    <p><b>Lühikirjeldus:</b> Kujutab süsteemi funktsionaalsust kasutaja vaatenurgast, näidates erinevaid kasutusjuhtumeid (use cases) ja nende seoseid osalejatega (actors).</p>
+                    
+                    <h4>Peamised elemendid:</h4>
+                    <ul class="element-list">
+                        <li><b>Osaleja (Actor):</b> Inimene või süsteem, kes suhtleb süsteemiga</li>
+                        <li><b>Kasutusjuhtum (Use Case):</b> Ovaal, mis esindab süsteemi funktsionaalsust</li>
+                        <li><b>Seosed:</b> Sidemed osalejate ja kasutusjuhtumite vahel</li>
+                        <li><b>Süsteemi piir:</b> Ristkülik, mis määratleb süsteemi ulatuse</li>
+                    </ul>
+                    
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Use_Case_restaurant_model.svg/800px-Use_Case_restaurant_model.svg.png" alt="Use Case diagrammi näide" style="max-height: 250px;">
+                    </div>
+                </div>
+                
+                <div class="diagram-card">
+                    <h3><i class="fas fa-sitemap diagram-icon"></i> Class Diagram</h3>
+                    <p><b>Lühikirjeldus:</b> Kujutab süsteemi staatilist struktuuri, näidates klasse, nende atribuute, meetodeid ja nendevahelisi seoseid.</p>
+                    
+                    <h4>Peamised elemendid:</h4>
+                    <ul class="element-list">
+                        <li><b>Klass:</b> Ristkülik kolme osaga (nimi, atribuudid, meetodid)</li>
+                        <li><b>Atribuudid:</b> Klassi muutujad või omadused</li>
+                        <li><b>Meetodid:</b> Klassi funktsioonid või operatsioonid</li>
+                        <li><b>Seosed:</b> Assotsiatsioon, pärimine, sõltuvus, realisatsioon</li>
+                    </ul>
+                    
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Class_diagram.svg/800px-Class_diagram.svg.png" alt="Class diagrammi näide" style="max-height: 250px;">
+                    </div>
+                </div>
+                
+                <div class="diagram-card">
+                    <h3><i class="fas fa-sort-numeric-down diagram-icon"></i> Sequence Diagram</h3>
+                    <p><b>Lühikirjeldus:</b> Kujutab objektide vahelist interaktsiooni ajas, näidates sõnumite saatmise järjekorda erinevate objektide vahel.</p>
+                    
+                    <h4>Peamised elemendid:</h4>
+                    <ul class="element-list">
+                        <li><b>Elujoon (Lifeline):</b> Vertikaalne joon, mis esindab objekti eksistentsi ajas</li>
+                        <li><b>Aktivaatioriba:</b> Ristkülik elujoone peal, mis näitab objekti aktiivsust</li>
+                        <li><b>Sõnumid:</b> Horisontaalsed nooled objektide vahel</li>
+                        <li><b>Kattuvad sõnumid:</b> Nooled, mis näitavad vastuseid</li>
+                    </ul>
+                    
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/CheckEmail.svg/800px-CheckEmail.svg.png" alt="Sequence diagrammi näide" style="max-height: 250px;">
+                    </div>
+                </div>
+                
+                <div class="diagram-card">
+                    <h3><i class="fas fa-exchange-alt diagram-icon"></i> State Diagram</h3>
+                    <p><b>Lühikirjeldus:</b> Kujutab objekti olekute muutusi süsteemis, näidates, kuidas objekt reageerib erinevatele sündmustele läbi oma elutsükli.</p>
+                    
+                    <h4>Peamised elemendid:</h4>
+                    <ul class="element-list">
+                        <li><b>Olek (State):</b> Ümardatud ristkülik, mis esindab objekti hetkeolukorda</li>
+                        <li><b>Üleminek (Transition):</b> Nool olekult olekule</li>
+                        <li><b>Sündmus (Event):</b> Trigger, mis põhjustab ülemineku</li>
+                        <li><b>Algolek ja lõppolek:</b> Täidetud ring ja ring ristiga sees</li>
+                    </ul>
+                    
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/UML_state_diagram.svg/800px-UML_state_diagram.svg.png" alt="State diagrammi näide" style="max-height: 250px;">
+                    </div>
+                </div>
+                
+                <div class="diagram-card">
+                    <h3><i class="fas fa-object-group diagram-icon"></i> Component Diagram</h3>
+                    <p><b>Lühikirjeldus:</b> Kujutab tarkvara komponentide füüsilist struktuuri ja nendevahelisi sõltuvusi, näidates kuidas süsteem on jaotatud komponentideks ja liidesteks.</p>
+                    
+                    <h4>Peamised elemendid:</h4>
+                    <ul class="element-list">
+                        <li><b>Komponent:</b> Ristkünik, millel on komponendi ikoon vasakus ülanurgas</li>
+                        <li><b>Liides (Interface):</b> Ring või "lolli otsa" sümbol</li>
+                        <li><b>Port:</b> Väike ruut komponendi piiril</li>
+                        <li><b>Sõltuvus:</b> Katkendlik nool komponendi ja liidese vahel</li>
+                        <li><b>Seos:</b> Pidev joon komponentide vahel</li>
+                    </ul>
+                    
+                    <div class="image-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Component_diagram.svg/800px-Component_diagram.svg.png" alt="Component diagrammi näide" style="max-height: 250px;">
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="glass-card">
+            <h2>UML diagrammide indeks</h2>
+            <div class="index-list">
+                <div class="index-item">
+                    <h3><i class="fas fa-user-circle"></i> Use Case Diagram</h3>
+                    <p>Süsteemi funktsionaalsus kasutaja perspektiivist</p>
+                </div>
+                
+                <div class="index-item">
+                    <h3><i class="fas fa-sitemap"></i> Class Diagram</h3>
+                    <p>Süsteemi staatiline struktuur ja klassidevahelised seosed</p>
+                </div>
+                
+                <div class="index-item">
+                    <h3><i class="fas fa-sort-numeric-down"></i> Sequence Diagram</h3>
+                    <p>Objektidevahelised interaktsioonid ajas</p>
+                </div>
+                
+                <div class="index-item">
+                    <h3><i class="fas fa-exchange-alt"></i> State Diagram</h3>
+                    <p>Olekumuutused objektide elutsüklis</p>
+                </div>
+                
+                <div class="index-item">
+                    <h3><i class="fas fa-object-group"></i> Component Diagram</h3>
+                    <p>Tarkvara komponentide füüsiline struktuur</p>
+                </div>
+                
+                <div class="index-item">
+                    <h3><i class="fas fa-project-diagram"></i> ERD Diagram</h3>
+                    <p>Andmebaasi struktuur ja seosed</p>
+                </div>
+                
+                <div class="index-item">
+                    <h3><i class="fas fa-stream"></i> Activity Diagram</h3>
+                    <p>Töövoog ja protsesside käitumine</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card">
+            <h2>Viited ja lisalugemist</h2>
             <div class="links">
                 <div class="link-item">
-                    <a href="https://publibfp.dhe.ibm.com/epubs/pdf/c2738320.pdf">
-                        <i class="fas fa-book icon"></i>IBM Database Design Documentation
+                    <a href="https://www.uml.org/">
+                        <i class="fas fa-globe icon"></i>UML ametlik veebileht
                     </a>
                 </div>
                 <div class="link-item">
-                    <a href="https://www.lucidchart.com/pages/er-diagrams">
-                        <i class="fas fa-chart-diagram icon"></i>Lucidchart - ERD basics
+                    <a href="https://www.omg.org/spec/UML/">
+                        <i class="fas fa-book icon"></i>UML spetsifikatsioon
+                    </a>
+                </div>
+                <div class="link-item">
+                    <a href="https://www.lucidchart.com/pages/uml-diagram">
+                        <i class="fas fa-chart-diagram icon"></i>Lucidchart - UML tutorial
                     </a>
                 </div>
             </div>
         </div>
         
         <div class="footer">
-            <p>ERD-diagrammid | Modernne klaasiline disain</p>
+            <p>UML Diagrammid | Modernne klaasiline disain</p>
         </div>
     </div>
 </body>
