@@ -7,30 +7,198 @@
 <!--mida tööristaga teha saab-->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uppercase</title>
+    <title>Upper-CASE vahendid – Dark Glass</title>
+
+    <style>
+        /* Tume taust gradient - sama kui esimesel lehel */
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* Tume klaasi efekt - sama kui esimesel lehel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .tool-image {
+            max-width: 300px;
+            height: auto;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 8px 16px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Kategooriate jaoks */
+        .category {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Kasutatud/mittakasutatud markerid */
+        .used {
+            color: #86efac;
+            font-weight: 600;
+        }
+        
+        .not-used {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+        
+        /* Infokastid */
+        .info-box {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #93c5fd;
+        }
+    </style>
 </head>
+
 <body>
-    <h2>Mis on uppercase vahendid ja milleks neid kasutatakse?</h2>
-    <p>
+<div class="glass-box">
+
+    <h2>Upper-CASE vahendid</h2>
+    <div class="info-box">
+        <p>
+            <b>Upper-CASE (Computer-Aided Software Engineering) vahendid</b> on tööriistad, mis keskenduvad 
+            tarkvaraarenduse varajastele etappidele: nõuete analüüs, süsteemi disain, modelleerimine ja arhitektuur. 
+            Need aitavad visualiseerida süsteemi struktuuri ja protsesse enne koodi kirjutamist.
+        </p>
+    </div>
+
+    <h3>Mis on Upper-CASE vahendid ja milleks neid kasutatakse?</h3>
+    <div class="category">
+        <p>
+            Upper-CASE vahendeid kasutatakse süsteemi kõrgetasemeliseks modelleerimiseks, disainiks ja dokumenteerimiseks.
+            Need võimaldavad luua visuaalseid diagramme ja mudeleid, mis selgitavad süsteemi struktuuri ja käitumist.
+        </p>
+        
         <ul>
-            <li><b>IBM Rational Rose</b>-Objektorienteeritud modelleerimiseks.</li>
-            <li><b>PowerDesigner</b>-andmebaasimudelite ja süsteemi arhitektuuri loomiseks.</li>
-            <li><b>UML-diagrammide tööriistad</b>-(nt Lucidchart)süsteemi komponentide visualiseerimiseks.</li>
-            <li><b>Balsamiq</b>-prototüüpide ja kasutajaliideste skeemide loomiseks.</li>
+            <li><b>IBM Rational Rose</b> - Objektorienteeritud modelleerimiseks ja UML-diagrammide loomiseks</li>
+            <li><b>PowerDesigner</b> - Andmebaasimudelite ja süsteemi arhitektuuri loomiseks</li>
+            <li><b>UML-diagrammide tööriistad</b> (nt Lucidchart, Draw.io) - Süsteemi komponentide visualiseerimiseks</li>
+            <li><b>Balsamiq</b> - Prototüüpide ja kasutajaliideste skeemide loomiseks</li>
+            <li><b>Enterprise Architect</b> - Terviklik süsteemi arhitektuuri ja protsesside modelleerimiseks</li>
+            <li><b>Microsoft Visio</b> - Diagrammide ja vooskeemide loomiseks</li>
         </ul>
-    </p>
-    <h2>Milliseid vahendeid olen ise kasutanud ja milliseid ei ole?</h2>
-    <p>
+    </div>
+
+    <h3>Milliseid vahendeid olen ise kasutanud ja milliseid ei ole?</h3>
+    <div class="category">
         <ul>
-            <li><b>Powerdesigner</b>-Seda ei ole kasutanud</li>
-            <img src="https://help.sap.com/doc/abd3434b4987485c92057ab9392aadbe/16.7.08/en-US/loioc755733a6e1b1014aa83c9ef3567446c_LowRes.gif"width="300">
-            <li><b>Balsamiq</b>-Seda ei ole kasutanud</li>
-            <img src="https://blog.balsamiq.com/wp-content/uploads/2020/01/intro.png"width="300">
+            <li><span class="not-used">Ei ole kasutanud:</span> <b>PowerDesigner</b> - Seda ei ole kasutanud
+                <br>
+                <img src="https://help.sap.com/doc/abd3434b4987485c92057ab9392aadbe/16.7.08/en-US/loioc755733a6e1b1014aa83c9ef3567446c_LowRes.gif" 
+                     alt="PowerDesigner näide" class="tool-image">
+                <p><small>PowerDesigner võimaldab luua andmebaasimudeleid ja süsteemi arhitektuuri</small></p>
+            </li>
+            
+            <li><span class="not-used">Ei ole kasutanud:</span> <b>Balsamiq</b> - Seda ei ole kasutanud
+                <br>
+                <img src="https://blog.balsamiq.com/wp-content/uploads/2020/01/intro.png" 
+                     alt="Balsamiq näide" class="tool-image">
+                <p><small>Balsamiq on lihtne ja kiire kasutajaliideste prototüüpimise tööriist</small></p>
+            </li>
+            
+            <li><span class="not-used">Ei ole kasutanud:</span> <b>IBM Rational Rose</b> - Seda ei ole kasutanud</li>
+            <li><span class="used">Kasutanud:</span> <b>Lucidchart / Draw.io</b> - Olen kasutanud UML-diagrammide ja vooskeemide loomiseks</li>
         </ul>
-    </p>
+    </div>
+
+    <h3>Upper-CASE vs Lower-CASE</h3>
+    <div class="info-box">
+        <p>
+            Erinevalt <b>Lower-CASE</b> vahenditest, mis keskenduvad koodi kirjutamisele, testimisele ja 
+            juurutamisele, on <b>Upper-CASE</b> vahendid rohkem abstraktsed ja visuaalsed. Need aitavad 
+            mõista süsteemi terviklikku struktuuri, protsesse ja komponentidevahelisi seoseid enne 
+            tehnilise teostamise alustamist.
+        </p>
+        <p>
+            Upper-CASE vahendid on eriti olulised suuremate ja keerukamate süsteemide puhul, kus 
+            selge arhitektuur ja disain on võtmetähtsusega eduka arenduse jaoks.
+        </p>
+    </div>
+
+    <a href="index.html" class="back-link">← Tagasi CASE-vahendite pealehele</a>
+
+</div>
 </body>
 </html>
