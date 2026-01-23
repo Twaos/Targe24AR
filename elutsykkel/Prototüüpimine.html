@@ -1,79 +1,407 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inkrementaalne arendusmudel</title>
-</head>
-<body>
-    <p>
-        <!--pealkiri -->
-        <!--lühike omasõnaline kirjeldus -->
-        <!--etappide täpsem kirjeldus -->
-        <!--visuaalne joonis -->
-        <!--tabel mis loetleb head ja vead() -->
-        <!--kustkohast sain info(linkide kujul) -->
-    </p>
-    <ul>
-    <h1>Prototüüpimine</h1>
-    <p>Prototüüpimine on tarkvaraarenduse meetod, kus luuakse esialgne, lihtsustatud ja kiire töötav mudel (prototüüp) lõpptootest, et testimiseks, visualiseerimiseks ja tagasiside kogumiseks.</p>
-    <h3>1.Prototüübi loomine</h3>
-    <p>Kiire arendus, keskendudes peamistele nähtavatele omadustele. </p>
-    <h3>2.Kiire arendus, keskendudes peamistele nähtavatele omadustele.</h3>
-    <p>Klient testib ja annab kommentaare.</p>
-    <h3>3.Täiustamine ja iteratsioon</h3>
-    <p>Prototüüpi täiendatakse või ümber tehakse vastavalt tagasisidele.</p>
-    <h3>4.Lõplik arendus</h3>
-    <p>Kui prototüüp kõiki rahuldatud, alustatakse täiemahulist arendust, kasutades kogutud teadmisi.</p>  
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h2>Prototüüpimine</h2>
-    <img src="https://eopearhiiv.edu.ee/e-kursused/eucip/arendus/image5.jpeg">
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
+    <title>Prototüüpimine – Dark Glass</title>
+
     <style>
-        table {font-family:arial, sans-serif;
-                border:1px solid #000000;
-                width:100%
-
+        /* Tume taust gradient - sama kui teistel lehtedel */
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        td, th {
-  border: 1px solid #000000;
-  text-align: left;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
 
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        .stage-number {
+            display: inline-block;
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Prototüübi efektiga kast - PARANDATUD VERSIOON (ilma silt paremast nurgast) */
+        .prototype-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px dashed rgba(147, 197, 253, 0.3);
+        }
     </style>
-    <table>
-        <tr>
-            <td><b>Prototüüpimine plus</b></td>
-            <td><b>Prototüüpimine vead</b></td>
-        </tr>
-        <tr>
-            <td>Kiire tagasiside</td>
-            <td>Ajaliselt ja rahaliselt kulukas</td>
-        </tr>
-        <tr>
-            <td>Riskide vähendamine</td>
-            <td>Lõpliku toote hilinemine</td>
-        </tr>
-        <tr>
-            <td>Paremini mõistetavad nõuded</td>
-            <td>Ootuste muutumine</td>
-        </tr>
+</head>
 
+<body>
+<div class="glass-box">
 
+    <h1>Prototüüpimine</h1>
+    
+    <div class="prototype-highlight">
+        <p>
+            <b>Prototüüpimine</b> on tarkvaraarenduse meetod, kus luuakse esialgne, lihtsustatud ja kiire 
+            <b>töötav mudel (prototüüp)</b> lõpptootest, et testimiseks, visualiseerimiseks ja tagasiside kogumiseks. 
+            Prototüüp ei ole lõplik toote, vaid tööriist nõuete selgitamiseks ja disaini parandamiseks.
+        </p>
+        <p>
+            See meetod on eriti kasulik siis, kui kliendi nõuded on ebaselged või muutuvad, 
+            või kui tehnoloogilised lahendused on ebakindlad. Prototüüpimine võimaldab 
+            "proovida" ideid enne suurte ressursside investeerimist.
+        </p>
+    </div>
+
+    <h2>Prototüüpimise etapid</h2>
+    
+    <div class="stage-box">
+        <h3><span class="stage-number">1</span>Prototüübi loomine</h3>
+        <p>
+            <b>Kiire arendus, keskendudes peamistele nähtavatele omadustele.</b> 
+            Prototüüp ei pruugi sisaldada kõiki funktsionaalsusi, vaid keskendub 
+            kriitilistele või ebaselgetele osadele. Kasutatakse kiireid arendustööriistu, 
+            et luua töötav mudel minimaalse ajaga.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3><span class="stage-number">2</span>Kasutajate katsetamine ja tagasiside</h3>
+        <p>
+            <b>Klient testib ja annab kommentaare.</b> Prototüüp esitatakse kasutajatele, 
+            kes seda katsetavad ja annavad oma tagasiside. See etapp on kriitiline 
+            nõuete mõistmiseks ja parandamiseks. Kasutajad saavad näha, kuidas süsteem 
+            töötab, mitte lihtsalt lugeda seda dokumentatsioonist.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3><span class="stage-number">3</span>Täiustamine ja iteratsioon</h3>
+        <p>
+            <b>Prototüüpi täiendatakse või ümber tehakse vastavalt tagasisidele.</b> 
+            Kogutud tagasisidet analüüsitakse ja prototüüpi täiendatakse vastavalt. 
+            See protsess võib korduda mitu korda, kuni klient on rahul või kuni 
+            nõuded on piisavalt selged edasiseks arenduseks.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3><span class="stage-number">4</span>Lõplik arendus</h3>
+        <p>
+            <b>Kui prototüüp kõiki rahuldatud, alustatakse täiemahulist arendust, kasutades kogutud teadmisi.</b> 
+            Pärast seda, kui prototüüp on piisavalt täiustatud ja nõuded on selged, 
+            alustatakse lõpliku süsteemi arendamist. Prototüüp võib olla aluseks 
+            lõplikule disainile või visata ära (nn "throwaway prototype").
+        </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Prototüüpimise visuaalne esitus</h2>
+    <img src="https://eopearhiiv.edu.ee/e-kursused/eucip/arendus/image5.jpeg" 
+         alt="Prototüüpimise diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Prototüüpimise protsess - iteratiivne tsükkel kuni nõuete selguseni
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Prototüüpimise eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kiire tagasiside</h4>
+                <p>Klient saab varakult näha ja katsetada süsteemi, 
+                   mis võimaldab kiiret tagasisidet ja muudatusi enne suurt investeeringut.</p>
+            </td>
+            <td>
+                <h4>Ajaliselt ja rahaliselt kulukas</h4>
+                <p>Prototüüpide loomine ja iteratiivne täiustamine nõuab 
+                   täiendavaid ressursse ja aega, eriti kui tsükleid on palju.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Riskide vähendamine</h4>
+                <p>Ebaselged nõuded ja tehnoloogilised ebaselgused saab 
+                   testida enne põhjalikku arendust, vähendades projekti riske.</p>
+            </td>
+            <td>
+                <h4>Lõpliku toote hilinemine</h4>
+                <p>Aeg, mis kulub prototüüpidele, võib viia lõpliku toote 
+                   hilinemiseni, eriti kui aega planeeriti liiga optimistlikult.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Paremini mõistetavad nõuded</h4>
+                <p>Klientidel on lihtsam näha ja katsetada kui lugeda 
+                   dokumente, mis parandab nõuete mõistmist oluliselt.</p>
+            </td>
+            <td>
+                <h4>Ootuste muutumine</h4>
+                <p>Klient võib hakata pidama prototüüpi peaaegu valmis tooteks 
+                   ja nõuda selle kiiret valmimist, ignoreerides kvaliteedinõudeid.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kasutaja kaasatus</h4>
+                <p>Kasutajad tunnevad end kaasatuna protsessi, mis suurendab 
+                   nende rahulolu ja vähendab vastupanu muudatustele.</p>
+            </td>
+            <td>
+                <h4>Liigne keskendumine liidesele</h4>
+                <p>Arendajad ja kliendid võivad keskenduda liiga palju 
+                   kasutajaliidesele, unustades süsteemi sisemise loogika ja jõudluse.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Vigade varajane avastamine</h4>
+                <p>Disaini ja nõuete probleemid avastatakse varases staadiumis, 
+                   kui nende parandamine on veel odav ja lihtne.</p>
+            </td>
+            <td>
+                <h4>Dokumentatsiooni puudumine</h4>
+                <p>Prototüüpimisel võib jääda tähelepanuta dokumentatsiooni 
+                   loomine, mis võib põhjustada probleeme hilisemas arenduses.</p>
+            </td>
+        </tr>
     </table>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h3>Link kasutatud allikatele</h3>
-    <ul>
-        <li><a href="https://eopearhiiv.edu.ee/e-kursused/eucip/arendus/image5.jpeg">Joonis</a></li>
-        <li><a href="https://eopearhiiv.edu.ee/e-kursused/eucip/arendus/1224_prototpimine.html">Prototüüpimine arendusmudel</a></li>
-    </ul>
 
+    <div class="separator"></div>
 
+    <h3>Prototüüpide tüübid</h3>
+    <div class="stage-box">
+        <h4>Visatav prototüüp (Throwaway / Rapid Prototyping)</h4>
+        <p>
+            Lihtne visand, mille eesmärk on ainult nõuete selgitamine. 
+            Pärast õppimist visatakse ära ja alustatakse nullist. 
+            Hea nõuete selgitamiseks, kuid raiskab arendusaega.
+        </p>
+        
+        <h4>Evolutsiooniline prototüüp</h4>
+        <p>
+            Alustatakse lihtsalt, kuid seda täiustatakse ja laiendatakse 
+            järk-järgult, kuni see muutub lõplikuks tooteks. 
+            Säästab aega, kuid nõuab hoolikat planeerimist algusest peale.
+        </p>
+        
+        <h4>Horisontaalne prototüüp</h4>
+        <p>
+            Keskendub kasutajaliidesele ja üldistele funktsionaalsustele, 
+            kuid mitte sügavale funktsionaalsusele. Hea kasutajaliidese testimiseks.
+        </p>
+        
+        <h4>Vertikaalne prototüüp</h4>
+        <p>
+            Keskendub süsteemi ühele kitsale osale, kuid arendab seda sügavalt. 
+            Hea keeruliste tehniliste lahenduste testimiseks.
+        </p>
+    </div>
 
+    <div class="separator"></div>
 
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://eopearhiiv.edu.ee/e-kursused/eucip/arendus/image5.jpeg" target="_blank">
+                    Prototüüpimise diagramm - eopearhiiv.edu.ee
+                </a>
+            </li>
+            <li>
+                <a href="https://eopearhiiv.edu.ee/e-kursused/eucip/arendus/1224_prototpimine.html" target="_blank">
+                    Prototüüpimine arendusmudelina - eopearhiiv.edu.ee
+                </a>
+            </li>
+            <li>
+                <a href="https://www.geeksforgeeks.org/software-engineering-prototyping-model/" target="_blank">
+                    Software Engineering | Prototyping Model - GeeksforGeeks
+                </a>
+            </li>
+            <li>
+                <a href="https://www.tutorialspoint.com/sdlc/sdlc_prototype_model.htm" target="_blank">
+                    SDLC - Prototype Model - Tutorialspoint
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="index.html" class="back-link">← Tagasi pealehele</a>
+
+</div>
 </body>
 </html>
