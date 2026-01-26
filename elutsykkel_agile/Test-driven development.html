@@ -3,99 +3,633 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test-Driven Development</title>
+    <title>Test-Driven Development (TDD)</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 20px;
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        h1, h2, h3 {
-            color: #2c3e50;
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
         }
+
         h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
             text-align: center;
         }
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
         }
-        ul {
-            list-style-type: disc;
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h5 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #22d3ee;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
             margin-left: 20px;
+            padding-left: 0;
         }
-        pre {
-            background-color: #e6e6e6;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            white-space: pre-wrap;
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* TDD etappide kastid */
+        .tdd-stage {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* TDD efektiga kast */
+        .tdd-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #10b981;
+        }
+
+        /* Põhimõtete grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .principle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .principle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #10b981;
+        }
+
+        /* JUnit teema */
+        .junit-feature {
+            background: rgba(16, 185, 129, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #10b981;
+        }
+
+        /* Koodinäidete stiil */
+        .code-example {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Courier New", monospace;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin: 15px 0;
+            border-left: 4px solid #60a5fa;
+            overflow-x: auto;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* TDD tsükli visualiseerimine */
+        .tdd-cycle {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .cycle-step {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 20px;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            border: 2px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .cycle-step.red {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        .cycle-step.green {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+
+        .cycle-step.refactor {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .cycle-arrow {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ef4444, #22c55e, #3b82f6);
+            z-index: 1;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Kerge hover efekti kastidele */
+        .tdd-stage:hover, .tdd-highlight:hover, .junit-feature:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Testi staatuse indikaatorid */
+        .test-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0 5px;
+        }
+
+        .test-fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .test-pass {
+            background: rgba(34, 197, 94, 0.2);
+            color: #86efac;
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
     </style>
 </head>
+
 <body>
+<div class="glass-box">
 
     <h1>Test-Driven Development (TDD)</h1>
-
-    <div class="content">
-        <h2>Test-Driven Development</h2>
+    
+    <div class="tdd-highlight">
         <p>
-            Test-Driven Development (TDD) on tarkvara arendamise praktika, kus testid kirjutatakse enne koodimist. See praktika
-            järgib tsüklilist protsessi, kus kõigepealt kirjutatakse test, seejärel kirjutatakse minimaalne kood, et test läbi
-            minna, ja lõpuks refaktoreeritakse kood. TDD eesmärk on tagada, et kood oleks testitav, et see täidaks soovitud
-            funktsionaalsust ja et võimalikke vigu saaks kiiresti tuvastada.
+            <b>Test-Driven Development (TDD)</b> on tarkvaraarenduse praktika, kus testid kirjutatakse enne koodimist. 
+            See praktika järgib tsüklilist protsessi, kus kõigepealt kirjutatakse test, seejärel kirjutatakse minimaalne 
+            kood, et test läbi minna, ja lõpuks refaktoreeritakse kood.
         </p>
-
-        <h2>Arendustsüklid ja Meetodid</h2>
-
-        <h3>1. Test-Driven Development (TDD)</h3>
-
-        <h4>1.1 Kirjeldus</h4>
         <p>
-            TDD hõlmab kolme põhilist etappi:
-            <ol>
-                <li><strong>Red (Viga):</strong> Alustatakse testide kirjutamisega, mis ei saa veel läbi minna, kuna vastavat funktsionaalsust ei ole kirjutatud.</li>
-                <li><strong>Green (Test Läbib):</strong> Kirjutatakse minimaalne kood, et test saaks läbida, vältides liigset keerukust.</li>
-                <li><strong>Refactor (Refaktoorimine):</strong> Pärast seda, kui test on läbitud, refaktoreeritakse kood, et teha see puhtamaks ja paremini hallatavaks, säilitades testide läbimise.</li>
-            </ol>
+            TDD eesmärk on tagada, et kood oleks testitav, et see täidaks soovitud funktsionaalsust ja et võimalikke 
+            vigu saaks kiiresti tuvastada. See on disainimeetod, mis paneb testid esikohale arendusprotsessis.
         </p>
+    </div>
 
-        <h4>1.2 Joonis: Test-Driven Development tsükkel</h4>
-        <img src="https://cdn.ttgtmedia.com/rms/onlineImages/software_quality-test_driven_testing_mobile.jpg">
+    <h2>TDD põhiprintsiibid</h2>
+    
+    <div class="principles-grid">
+        <div class="principle-item">
+            <div class="principle-icon">🔴</div>
+            <h4>Test enne koodi</h4>
+            <p>Testid kirjutatakse alati enne vastava funktsionaalsuse koodi, mis tagab selge eesmärgi ja spetsifikatsiooni</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">🟢</div>
+            <h4>Minimaalne kood</h4>
+            <p>Kirjutatakse ainult minimaalne kogus koodi, mis on vajalik testi läbimiseks, vältides üleliigset keerukust</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">🔵</div>
+            <h4>Pidev refaktoreerimine</h4>
+            <p>Pärast testi läbimist refaktoreeritakse kood, et parandada selle struktuuri, loetavust ja hooldatavust</p>
+        </div>
+    </div>
 
-        <h4>1.3 Head ja Vead</h4>
-        <h5>Head:</h5>
-        <ul>
-            <li><strong>Kvaliteedi tagamine:</strong> TDD aitab tagada, et iga loodud funktsioon vastab täpselt nõuetele ja on testitav.</li>
-            <li><strong>Kood on testitav:</strong> Kuna testid kirjutatakse enne koodi, on kogu süsteem testimisvalmis, aidates tuvastada vigu varakult.</li>
-            <li><strong>Refaktoorimine:</strong> Pidev refaktoreerimine hoiab koodi puhtana ja lihtsustab hooldamist.</li>
-        </ul>
+    <h2>Test-Driven Development tsükkel</h2>
+    
+    <img src="https://cdn.ttgtmedia.com/rms/onlineImages/software_quality-test_driven_testing_mobile.jpg" 
+         alt="Test-Driven Development tsükkel" 
+         class="model-image">
+    
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        TDD tsükkel - Test (Red), Kood (Green), Refaktoreeri (Refactor) ja taas kõik otsast peale
+    </p>
 
-        <h5>Vead:</h5>
-        <ul>
-            <li><strong>Aeglasem algus:</strong> Alguses võib TDD tunduda aeglasem, kuna testide kirjutamine enne koodi võib võtta rohkem aega.</li>
-            <li><strong>Kohati madal katvuse tase:</strong> TDD ei taga alati, et kõik võimalikud vead oleksid katetud, sest testid võivad keskenduda vaid kitsastele valdkondadele.</li>
-            <li><strong>Liigne kood:</strong> TDD võib viia liigse koodikoguse tekkimiseni, kuna iga uus funktsioon nõuab testide kirjutamist.</li>
-        </ul>
+    <div class="tdd-cycle">
+        <div class="cycle-arrow"></div>
+        <div class="cycle-step red">
+            <span style="font-size: 2rem; color: #ef4444;">🔴</span>
+            <h4>RED</h4>
+            <p style="font-size: 0.9rem;">Test ei lähe läbi</p>
+        </div>
+        <div class="cycle-step green">
+            <span style="font-size: 2rem; color: #22c55e;">🟢</span>
+            <h4>GREEN</h4>
+            <p style="font-size: 0.9rem;">Test läheb läbi</p>
+        </div>
+        <div class="cycle-step refactor">
+            <span style="font-size: 2rem; color: #3b82f6;">🔵</span>
+            <h4>REFACTOR</h4>
+            <p style="font-size: 0.9rem;">Koodi täiustamine</p>
+        </div>
+    </div>
 
-        <h4>1.4 Näide tööriistast: <strong>JUnit</strong></h4>
+    <div class="separator"></div>
+
+    <h2>TDD eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kvaliteedi tagamine</h4>
+                <p>TDD aitab tagada, et iga loodud funktsioon vastab täpselt nõuetele ja on testitav. 
+                   Testid toimivad kui elav dokumentatsioon, mis selgitab koodi eesmärki ja käitumist.</p>
+            </td>
+            <td>
+                <h4>Aeglasem algus</h4>
+                <p>Alguses võib TDD tunduda aeglasem, kuna testide kirjutamine enne koodi võib võtta rohkem aega. 
+                   Arendajad peavad harjuma uue mõtteviisiga.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kood on testitav</h4>
+                <p>Kuna testid kirjutatakse enne koodi, on kogu süsteem testimisvalmis, aidates tuvastada vigu varakult. 
+                   See vähendab vigade leidmise kulusid hiljem arendusprotsessis.</p>
+            </td>
+            <td>
+                <h4>Kohati madal katvuse tase</h4>
+                <p>TDD ei taga alati, et kõik võimalikud vead oleksid katetud, sest testid võivad keskenduda vaid 
+                   kitsastele valdkondadele ja ülejäänud kood võib jääda testimata.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Refaktoreerimise ohutus</h4>
+                <p>Pidev refaktoreerimine hoiab koodi puhtana ja lihtsustab hooldamist. Testide kogum tagab, et 
+                   refaktoreerimine ei riku olemasolevat funktsionaalsust.</p>
+            </td>
+            <td>
+                <h4>Liigne kood ja komplekssus</h4>
+                <p>TDD võib viia liigse koodikoguse tekkimiseni, kuna iga uus funktsioon nõuab testide kirjutamist. 
+                   See võib suurendada süsteemi komplekssust.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Parem disain ja arhitektuur</h4>
+                <p>Testide enne koodi kirjutamine sunnib arendajaid mõtlema süsteemi disainile ja liidestele, 
+                   mis viib parema arhitektuurini ja vähem seotud komponentideni.</p>
+            </td>
+            <td>
+                <h4>Testide hoolduse vajadus</h4>
+                <p>Testide kogum vajab pidevat hooldust ja uuendamist koos koodibaasi muutustega. Halvasti hooldatud 
+                   testid võivad muutuda takistuseks arendusele.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Vähem manuaalset testimist</h4>
+                <p>Automaattestide olemasolu vähendab vajadust manuaalse testimise järele, säästes aega ja ressursse. 
+                   Teste saab käivitada iga koodimuutuse korral.</p>
+            </td>
+            <td>
+                <h4>Õppimiskõver</h4>
+                <p>TDD nõuab uut mõtteviisi ja harjumuste muutmist, mis võib olla alguses keeruline ja aeganõudev 
+                   arendajatele, kes on harjunud traditsioonilisele lähenemisele.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>JUnit - Test-Driven Development tööriist</h2>
+    <div class="junit-feature">
+        <h3>Näide JUnit kasutamisest TDD-s</h3>
         <p>
-            <strong>JUnit</strong> on populaarne testimisraamistik Java keeles, mis toetab TDD-d. JUnit abil saavad arendajad kirjutada
+            <b>JUnit</b> on populaarne testimisraamistik Java keeles, mis toetab TDD-d. JUnit abil saavad arendajad kirjutada 
             üksikute funktsioonide jaoks automaatseid teste, mis aitavad tagada, et iga koodimuutus ei rikuks süsteemi toimivust.
         </p>
-
-        <h5>Kuidas see aitab meeskonnatöös:</h5>
+        
+        <h4>Kuidas JUnit aitab meeskonnatöös:</h4>
         <ul>
-            <li>Meeskond saab kasutada JUnit-i, et hallata testide kirjutamist ja tagada, et kõik arendatud funktsioonid vastavad täpselt nõuetele.</li>
-            <li>Testide automaatimine vähendab inimlikke vigu ja aitab meeskonnaliikmetel keskenduda tarkvara arendamisele, mitte manuaalsele testimisele.</li>
+            <li><b>Testide automatiseerimine:</b> Meeskond saab kasutada JUnit-i, et hallata testide kirjutamist ja tagada, 
+                et kõik arendatud funktsioonid vastavad täpselt nõuetele. Teste saab käivitada automaatselt iga koodimuutuse korral.</li>
+            <li><b>Vigade varajane tuvastamine:</b> Testide automaatimine vähendab inimlikke vigu ja aitab meeskonnaliikmetel 
+                keskenduda tarkvara arendamisele, mitte manuaalsele testimisele. Vigadetuvastus toimub kohe pärast koodi kirjutamist.</li>
+            <li><b>Integreeritud arenduskeskkond:</b> JUnit integreerub hästi populaarsetesse Java arenduskeskkondadesse nagu 
+                Eclipse, IntelliJ IDEA ja Maven, muutes testide kirjutamise ja käitamise lihtsaks.</li>
+            <li><b>Testide korrastamine:</b> JUnit võimaldab testide rühmitamist, nimekirjastamist ja korraldatud käitamist, 
+                mis hõlbustab suurte testide kogumite haldamist.</li>
+        </ul>
+        
+        <h4>JUnit näide:</h4>
+        
+        <div class="code-example">
+// 1. RED - Test enne koodi<br>
+import org.junit.jupiter.api.Test;<br>
+import static org.junit.jupiter.api.Assertions.*;<br>
+<br>
+public class CalculatorTest {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;@Test<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public void testAdd() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calculator calculator = new Calculator();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="test-fail">assertEquals(5, calculator.add(2, 3)); // Test ei lähe läbi - klass Calculator ei eksisteeri</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+// 2. GREEN - Minimaalne kood testi läbimiseks<br>
+public class Calculator {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public int add(int a, int b) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="test-pass">return a + b; // Lihtne implementatsioon</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}<br>
+<br>
+// 3. REFACTOR - Koodi täiustamine<br>
+public class Calculator {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public int add(int a, int b) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Võib lisada veahalduse või logimise<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return a + b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}
+        </div>
+        
+        <h4>Teised olulised TDD tööriistad:</h4>
+        <ul>
+            <li><b>pytest:</b> Täisfunktsionaalne testiraamistik Pythoni jaoks</li>
+            <li><b>Mocha/Chai:</b> JavaScripti testiraamistik Node.js keskkonnas</li>
+            <li><b>NUnit:</b> .NET-i testiraamistik, mis on inspireeritud JUnit-ist</li>
+            <li><b>PHPUnit:</b> PHP testiraamistik üksikute testide jaoks</li>
+            <li><b>RSpec:</b> Ruby testiraamistik, mis toetab BDD-d</li>
+            <li><b>Jest:</b> Facebooki loodud JavaScripti testiraamistik Reacti jaoks</li>
+            <li><b>Catch2:</b> Kaasaegne C++ testiraamistik</li>
         </ul>
     </div>
 
+    <div class="separator"></div>
+
+    <h2>TDD protsessi etapid üksikasjalikult</h2>
+    
+    <div class="tdd-stage">
+        <h3>1. RED - Testi kirjutamine (eelmine kood)</h3>
+        <p>Kirjutatakse test, mis kontrollib soovitud funktsionaalsust. Kuna vastavat koodi veel pole, ei lähe test läbi.</p>
+        <div class="code-example">
+// Näide: Kalkulaatori liitmise test<br>
+@Test<br>
+public void testAddNumbers() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Calculator calc = new Calculator();<br>
+&nbsp;&nbsp;&nbsp;&nbsp;assertEquals(5, calc.add(2, 3));  // <span class="test-fail">Test ei lähe läbi</span><br>
+}
+        </div>
+    </div>
+    
+    <div class="tdd-stage">
+        <h3>2. GREEN - Koodi kirjutamine (minimaalne)</h3>
+        <p>Kirjutatakse minimaalne kood, mis võimaldab testil läbida. Mitte rohkem kui vajalik.</p>
+        <div class="code-example">
+// Minimaalne implementatsioon<br>
+public class Calculator {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public int add(int a, int b) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return a + b;  // <span class="test-pass">Test läheb nüüd läbi</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}
+        </div>
+    </div>
+    
+    <div class="tdd-stage">
+        <h3>3. REFACTOR - Koodi täiustamine</h3>
+        <p>Kui test läheb läbi, täiustatakse koodi ilma funktsionaalsust muutmata. Eemaldatakse duplikaatkood, parandatakse nimetusi ja struktuuri.</p>
+        <div class="code-example">
+// Parandatud implementatsioon<br>
+public class Calculator {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;/**<br>
+&nbsp;&nbsp;&nbsp;&nbsp; * Liidab kaks täisarvu<br>
+&nbsp;&nbsp;&nbsp;&nbsp; * @param a esimene liidetav<br>
+&nbsp;&nbsp;&nbsp;&nbsp; * @param b teine liidetav<br>
+&nbsp;&nbsp;&nbsp;&nbsp; * @return liitmise tulemus<br>
+&nbsp;&nbsp;&nbsp;&nbsp; */<br>
+&nbsp;&nbsp;&nbsp;&nbsp;public int add(int a, int b) {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Võib lisada kontrollid ülevoolu kohta<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return a + b;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+}
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Millal kasutada Test-Driven Development'i?</h2>
+    <div class="tdd-stage">
+        <h4>Sobivad olukorrad:</h4>
+        <ul>
+            <li><b>Keerukad algoritmid:</b> Kui on vaja implementeerida keerulisi loogikaid või arvutusi</li>
+            <li><b>Kriitilised süsteemid:</b> Finants-, tervishoiu- või ohutussüsteemid, kus vead on väga kulukad</li>
+            <li><b>Pikaajalised projektid:</b> Kus on oluline hooldatavus ja stabiilsus aja jooksul</li>
+            <li><b>Uued meeskonnaliikmed:</b> Et õpetada uutele arendajatele koodibaasi ja nõudeid</li>
+            <li><b>API-de arendus:</b> Kui liidesed peavad olema stabiilsed ja hästi dokumenteeritud</li>
+            <li><b>Legacy koodi täiendamine:</b> Et tagada, et uued muudatused ei riku olemasolevat funktsionaalsust</li>
+        </ul>
+        
+        <h4>Ebasobivad olukorrad:</h4>
+        <ul>
+            <li><b>Prototüübid ja MVP-d:</b> Kus on oluline kiiresti turule jõudmine, mitte täiuslik testimine</li>
+            <li><b>Väga lihtsad funktsioonid:</b> Kus testide kirjutamine võtaks rohkem aega kui funktsiooni implementeerimine</li>
+            <li><b>UI arendus:</b> Kasutajaliidese testimine on sageli keerulisem ja vähem effektiivne TDD abil</li>
+            <li><b>Kriisiolukorrad:</b> Kus on vaja kiireid lahendusi, mitte põhjalikku testide komplekti</li>
+            <li><b>Puuduvad testioskused:</b> Kui meeskonnal puuduvad testide kirjutamise oskused ja kogemused</li>
+            <li><b>Eksperimentaalsed tehnoloogiad:</b> Kui tehnoloogia on uus ja testiraamistikud pole veel saadaval</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://cdn.ttgtmedia.com/rms/onlineImages/software_quality-test_driven_testing_mobile.jpg" target="_blank">
+                    Test-Driven Development tsükli diagramm - TechTarget
+                </a>
+            </li>
+            <li>
+                <a href="https://junit.org/junit5/" target="_blank">
+                    JUnit 5 - Testiraamistik Java jaoks
+                </a>
+            </li>
+            <li>
+                <a href="https://www.agilealliance.org/glossary/tdd/" target="_blank">
+                    TDD definitsioon - Agile Alliance
+                </a>
+            </li>
+            <li>
+                <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank">
+                    Test-Driven Development - Martin Fowler
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
