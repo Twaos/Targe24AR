@@ -3,94 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Acceptance Test-Driven Development</title>
+    <title>Acceptance Test-Driven Development (ATDD)</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
             margin: 0;
-            padding: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h5 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #22d3ee;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* ATDD efektiga kast */
+        .atdd-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #86efac;
+        }
+
+        /* Koodibloki stiil */
+        .code-block {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .code-keyword {
+            color: #f87171;
+        }
+
+        .code-string {
+            color: #86efac;
+        }
+
+        .code-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-function {
+            color: #60a5fa;
+        }
+
+        /* ATDD osaliste grid */
+        .participants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .participant-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
         }
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+        .participant-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
         }
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
+
+        /* Protsessimärgistused */
+        .process-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(30, 41, 59, 0.2);
+            border-radius: 8px;
         }
-        h2, h3, h4, h5 {
-            color: #34495e;
-            text-align: left;
-        }
-        p, ul {
-            text-align: left;
-            line-height: 1.6;
-        }
-        ul {
-            padding-left: 20px;
-        }
-        pre {
-            background-color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            overflow-x: auto;
-        }
-        img {
-            width: 100%;
-            max-width: 700px;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 20px;
-            background: #3498db;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        .btn:hover {
-            background: #2980b9;
+
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            font-weight: 700;
+            border-radius: 50%;
+            margin-right: 15px;
+            flex-shrink: 0;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Acceptance Test-Driven Development (ATDD)</h1>
-        <h2>Mis on Acceptance Test-Driven Development?</h2>
+<div class="glass-box">
+
+    <h1>Acceptance Test-Driven Development (ATDD)</h1>
+    
+    <div class="atdd-highlight">
         <p>
-            Acceptance Test-Driven Development (ATDD) on tarkvaraarendusmeetod, kus testid kirjutatakse enne arendust,
-            et tagada funktsionaalsuse vastavus ärinõuetele. ATDD kaasab arendajaid ja äripoole, et tagada täpsed nõuded enne koodi kirjutamist.
+            <b>Acceptance Test-Driven Development (ATDD)</b> on tarkvaraarendusmeetod, kus aktsepteerimistestid 
+            kirjutatakse enne arendust, et tagada funktsionaalsuse vastavus ärinõuetele. ATDD kaasab arendajaid, 
+            testijaid ja äripoole (klienti või tooteomanikku), et luua ühine arusaam nõuetest enne koodi kirjutamist.
         </p>
-        <h2>ATDD tsükkel</h2>
-        <img src="https://www.collidu.com/media/catalog/product/img/f/0/f084be39b93f16ebd46f3b2de428495c6af39a6070c6d254ddefbe7576f85069/acceptance-test-driven-development-slide2.png" alt="ATDD tsükkel">
-        <h3>Plussid ja miinused</h3>
-        <h4>Plussid:</h4>
-        <ul>
-            <li><strong>Kõrge kvaliteet:</strong> Tagab, et kõik funktsioonid vastavad täpselt ärinõuetele.</li>
-            <li><strong>Äripoolte kaasamine:</strong> Võimaldab tihedat koostööd arendajate ja äripoolte vahel.</li>
-            <li><strong>Selged testid:</strong> Loob parema arusaama ja testitava määratluse.</li>
-        </ul>
-        <h4>Miinused:</h4>
-        <ul>
-            <li><strong>Aeglane algus:</strong> Testide koostamine enne arendust võib tunduda ajakulukas.</li>
-            <li><strong>Kõrge õppimiskõver:</strong> Nõuab arendajatelt head testikirjutamise oskust.</li>
-            <li><strong>Võimalik jäikus:</strong> Liiga spetsiifilised testid võivad piirata arenduse paindlikkust.</li>
-        </ul>
-        <h2>Cucumber ja ATDD</h2>
         <p>
-            <strong>Cucumber</strong> on ATDD tööriist, mis kasutab Gherkin-keelt, et kirjutada lihtsaid ja loetavaid aktsepteerimisteste.
+            ATDD on laiendus <b>Test-Driven Development (TDD)</b>-st, mis keskendub rohkem äriväärtusele ja 
+            lõppkasutaja vaatele. Meetod tagab, et kogu meeskond (sh ärimehed) mõistab, mida süsteem tegema peab.
         </p>
     </div>
+
+    <h2>ATDD osalised ja nende rollid</h2>
+    
+    <div class="participants-grid">
+        <div class="participant-item">
+            <div class="participant-icon">👨‍💼</div>
+            <h4>Äripoole esindaja</h4>
+            <p>Toob sisse ärinõuded ja prioriteedid, kirjeldab stsenaariume inimkeeles.</p>
+        </div>
+        
+        <div class="participant-item">
+            <div class="participant-icon">👨‍💻</div>
+            <h4>Arendaja</h4>
+            <p>Viib stsenaariumid testitavaks vormingusse, implementeerib lahenduse.</p>
+        </div>
+        
+        <div class="participant-item">
+            <div class="participant-icon">🧪</div>
+            <h4>Testija</h4>
+            <p>Tagab testide täielikkuse ja kvaliteedi, aitab defineerida aktsepteerimiskriteeriume.</p>
+        </div>
+    </div>
+
+    <h2>ATDD protsessi sammud</h2>
+    
+    <div class="process-step">
+        <div class="step-number">1</div>
+        <div>
+            <h5>Diskussioon ja nõuete selgitamine</h5>
+            <p>Meeskond (äripoole esindaja, arendaja, testija) kohtub, et arutada uut funktsionaalsust. 
+               Koos kirjeldatakse stsenaariume, mida süsteem peab toetama.</p>
+        </div>
+    </div>
+    
+    <div class="process-step">
+        <div class="step-number">2</div>
+        <div>
+            <h5>Aktsepteerimistestide loomine</h5>
+            <p>Koostatakse automatiseeritavad aktsepteerimistestid, mis valideerivad, et süsteem käitub 
+               ootuspäraselt. Testid kirjutatakse ärimehe arusaadaval keelel.</p>
+        </div>
+    </div>
+    
+    <div class="process-step">
+        <div class="step-number">3</div>
+        <div>
+            <h5>Testide rakendamine ja testimine</h5>
+            <p>Arendajad implementeerivad testid ja veenduvad, et need algselt ebaõnnestuvad 
+               (kuna funktsionaalsus puudub). Seejärel kirjutatakse minimaalne kood testi läbimiseks.</p>
+        </div>
+    </div>
+    
+    <div class="process-step">
+        <div class="step-number">4</div>
+        <div>
+            <h5>Refaktoreerimine ja korduvus</h5>
+            <p>Pärast testi läbimist parandatakse koodi kvaliteeti (refaktoreerimine) ilma 
+               funktsionaalsust muutmata. Protsess kordub iga uue funktsionaalsuse puhul.</p>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>ATDD tsükli visuaalne esitus</h2>
+    <img src="https://www.collidu.com/media/catalog/product/img/f/0/f084be39b93f16ebd46f3b2de428495c6af39a6070c6d254ddefbe7576f85069/acceptance-test-driven-development-slide2.png" 
+         alt="ATDD tsükli diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        ATDD tsükkel - koostöö, testide loomine, arendus ja refaktoreerimine
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Cucumber ja ATDD</h2>
+    <div class="stage-box">
+        <p>
+            <b>Cucumber</b> on populaarne ATDD tööriist, mis kasutab <b>Gherkin</b>-keelt, et kirjutada 
+            lihtsaid ja loetavaid aktsepteerimisteste. Gherkin kasutab inglise keelele sarnast süntaksit, 
+            mida ärimehed ja arendajad mõlemad saavad mõista.
+        </p>
+        
+        <h5>Gherkin süntaksi näide:</h5>
+        <div class="code-block">
+            <span class="code-keyword">Feature</span>: Kasutaja sisselogimine<br>
+            <span class="code-comment">  # Kasutaja peab saama sisse logida süsteemi</span><br><br>
+            
+            <span class="code-keyword">  Scenario</span>: Edukas sisselogimine kehtiva kasutajanime ja parooliga<br>
+            <span class="code-keyword">    Given</span> kasutajal on olemas kasutajakonto<br>
+            <span class="code-keyword">    And</span> kasutaja on sisselogimise lehel<br>
+            <span class="code-keyword">    When</span> kasutaja sisestab kehtiva kasutajanime ja parooli<br>
+            <span class="code-keyword">    And</span> kasutaja vajutab "Logi sisse" nuppu<br>
+            <span class="code-keyword">    Then</span> kasutaja suunatakse avalehele<br>
+            <span class="code-keyword">    And</span> kuvatakse tervitus sõnum "Tere tulemast!"
+        </div>
+        
+        <h5>ATDD vs TDD vs BDD</h5>
+        <ul>
+            <li><b>TDD (Test-Driven Development):</b> Keskendub tehnilistele üksustestidele, mida arendajad kirjutavad</li>
+            <li><b>BDD (Behavior-Driven Development):</b> Keskendub süsteemi käitumisele ärimehe perspektiivist</li>
+            <li><b>ATDD (Acceptance Test-Driven Development):</b> Keskendub aktsepteerimistestidele, mida kirjutavad kõik osapooled koos</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>ATDD eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kõrge kvaliteet</h4>
+                <p>Tagab, et kõik funktsioonid vastavad täpselt ärinõuetele, 
+                   vähendades valesti mõistmise ja implementeerimise võimalust.</p>
+            </td>
+            <td>
+                <h4>Aeglane algus</h4>
+                <p>Testide koostamine enne arendust võib tunduda ajakulukas, 
+                   eriti meeskondadele, kes pole ATDD-ga tuttavad.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Äripoolte kaasamine</h4>
+                <p>Võimaldab tihedat koostööd arendajate, testijate ja äripoolte vahel, 
+                   tagades ühise arusaama nõuetest juba varakult.</p>
+            </td>
+            <td>
+                <h4>Kõrge õppimiskõver</h4>
+                <p>Nõuab arendajatelt, testijatelt ja äripooltelt head testikirjutamise 
+                   ja koostöö oskust, mis võib nõuda koolitust.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Selged testid ja nõuded</h4>
+                <p>Loob parema arusaama ja testitava määratluse, mis toimib 
+                   nii nõuete kui ka testimise dokumendina.</p>
+            </td>
+            <td>
+                <h4>Võimalik jäikus</h4>
+                <p>Liiga spetsiifilised testid võivad piirata arenduse paindlikkust 
+                   ja tekitada vastupanu muudatustele.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Vähendatud ümbertegemised</h4>
+                <p>Kuna nõuded on selged enne arendust, väheneb oluliselt 
+                   vajadus ümber teha valesti mõistetud funktsionaalsusi.</p>
+            </td>
+            <td>
+                <h4>Suurenenud planeerimise vajadus</h4>
+                <p>Nõuab rohkem koosolekuid ja koostööd kui traditsiooniline arendus, 
+                   mis võib olla väljakutse hajutatud meeskondadele.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Pidev tagasiside</h4>
+                <p>Kiire tagasiside testide kaudu võimaldab kiiresti parandada 
+                   vigu ja kohandada nõudeid vastavalt vajadusele.</p>
+            </td>
+            <td>
+                <h4>Lisatööriistad ja -ressursid</h4>
+                <p>Vajab täiendavaid tööriistu (nagu Cucumber) ja infrastruktuuri 
+                   testide automatiseerimiseks ja haldamiseks.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>Millal kasutada ATDD-d?</h2>
+    <div class="stage-box">
+        <h4>Sobivad olukorrad:</h4>
+        <ul>
+            <li><b>Komplekssed ärilised nõuded:</b> Kui nõuded on keerulised ja vajavad selget arusaama</li>
+            <li><b>Suured meeskonnad:</b> Kui on vaja koordineerida mitme inimese tööd</li>
+            <li><b>Kriitilised süsteemid:</b> Kus vead võivad põhjustada suuri kahjusid</li>
+            <li><b>Regulatiivsed nõuded:</b> Kus on vaja täpselt dokumenteerida, mida süsteem teeb</li>
+        </ul>
+        
+        <h4>Ebasobivad olukorrad:</h4>
+        <ul>
+            <li><b>Kiired prototüübid:</b> Kui on vaja kiirelt midagi töötavat näidata</li>
+            <li><b>Väga väikesed projektid:</b> Kus formaalne protsess võib olla üleliigne</li>
+            <li><b>Puuduv ärimees:</b> Kui pole kättesaadavat ärimeest või klienti</li>
+            <li><b>Tehnilised prototüübid:</b> Kui eesmärk on testida tehnoloogiat, mitte ärifunktsionaalsust</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://www.collidu.com/media/catalog/product/img/f/0/f084be39b93f16ebd46f3b2de428495c6af39a6070c6d254ddefbe7576f85069/acceptance-test-driven-development-slide2.png" target="_blank">
+                    ATDD tsükli diagramm - Collidu
+                </a>
+            </li>
+            <li>
+                <a href="https://cucumber.io/docs/guides/overview/" target="_blank">
+                    Cucumber dokumentatsioon - cucumber.io
+                </a>
+            </li>
+            <li>
+                <a href="https://www.agilealliance.org/glossary/atdd/" target="_blank">
+                    ATDD - Agile Alliance
+                </a>
+            </li>
+            <li>
+                <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank">
+                    Test-Driven Development - Martin Fowler
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="index.html" class="back-link">← Tagasi pealehele</a>
+
+</div>
 </body>
 </html>
