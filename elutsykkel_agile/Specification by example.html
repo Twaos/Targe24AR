@@ -4,97 +4,616 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Specification by Example</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 20px;
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        h1, h2, h3 {
-            color: #2c3e50;
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
         }
+
         h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
             text-align: center;
         }
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
         }
-        ul {
-            list-style-type: disc;
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h5 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #22d3ee;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
             margin-left: 20px;
+            padding-left: 0;
         }
-        pre {
-            background-color: #e6e6e6;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            white-space: pre-wrap;
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Näidete kastid */
+        .example-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Specification by Example efektiga kast */
+        .sbe-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #c084fc;
+        }
+
+        /* Põhimõtete grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .principle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .principle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #c084fc;
+        }
+
+        /* FitNesse teema */
+        .fitnesse-feature {
+            background: rgba(192, 132, 252, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #c084fc;
+        }
+
+        /* Näidete tabel */
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .example-table th {
+            background-color: rgba(30, 41, 59, 0.6);
+            color: #93c5fd;
+            text-align: left;
+            padding: 12px 15px;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .example-table td {
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .example-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.2);
+        }
+
+        .example-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.2);
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Kerge hover efekti kastidele */
+        .example-box:hover, .sbe-highlight:hover, .fitnesse-feature:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Näidete blokk */
+        .spec-example {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            border-left: 3px solid #60a5fa;
         }
     </style>
 </head>
+
 <body>
+<div class="glass-box">
 
     <h1>Specification by Example</h1>
-
-    <div class="content">
-        <h2>Specification by Example</h2>
+    
+    <div class="sbe-highlight">
         <p>
-            Specification by Example (SbE) on tarkvara arendamise praktika, kus süsteemi nõuded määratletakse ja valideeritakse
-            reaalsete näidete kaudu, mitte abstraktsete kirjelduste või tekstiliste nõuete kaudu. SbE põhineb ideel, et ärinõuded
-            peaksid olema selged, testitavad ja mõistetavad kõigile meeskonnaliikmetele ning et need tuleb defineerida ja arutada
-            konkreetsete näidete kaudu, mis kajastavad tegelikku süsteemi käitumist.
+            <b>Specification by Example (SbE)</b> on tarkvaraarenduse praktika, kus süsteemi nõuded määratletakse 
+            ja valideeritakse reaalsete näidete kaudu, mitte abstraktsete kirjelduste või tekstiliste nõuete kaudu. 
         </p>
-
-        <h2>Arendustsüklid ja Meetodid</h2>
-
-        <h3>1. Specification by Example</h3>
-
-        <h4>1.1 Kirjeldus</h4>
         <p>
-            Specification by Example keskendub sellele, et ärinõuded ja funktsionaalsuse kirjeldused tehakse konkreetselt
-            testitavate näidete kaudu. Selle praktika abil saavad kõik meeskonnaliikmed (äripooled, arendajad, testijad) töötada
-            ühiselt süsteemi nõuete täpsustamiseks ja valideerimiseks. Näited, mis on esitatud arendusprotsessi alguses, toimivad
-            nii ärimudeli kui ka koodinäidistena, pakkudes meeskonnale selget arusaama nõuete täitmise kohta.
+            SbE põhineb ideel, et ärinõuded peaksid olema selged, testitavad ja mõistetavad kõigile meeskonnaliikmetele 
+            ning et need tuleb defineerida ja arutada konkreetsete näidete kaudu, mis kajastavad tegelikku süsteemi käitumist.
         </p>
+    </div>
 
-        <h4>1.2 Joonis: Specification by Example tsükkel</h4>
-        <img src="https://tech.edreamsodigeo.com/wp-content/uploads/sites/34/2017/04/specification-by-example.jpg">>
+    <h2>Specification by Example põhiprintsiibid</h2>
+    
+    <div class="principles-grid">
+        <div class="principle-item">
+            <div class="principle-icon">🎯</div>
+            <h4>Konkreetsete näidete põhjal</h4>
+            <p>Nõuded määratletakse konkreetsete, testitavate näidete kaudu, mitte abstraktsete kirjeldustega</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">🤝</div>
+            <h4>Koostööline määratlemine</h4>
+            <p>Kõik huvipooled (äri, arendajad, testijad) osalevad näidete loomises ja arutelus</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">🔄</div>
+            <h4>Elav dokumentatsioon</h4>
+            <p>Näited toimivad elava dokumentatsioonina, mis püsib ajakohane koos süsteemi muutustega</p>
+        </div>
+    </div>
 
-        <h4>1.3 Head ja Vead</h4>
-        <h5>Head:</h5>
+    <h2>Specification by Example tsükkel</h2>
+    
+    <img src="https://tech.edreamsodigeo.com/wp-content/uploads/sites/34/2017/04/specification-by-example.jpg" 
+         alt="Specification by Example tsükkel" 
+         class="model-image">
+    
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Specification by Example tsükkel - näidete kogumine, spetsifikatsioon, arendus, testimine ja tagasiside
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Specification by Example eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Selged nõuded</h4>
+                <p>SbE aitab tagada, et kõik meeskonnaliikmed saavad ühtse arusaama süsteemi nõuetest ja käitumisest, 
+                   kuna need on määratletud läbi konkreetsete näidete. See vähendab arusaamatusi ja ebaselgusi.</p>
+            </td>
+            <td>
+                <h4>Algse määratluse keerukus</h4>
+                <p>Alguses võib olla raske täpselt määratleda kõiki vajalikke näiteid ja parameetreid, 
+                   mis võivad põhjustada arendusprotsessi viivitusi ja lisakulusid.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Paranenud koostöö</h4>
+                <p>SbE soodustab tihedat koostööd arendajate, testijate ja äripoolte vahel, kuna kõik osapooled 
+                   arutavad ja töötavad koos süsteemi käitumise määratlemisel. See loob ühise arusaama.</p>
+            </td>
+            <td>
+                <h4>Hoolikas hooldus</h4>
+                <p>Kuna SbE sõltub konkreetsetest näidetest, võib süsteemi muutumine nõuda pidevat testide ja 
+                   näidete uuendamist, et need kajastaksid süsteemi uut käitumist.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kõrge kvaliteet ja usaldusväärsus</h4>
+                <p>Näited aitavad tagada, et arendatud süsteem täidab täpselt määratletud ärinõuded ja et 
+                   kood ei sisalda ebatäpsusi ega vigu. Testid põhinevad otse ärinõuetel.</p>
+            </td>
+            <td>
+                <h4>Kõrge algne töökoormus</h4>
+                <p>Esialgne töö, et koostada täpsed ja testitavad näited, võib võtta rohkem aega ja ressursse 
+                   kui tavapärased nõuded või kirjeldused.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Elav dokumentatsioon</h4>
+                <p>Näited toimivad elava dokumentatsioonina, mis püsib ajakohane koos süsteemi muutustega. 
+                   See on täpsem kui eraldi hoitud dokumentatsioon, mis sageli vananeb.</p>
+            </td>
+            <td>
+                <h4>Näidete ülemäärane spetsiifilisus</h4>
+                <p>Liiga detailsete näidete loomine võib viia ülemäärase keerukuseni ja võib olla raske 
+                   hoida neid korrastatud ja mõistetavana.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Automaattestimise lihtsustamine</h4>
+                <p>Näited, mis on kirjutatud struktureeritud vormis (nagu tabelid), on kergesti teisendatavad 
+                   automaattestideks, vähendades manuaalse testimise koormust.</p>
+            </td>
+            <td>
+                <h4>Õppimiskõvera olemasolu</h4>
+                <p>Uute meeskonnaliikmete jaoks võib SbE lähenemine olla esialgu keeruline, kuna see erineb 
+                   traditsioonilisest nõuete määratlemisest.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>FitNesse - Specification by Example tööriist</h2>
+    <div class="fitnesse-feature">
+        <h3>Näide FitNesse kasutamisest SbE-s</h3>
+        <p>
+            <b>FitNesse</b> on tööriist, mis toetab Specification by Example praktikat, võimaldades meeskondadel 
+            koostada ja käivitada nõudeid testivaid näiteid. FitNesse abil saavad kõik meeskonnaliikmed kirjutada 
+            testide määratlusi, mis kajastavad süsteemi käitumist vastavalt nõuetele.
+        </p>
+        
+        <h4>Kuidas FitNesse aitab meeskonnatöös:</h4>
         <ul>
-            <li><strong>Selged nõuded:</strong> SbE aitab tagada, et kõik meeskonnaliikmed saavad ühtse arusaama süsteemi nõuetest ja käitumisest, kuna need on määratletud läbi konkreetsete näidete.</li>
-            <li><strong>Paranenud koostöö:</strong> SbE soodustab tihedat koostööd arendajate, testijate ja äripoolte vahel, kuna kõik osapooled arutavad ja töötavad koos süsteemi käitumise määratlemisel.</li>
-            <li><strong>Kõrge kvaliteet ja usaldusväärsus:</strong> Näited aitavad tagada, et arendatud süsteem täidab täpselt määratletud ärinõuded ja et kood ei sisalda ebatäpsusi ega vigu.</li>
+            <li><b>Ühine tööruum:</b> FitNesse võimaldab meeskonnaliikmetel jagada ja arutada näiteid, mis on 
+                arusaadavad kõigile, sealhulgas mitte-tehnilistele osapooltele (äripoolele).</li>
+            <li><b>Otse testimine:</b> Testide läbiviimine koos näidete ja äripooltega aitab tagada, et kõik 
+                nõuded on täidetud, ja kõik meeskonnaliikmed saavad tagasisidet süsteemi käitumisest.</li>
+            <li><b>Dokumentatsioon ja testimine ühes:</b> FitNesse lehed toimivad nii dokumentatsioonina kui ka 
+                testide käitamise platvormina, vähendades duplikeerimist.</li>
+            <li><b>Automaatne testimine:</b> Võimaldab automaatselt käivitada näiteid testidena, kontrollides 
+                pidevalt, kas süsteem vastab määratletud nõuetele.</li>
         </ul>
-
-        <h5>Vead:</h5>
+        
+        <h4>Näide FitNesse tabelist:</h4>
+        
+        <table class="example-table">
+            <tr>
+                <th colspan="4">Kasutaja registreerimise testimine</th>
+            </tr>
+            <tr>
+                <th>Kasutajanimi</th>
+                <th>Parool</th>
+                <th>Kinnita parool</th>
+                <th>Oodatav tulemus</th>
+            </tr>
+            <tr>
+                <td>johndoe</td>
+                <td>Secret123!</td>
+                <td>Secret123!</td>
+                <td>Registreerimine õnnestub</td>
+            </tr>
+            <tr>
+                <td>john</td>
+                <td>short</td>
+                <td>short</td>
+                <td>Ebaõnnestub - parool liiga lühike</td>
+            </tr>
+            <tr>
+                <td>johndoe</td>
+                <td>Secret123!</td>
+                <td>Secret456!</td>
+                <td>Ebaõnnestub - paroolid ei kattu</td>
+            </tr>
+            <tr>
+                <td>existing_user</td>
+                <td>Secret123!</td>
+                <td>Secret123!</td>
+                <td>Ebaõnnestub - kasutajanimi on juba olemas</td>
+            </tr>
+        </table>
+        
+        <h4>Teised olulised Specification by Example tööriistad:</h4>
         <ul>
-            <li><strong>Algse määratluse keerukus:</strong> Alguses võib olla raske täpselt määratleda kõiki vajalikke näiteid ja parameetreid, mis võivad põhjustada arendusprotsessi viivitusi.</li>
-            <li><strong>Hoolikas hooldus:</strong> Kuna SbE sõltub konkreetsest näidetest, võib süsteemi muutumine nõuda pidevat testide ja näidete uuendamist, et need kajastaksid süsteemi uue käitumise.</li>
-            <li><strong>Kõrge algne töökoormus:</strong> Esialgne töö, et koostada täpsed ja testitavad näited, võib võtta rohkem aega ja ressursse kui tavapärased nõuded või kirjeldused.</li>
-        </ul>
-
-        <h4>1.4 Näide tööriistast: <strong>FitNesse</strong></h4>
-        <p>
-            <strong>FitNesse</strong> on tööriist, mis toetab Specification by Example praktikat, võimaldades meeskondadel koostada ja
-            käivitada nõudeid testivaid näiteid. FitNesse abil saavad kõik meeskonnaliikmed kirjutada testide määratlusi, mis kajastavad
-            süsteemi käitumist vastavalt nõuetele, ning seejärel neid testida, et tagada, et süsteem vastab ootustele.
-        </p>
-
-        <h5>Kuidas see aitab meeskonnatöös:</h5>
-        <ul>
-            <li>FitNesse võimaldab meeskonnaliikmetel jagada ja arutada näiteid, mis on arusaadavad kõigile, sealhulgas mitte-tehnilistele osapooltele.</li>
-            <li>Testide läbiviimine koos näidete ja äripooltega aitab tagada, et kõik nõuded on täidetud, ja kõik meeskonnaliikmed saavad tagasisidet süsteemi käitumisest.</li>
+            <li><b>Cucumber:</b> BDD (Behaviour-Driven Development) raamistik, mis kasutab Gherkin süntaksit</li>
+            <li><b>SpecFlow:</b> .NET-i BDD raamistik, mis integreerub Visual Studio'ga</li>
+            <li><b>JBehave:</b> Java BDD raamistik, mis keskendub käitumispõhistele lugudele</li>
+            <li><b>Behat:</b> PHP BDD raamistik</li>
+            <li><b>Robot Framework:</b> Üldotstarbeline testiraamistik, mis toetab nõuete testimist</li>
+            <li><b>Gauge:</b> Testiraamistik, mis keskendub loetavatele ja hooldatavatele testidele</li>
         </ul>
     </div>
 
+    <div class="separator"></div>
+
+    <h2>Näiteid Specification by Example kasutamisest</h2>
+    
+    <div class="example-box">
+        <h3>1. Ostukorvi funktsiooni näide</h3>
+        
+        <div class="spec-example">
+            <strong>Stsenaarium:</strong> Kasutaja lisab toote ostukorvi<br>
+            <strong>Kui</strong> kasutajal on tühi ostukorv<br>
+            <strong>Ja</strong> kasutaja valib toote "iPhone 15"<br>
+            <strong>Ja</strong> kasutaja vajutab nuppu "Lisa ostukorvi"<br>
+            <strong>Siis</strong> ostukorvis peaks olema 1 toode<br>
+            <strong>Ja</strong> ostukorvi kogusumma peaks olema 999€<br>
+            <strong>Ja</strong> kasutajale kuvatakse teade "Toode lisatud ostukorvi"
+        </div>
+    </div>
+    
+    <div class="example-box">
+        <h3>2. Soodusklubi liikmelisuse näide</h3>
+        
+        <table class="example-table">
+            <tr>
+                <th>Ostud kokku</th>
+                <th>Praegune staatus</th>
+                <th>Uus ost</th>
+                <th>Oodatav uus staatus</th>
+                <th>Soodus %</th>
+            </tr>
+            <tr>
+                <td>0€</td>
+                <td>Regulaarne klient</td>
+                <td>50€</td>
+                <td>Regulaarne klient</td>
+                <td>0%</td>
+            </tr>
+            <tr>
+                <td>450€</td>
+                <td>Regulaarne klient</td>
+                <td>100€</td>
+                <td>Hõbeklient</td>
+                <td>5%</td>
+            </tr>
+            <tr>
+                <td>950€</td>
+                <td>Hõbeklient</td>
+                <td>200€</td>
+                <td>Kuldklient</td>
+                <td>10%</td>
+            </tr>
+            <tr>
+                <td>1990€</td>
+                <td>Kuldklient</td>
+                <td>300€</td>
+                <td>Platina klient</td>
+                <td>15%</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Specification by Example protsessi etapid</h2>
+    
+    <div class="principles-grid">
+        <div class="principle-item">
+            <div class="principle-icon">1️⃣</div>
+            <h4>Näidete kogumine</h4>
+            <p>Huvipooltega kohtumised, et koguda konkreetseid näiteid süsteemi oodatava käitumise kohta</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">2️⃣</div>
+            <h4>Spetsifikatsiooni koostamine</h4>
+            <p>Näidete struktureerimine ja vormistamine testitavasse vormingusse</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">3️⃣</div>
+            <h4>Arendus ja testimine</h4>
+            <p>Koodi kirjutamine, kasutades näiteid viitepunktidena ja testimiskriteeriumitena</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">4️⃣</div>
+            <h4>Tagasiside ja täiendamine</h4>
+            <p>Testide tulemuste analüüs ja näidete täiendamine vastavalt süsteemi muutustele</p>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Millal kasutada Specification by Example'i?</h2>
+    <div class="example-box">
+        <h4>Sobivad olukorrad:</h4>
+        <ul>
+            <li><b>Keerukad ärireeglid:</b> Kui süsteemil on palju ärireegleid ja -tingimusi</li>
+            <li><b>Mitme osapoolega projektid:</b> Kui on vaja ühist arusaamist erinevate huvipoolte vahel</li>
+            <li><b>Regulatiivsed nõuded:</b> Kus on vaja täpset dokumentatsiooni ja jälgitavust</li>
+            <li><b>Pikad projektid:</b> Kus on oluline hoida nõuete selgust kogu projekti jooksul</li>
+            <li><b>Kvaliteedinõudlikud süsteemid:</b> Finants-, tervishoiu- või muu kriitilise tähtsusega süsteemid</li>
+        </ul>
+        
+        <h4>Ebasobivad olukorrad:</h4>
+        <ul>
+            <li><b>Kiired prototüübid:</b> Kus on oluline kiiresti turule jõudmine, mitte täiuslik dokumentatsioon</li>
+            <li><b>Väga lihtsad funktsioonid:</b> Kus nõuded on nii lihtsad, et näidete loomine oleks üleliigne</li>
+            <li><b>Eksperimentaalsed projektid:</b> Kus nõuded muutuvad väga tihti ja põhimõtteliselt</li>
+            <li><b>Väga väikesed meeskonnad:</b> Kus kõik meeskonnaliikmed on pidevas otseses suhtluses</li>
+            <li><b>Piiratud ressursid:</b> Kui pole aega ega inimesi näidete põhjalikuks koostamiseks ja hoidmiseks</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://tech.edreamsodigeo.com/wp-content/uploads/sites/34/2017/04/specification-by-example.jpg" target="_blank">
+                    Specification by Example tsükli diagramm - eDreams Odigeo
+                </a>
+            </li>
+            <li>
+                <a href="http://fitnesse.org/" target="_blank">
+                    FitNesse - Specification by Example tööriist
+                </a>
+            </li>
+            <li>
+                <a href="https://cucumber.io/docs/bdd/" target="_blank">
+                    Behaviour-Driven Development (BDD) - Cucumber
+                </a>
+            </li>
+            <li>
+                <a href="https://specbyexample.com/" target="_blank">
+                    Specification by Example - ametlik veebisait
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
