@@ -1,134 +1,440 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agile Arendusmudel</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
             margin: 0;
-            padding: 0;
-            background-color: #eef2f3;
-            color: #333;
-            text-align: center;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        header {
-            background-color: #2a9d8f;
-            color: white;
-            padding: 20px 0;
-        }
-        h1 {
-            margin: 0;
-            font-size: 2.5em;
-        }
-        h2 {
-            color: #e76f51;
-            margin-top: 20px;
-        }
-        p {
-            max-width: 800px;
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
             margin: auto;
-            font-size: 1.1em;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
         }
-        img {
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
             max-width: 100%;
             height: auto;
-            margin: 20px auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
         }
-        table {
-            width: 80%;
-            margin: 20px auto;
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Rohkem nupp */
+        .more-btn {
+            display: inline-block;
+            margin: 25px 0;
+            padding: 12px 24px;
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+            border-radius: 10px;
+            font-weight: 600;
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .more-btn:hover {
+            background: rgba(96, 165, 250, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
             border-collapse: collapse;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 25px 0;
+            font-size: 1rem;
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background: #264653;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        ul li {
-            background-color: #e76f51;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        ul li a {
-            text-decoration: none;
-            color: white;
-            font-weight: bold;
-        }
-        footer {
-            background-color: #2a9d8f;
-            color: white;
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
             text-align: center;
-            padding: 10px 0;
-            margin-top: 20px;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 20px;
-            background: #264653;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: 0.3s;
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
         }
-        .btn:hover {
-            background: #1d3a40;
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Agile efektiga kast */
+        .agile-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #86efac;
+        }
+
+        /* Agiilsuse põhimõtete loend */
+        .principles-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .principle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <h1>Agile Arendusmudel</h1>
-    </header>
-    <main style="padding: 20px;">
-        <p>Agile on paindlik tarkvaraarendusmeetod, mis keskendub kiiretele iteratsioonidele, koostööle ja pidevale täiustamisele...</p>
-        <h2>Agile Mudel</h2>
-        <img src="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-agile-model.png" alt="Agile Arendusmudel">
-        <h2>Agile plussid ja miinused</h2>
-        <table>
-            <tr>
-                <th>Agile Plus</th>
-                <th>Agile Vead</th>
-            </tr>
-            <tr>
-                <td>Paindlikkus</td>
-                <td>Projekt võib muutuda raskesti hallatavaks</td>
-            </tr>
-            <tr>
-                <td>Tihe koostöö</td>
-                <td>Nõuab tugevat omavahelist suhtlust</td>
-            </tr>
-        </table>
-        <h3>Kasulikud lingid</h3>
+<div class="glass-box">
+
+    <h1>Agile Arendusmudel</h1>
+    
+    <div class="agile-highlight">
+        <p>
+            <b>Agile</b> on paindlik tarkvaraarendusmeetod, mis keskendub kiiretele iteratsioonidele, 
+            tihedale koostööle ja pidevale täiustamisele. Erinevalt traditsioonilistest 
+            lineaarsetest mudelitest (nagu vesipall) on Agile iteratiivne ja inkrementaalne, 
+            võimaldades kohanduda muutuvatele nõuetele ja prioriteetidele.
+        </p>
+    </div>
+
+    <h2>Agile'i põhipõhimõtted</h2>
+    
+    <div class="principles-list">
+        <div class="principle-item">
+            <h4>1. Individuaalsus ja interaktsioon</h4>
+            <p>Inimeste ja nendevaheline suhtlemine on olulisem kui protsessid ja tööriistad.</p>
+        </div>
+        
+        <div class="principle-item">
+            <h4>2. Töötav tarkvara</h4>
+            <p>Töötav tarkvara on peamine edenemise mõõdupuu, mitte ulatuslik dokumentatsioon.</p>
+        </div>
+        
+        <div class="principle-item">
+            <h4>3. Klientide kaasatus</h4>
+            <p>Tihe koostöö klientidega kogu arendusprotsessi vältel.</p>
+        </div>
+        
+        <div class="principle-item">
+            <h4>4. Muutuste suhtes avatus</h4>
+            <p>Tervitada muutusi, isegi arenduse hilistades etappides.</p>
+        </div>
+    </div>
+
+    <h2>Agile'i tüüpilised praktikad</h2>
+    
+    <div class="stage-box">
+        <h3>Sprintid</h3>
+        <p>
+            Lühikesed, fikseeritud pikkusega iteratsioonid (tavaliselt 1-4 nädalat), 
+            mille jooksul luuakse lõpetatud, testitud ja kasutuskõlblik tarkvara inkrement.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Igapäevased koosolekud</h3>
+        <p>
+            Lühikesed (15-minutilised) iga päevased koosolekud, kus meeskonnaliikmed 
+            jagavad, mida nad eile tegid, mida nad täna teevad ja mis takistused neil on.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Sprint Planeerimine</h3>
+        <p>
+            Iga sprindi alguses plaanib meeskond, millised ülesanded ja funktsionaalsused 
+            selles sprintis teostatakse, lähtudes prioriteetsusest ja meeskonna võimetest.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Sprinti ülevaade ja retrospektiiv</h3>
+        <p>
+            Sprinti lõpus demonstreeritakse klientidele tehtud tööd (ülevaade) ning 
+            analüüsitakse, mida hästi tehti ja mida saab parandada (retrospektiiv).
+        </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Agile'i visuaalne esitus</h2>
+    <img src="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-agile-model.png" 
+         alt="Agile Arendusmudeli diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Agile'i iteratiivne ja inkrementaalne protsess - pidev tagasiside ja täiustamine
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Agile'i eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Paindlikkus</h4>
+                <p>Võimaldab kohanduda muutuvatele nõuetele ja prioriteetidele 
+                   kiiresti, mis on oluline dünaamilistes keskkondades.</p>
+            </td>
+            <td>
+                <h4>Projekt võib muutuda raskesti hallatavaks</h4>
+                <p>Suurtel projektidel võib iteratiivne lähenemine muutuda 
+                   keeruliseks, eriti kui puudub selge lõppeesmärk.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Tihe koostöö</h4>
+                <p>Regulaarne suhtlus meeskonnaliikmete ja klientidega 
+                   tagab, et lõpptoode vastab ootustele ja vajadustele.</p>
+            </td>
+            <td>
+                <h4>Nõuab tugevat omavahelist suhtlust</h4>
+                <p>Eduks on vajalik pidev ja avatud suhtlus, mis võib 
+                   olla väljakutse hajutatud meeskondadele.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Varajane ja regulaarne tarkvara kohaletoimetamine</h4>
+                <p>Klient saab töötavat tarkvara juba varajastes etappides, 
+                   mis võimaldab varajast kasutamist ja tagasisidet.</p>
+            </td>
+            <td>
+                <h4>Vähem kavandamist ja dokumentatsiooni</h4>
+                <p>Fookus töötaval tarkvaral võib viia piisava dokumentatsiooni 
+                   puudumiseni, mis võib põhjustada probleeme hiljem.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Pidev täiustamine</h4>
+                <p>Iga sprindi järel analüüsitakse protsessi ja tehakse 
+                   parandusi, mis viib pideva arenguni.</p>
+            </td>
+            <td>
+                <h4>Ressursside intensiivsus</h4>
+                <p>Regulaarsed kohtumised ja tihe koostöö nõuavad rohkem 
+                   aega ja pühendumist kui traditsioonilised meetodid.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kõrge klientide rahulolu</h4>
+                <p>Kliendi pidev kaasatus ja võimalus mõjutada arendust 
+                   suurendab lõpptulemusega rahulolu.</p>
+            </td>
+            <td>
+                <h4>Ebaselge lõppkuupäev ja eelarve</h4>
+                <p>Iteratiivne protsess ja muutuvad nõuded võivad muuta 
+                   lõppkuupäeva ja eelarve prognoosi raskemaks.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>Populaarsed Agile'i raamistikud</h2>
+    <div class="stage-box">
+        <h4>Scrum</h4>
+        <p>
+            Kõige populaarsem Agile'i raamistik, mis kasutab fikseeritud pikkusega sprinte, 
+            igapäevaseid koosolekuid ja selgeid rolle (Product Owner, Scrum Master, Development Team).
+        </p>
+        
+        <h4>Kanban</h4>
+        <p>
+            Visualiseerib töövoogu ja piirab pooleliolevat tööd, et parandada 
+            voolavust ja vähendada aega, mis kulub ülesannete lõpetamiseks.
+        </p>
+        
+        <h4>Extreme Programming (XP)</h4>
+        <p>
+            Keskendub tehnilistele praktikatele nagu paarprogrammeerimine, 
+            testipõhine arendus (TDD) ja pidev integratsioon.
+        </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <a href="../elutsykkel_agile/Agiilsed programmeerimisstiilid.html" class="more-btn">
+        Loe rohkem Agiilsest programmeerimisstiilist
+    </a>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
         <ul>
-            <li><a href="#">Joonis</a></li>
-            <li><a href="#">Agile metoodika</a></li>
+            <li>
+                <a href="https://images.javatpoint.com/tutorial/software-engineering/images/software-engineering-agile-model.png" target="_blank">
+                    Agile'i diagramm - JavaTpoint
+                </a>
+            </li>
+            <li>
+                <a href="https://agilemanifesto.org/" target="_blank">
+                    Agile Manifesto - AgileManifesto.org
+                </a>
+            </li>
+            <li>
+                <a href="https://www.scrum.org/" target="_blank">
+                    Scrum Guide - Scrum.org
+                </a>
+            </li>
+            <li>
+                <a href="https://www.geeksforgeeks.org/software-engineering-agile-development-models/" target="_blank">
+                    Agile Development Models - GeeksforGeeks
+                </a>
+            </li>
         </ul>
-        <a href="../elutsykkel_agile/Agiilsed programmeerimisstiilid.html" class="btn">Loe rohkem</a>
-    </main>
-    <footer>
-        <p>&copy; 2024 Freddie Turulinn</p>
-    </footer>
+    </div>
+
+    <a href="index.html" class="back-link">← Tagasi pealehele</a>
+
+</div>
 </body>
 </html>
