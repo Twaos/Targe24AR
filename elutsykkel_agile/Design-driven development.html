@@ -1,74 +1,505 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design-driven development</title>
+    <title>Design-Driven Development (DDD)</title>
+
+    <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* DDD efektiga kast */
+        .ddd-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #f0abfc;
+        }
+
+        /* Disainipõhimõtete grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .principle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .principle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #f0abfc;
+        }
+
+        /* Figma teema */
+        .figma-feature {
+            background: rgba(96, 165, 250, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #60a5fa;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Design-driven development</h1>
-    <p>Design-Driven Development (DDD) on tarkvaraarenduse lähenemisviis, mis keskendub tarkvara arhitektuuri ja disaini loomisele juba arenduse alguses. DDD eesmärgiks on arendada tarkvara, millel on tugev ja hästi läbimõeldud arhitektuur, mis teenib äri nõudeid, on skaleeritav ja lihtne hooldada. DDD paneb suurt rõhku kvaliteetsele süsteemi arhitektuurile, kasutajaliidese (UI) disainile, samuti üldisele süsteemi struktuurile ja voogudele.
+<div class="glass-box">
 
-        Disainimõtlemine ja visualiseerimine on keskmes, mis tähendab, et enne koodi kirjutamist luuakse süsteemi visuaalsed skeemid, diagrammid, prototüübid ja isegi interaktiivsed disainilahendused. Selle kaudu tagatakse, et kõik meeskonnaliikmed, sealhulgas arendajad, disainerid ja ärihuvigruppide liikmed, mõistavad ja on kooskõlas süsteemi struktuuride ja eesmärkidega.
+    <h1>Design-Driven Development (DDD)</h1>
+    
+    <div class="ddd-highlight">
+        <p>
+            <b>Design-Driven Development (DDD)</b> on tarkvaraarenduse lähenemisviis, mis keskendub 
+            tarkvara arhitektuuri ja disaini loomisele juba arenduse alguses. DDD eesmärgiks on arendada 
+            tarkvara, millel on tugev ja hästi läbimõeldud arhitektuur, mis teenib äri nõudeid, on 
+            skaleeritav ja lihtne hooldada.
+        </p>
+        <p>
+            DDD paneb suurt rõhku kvaliteetsele süsteemi arhitektuurile, kasutajaliidese (UI) disainile, 
+            samuti üldisele süsteemi struktuurile ja voogudele. Disainimõtlemine ja visualiseerimine on 
+            keskmes, mis tähendab, et enne koodi kirjutamist luuakse süsteemi visuaalsed skeemid, diagrammid, 
+            prototüübid ja isegi interaktiivsed disainilahendused.
+        </p>
+    </div>
+
+    <h2>Design-Driven Development põhiprintsiibid</h2>
+    
+    <div class="principles-grid">
+        <div class="principle-item">
+            <div class="principle-icon">🎯</div>
+            <h4>Disain enne koodi</h4>
+            <p>Visuaalsed skeemid, prototüübid ja arhitektuuridiagrammid luuakse enne 
+               koodi kirjutamist, et tagada ühine arusaam ja vähendada vigu.</p>
+        </div>
         
-        Selle arendusstiili juures on oluline, et disain ei oleks lihtsalt visuaalne aspekt, vaid ka süsteemi loogika ja töötlusprotsesside aluseks olev arhitektuur.</p>
-        <img src="https://image.slidesharecdn.com/designdrivendevelopment-130528223150-phpapp01/95/design-driven-development-45-638.jpg?cb=1369780522">
-        <style>
-            table {font-family:arial, sans-serif;
-                    border:1px solid #000000;
-                    width:100%
+        <div class="principle-item">
+            <div class="principle-icon">🤝</div>
+            <h4>Interdistsiplinaarne koostöö</h4>
+            <p>Arendajad, disainerid, ärihuvigrupid ja testijad töötavad koos, et 
+               luua terviklik ja kasutajasõbralik lahendus.</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">📐</div>
+            <h4>Arhitektuuriline täpsus</h4>
+            <p>Süsteemi struktuur, komponendid ja nende suhted on hoolikalt 
+               planeeritud ja dokumenteeritud enne implementatsiooni.</p>
+        </div>
+    </div>
+
+    <h2>DDD protsessi etapid</h2>
     
-            }
-            td, th {
-      border: 1px solid #000000;
-      text-align: left;
-      padding: 8px;
-    }
-    tr:nth-child(even) {
-      background-color: #dddddd;
-    }
+    <div class="stage-box">
+        <h3>1. Ärinõuete analüüs ja mõistmine</h3>
+        <p>
+            Sügav analüüs äriprotsessidest, kasutajate vajadustest ja süsteemi eesmärkidest. 
+            Koostöös ärimeestega ja kasutajatega tuvastatakse põhilised probleemid ja vajadused.
+        </p>
+    </div>
     
-        </style>
-         <table>
-            <tr>
-                <td><b>Plussid</b></td>
-                <td><b>Vead</b></td>
-            </tr>
-            <tr>
-                <td><b>Selge ja kindel arhitektuur:</b> Kuna disain keskendub süsteemi struktuuri loomisele, võimaldab see arendajatel luua tugeva arhitektuuri, mis toetab täiendamist ja skaalaerimist.</td>
-                <td><b>Algusfaasis ajakulukus:</b> Disainifaas võib olla ajamahukas ja nõuda palju algseid ressursse, kuna see eeldab üksikasjalikku planeerimist ja visuaalset modelleerimist.</td>
-            </tr>
-            <tr>
-                <td><b>Kasutajakesksus:</b> Protsess paneb tugevat rõhku kasutajakogemusele ja interaktiivsetele disainilahendustele, mis viivad parema lõppkasutajakogemuse loomiseni.</td>
-                <td><b>Liigne keskendumine disainile:</b> Kui liialdada disaini ja arhitektuuri loomisega, võib arendus hilineda, kuna arendajad keskenduvad rohkem süsteemi struktuuri täpsusele, kui tegelikele funktsioonidele.</td>
-            </tr>
-            <tr>
-                <td><b>Visuaalne ja intuitiivne mõtlemine:</b> Arendajad ja muud meeskonnaliikmed saavad kiiresti aru süsteemi ülesehitusest ja põhieesmärkidest läbi visuaalsete prototüüpide ja skeemide.</td>
-                <td><b>Kohustuslik disaini ja arenduse koostöö:</b> DDD eeldab tugevat koostööd disainerite ja arendajate vahel, mis võib mõnel meeskonnal olla keeruline, kui osapooled ei ole samal lehel.</td>
-            </tr>
+    <div class="stage-box">
+        <h3>2. Visuaalne modelleerimine ja prototüüpimine</h3>
+        <p>
+            Luuakse visuaalsed skeemid, kasutajaliidese prototüübid ja arhitektuuridiagrammid. 
+            See hõlmab kasutajateekondade kaardistamist, süsteemi voogude visualiseerimist ja 
+            komponentide suhete defineerimist.
+        </p>
+    </div>
     
+    <div class="stage-box">
+        <h3>3. Arhitektuuri ja disaini valideerimine</h3>
+        <p>
+            Prototüübid ja disainilahendused esitatakse kasutajatele ja ärimeestele tagasiside 
+            saamiseks. Põhinevalt tagasisidest täiustatakse disaini enne arenduse alustamist.
+        </p>
+    </div>
     
-        </table>
-        <h2>Näide ühest vahendist, mis toetab DDD:</h2>
-        <p><b>Figma</b> on üks juhtivaid tööriistu, mis toetab Design-Driven Developmentit. Figma on veebipõhine disainitööriist, mis võimaldab meeskondadel luua prototüüpe, visuaalseid skeeme ja kasutajaliidese disaini ning samal ajal töötada koos reaalajas. Figma võimaldab arendajatel ja disaineritel tihedalt koostööd teha, jagada ideid ja täiendada visuaalseid mudeleid enne koodimist.</p>
-        <br/>
-        <br/>
-        <br/>
-        <h2>Peamised omadused:</h2>
+    <div class="stage-box">
+        <h3>4. Iteratiivne arendus ja testimine</h3>
+        <p>
+            Arendus algab põhinedes valideeritud disainil. Iga iteratsioonis integreeritakse 
+            disain ja arendus, tagades, et lõpptulemus vastab disaini eesmärkidele.
+        </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Design-Driven Development visuaalne esitus</h2>
+    <img src="https://image.slidesharecdn.com/designdrivendevelopment-130528223150-phpapp01/95/design-driven-development-45-638.jpg?cb=1369780522" 
+         alt="Design-Driven Development diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Design-Driven Development tsükkel - disain, valideerimine, arendus ja iteratsioon
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Design-Driven Development eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Selge ja kindel arhitektuur</h4>
+                <p>Kuna disain keskendub süsteemi struktuuri loomisele, võimaldab see arendajatel 
+                   luua tugeva arhitektuuri, mis toetab täiendamist ja skaleerimist. Süsteemi 
+                   komponendid ja nende suhted on hästi määratletud.</p>
+            </td>
+            <td>
+                <h4>Algusfaasis ajakulukus</h4>
+                <p>Disainifaas võib olla ajamahukas ja nõuda palju algseid ressursse, kuna see 
+                   eeldab üksikasjalikku planeerimist ja visuaalset modelleerimist enne arenduse 
+                   alustamist.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kasutajakesksus</h4>
+                <p>Protsess paneb tugevat rõhku kasutajakogemusele ja interaktiivsetele disainilahendustele, 
+                   mis viivad parema lõppkasutajakogemuse loomiseni. Kasutajad on kaasatud juba varajastes etappides.</p>
+            </td>
+            <td>
+                <h4>Liigne keskendumine disainile</h4>
+                <p>Kui liialdada disaini ja arhitektuuri loomisega, võib arendus hilineda, kuna arendajad 
+                   keskenduvad rohkem süsteemi struktuuri täpsusele, kui tegelikele funktsioonidele.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Visuaalne ja intuitiivne mõtlemine</h4>
+                <p>Arendajad ja muud meeskonnaliikmed saavad kiiresti aru süsteemi ülesehitusest ja 
+                   põhieesmärkidest läbi visuaalsete prototüüpide ja skeemide. See vähendab arusaamatusi.</p>
+            </td>
+            <td>
+                <h4>Kohustuslik disaini ja arenduse koostöö</h4>
+                <p>DDD eeldab tugevat koostööd disainerite ja arendajate vahel, mis võib mõnel meeskonnal 
+                   olla keeruline, kui osapooled ei ole samal lehel või puudub vastav kultuur.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Riskide vähendamine</h4>
+                <p>Kuna disain on hästi läbimõeldud ja valideeritud enne arendust, väheneb risk, et 
+                   lõpptoode ei vasta kasutajate vajadustele või nõuab suuri ümbertegemisi.</p>
+            </td>
+            <td>
+                <h4>Jäikus muutuste suhtes</h4>
+                <p>Põhjalikult planeeritud disain võib muuta süsteemi vähem paindlikuks muutustele, 
+                   eriti kui need tulenevad ootamatutest ärivajadustest või tehnoloogilistest muutustest.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Parema kvaliteedi tagamine</h4>
+                <p>Sügav disainianalüüs võimaldab tuvastada potentsiaalsed probleemid ja lahendused 
+                   varakult, mis parandab lõpptoode kvaliteeti ja usaldusväärsust.</p>
+            </td>
+            <td>
+                <h4>Suuremad algkulud</h4>
+                <p>Põhjaliku disaini ja prototüüpimise protsess nõuab rohkem aega ja ressursse 
+                   alguses võrreldes kiiremate lähenemisviisidega.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>Figma - Design-Driven Development tööriist</h2>
+    <div class="figma-feature">
+        <h3>Näide Figma kasutamisest DDD-s</h3>
+        <p>
+            <b>Figma</b> on üks juhtivaid tööriistu, mis toetab Design-Driven Developmentit. 
+            Figma on veebipõhine disainitööriist, mis võimaldab meeskondadel luua prototüüpe, 
+            visuaalseid skeeme ja kasutajaliidese disaini ning samal ajal töötada koos reaalajas.
+        </p>
+        
+        <h4>Kuidas Figma aitab meeskonnatöös Design-Driven Development'is:</h4>
         <ul>
-            <li><p><b>Reaalajas koostöö, mis võimaldab mitme meeskonnaliikme samaaegset tööd.</b></p></li>
-            <li><p><b>Suurepärane prototüüpide ja interaktiivsete elementide loomine.</b></p></li>
-            <li><p><b>Toetab pilvepõhist salvestust ja jagamist, mistõttu on lihtne meeskonnaliikmetel ühiseid mudeleid vaadata ja nendega töötada.</b></p></li>
+            <li><b>Reaalajas koostöö:</b> Võimaldab mitme meeskonnaliikme samaaegset tööd samal 
+                disainil, parandades kommunikatsiooni ja vähendades versioonikonflikte.</li>
+            <li><b>Prototüüpide ja interaktiivsete elementide loomine:</b> Figma võimaldab luua 
+                kõrge kvaliteediga prototüüpe, mida saab testida ja valideerida enne arendust.</li>
+            <li><b>Pilvepõhine salvestus ja jagamine:</b> Lihtne meeskonnaliikmetel ühiseid mudeleid 
+                vaadata ja nendega töötada, tagades, et kõik on alati ajakohase versiooniga.</li>
+            <li><b>Disaini süsteemid ja komponendid:</b> Võimaldab luua taaskasutatavaid disainikomponente, 
+                mis tagavad ühtsuse kogu süsteemis.</li>
+            <li><b>Integratsioon arendustööriistadega:</b> Figma koodi ekstraheerimise võimalused 
+                võimaldavad arendajatel hõlpsalt implementeerida disaine.</li>
         </ul>
-        <h2>Viited</h2>
+        
+        <h4>Figma peamised omadused DDD jaoks:</h4>
+        <div class="principles-grid">
+            <div class="principle-item">
+                <div class="principle-icon">👥</div>
+                <h4>Koostöö reaalajas</h4>
+                <p>Mitme inimese samaaegne töö samal disainil</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">🎨</div>
+                <h4>Prototüüpimine</h4>
+                <p>Interaktiivsete prototüüpide ja animatsioonide loomine</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">📱</div>
+                <h4>Responsiivne disain</h4>
+                <p>Automaatne kohandumine erinevate ekraanisuuruste jaoks</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">🔗</div>
+                <h4>Integratsioonid</h4>
+                <p>Ühendused Jira, Slack, GitHub ja muude tööriistadega</p>
+            </div>
+        </div>
+        
+        <h4>Muud olulised Design-Driven Development tööriistad:</h4>
         <ul>
-            <li><a href="https://en.wikipedia.org/wiki/Design_thinking">Wikipedia - Design Thinking</a></li>
-            <li><a href="https://www.figma.com/">Figma - tööriist, mis toetab DDD-d disainiprotsessis.</a></li>
+            <li><b>Adobe XD:</b> Prototüüpimine ja kasutajaliidese disain Adobe ekosüsteemis</li>
+            <li><b>Sketch:</b> Vektorpõhine disainitööriist macOS platvormil</li>
+            <li><b>InVision Studio:</b> Interaktiivsed prototüübid ja animatsioonid</li>
+            <li><b>Axure RP:</b> Komplekssete prototüüpide ja vooskeemide loomine</li>
+            <li><b>Balsamiq:</b> Kiired visandi stiilis prototüübid ja skeemid</li>
+            <li><b>Lucidchart / Draw.io:</b> Arhitektuuridiagrammid ja vooskeemid</li>
         </ul>
+    </div>
 
+    <div class="separator"></div>
 
+    <h2>Millal kasutada Design-Driven Developmenti?</h2>
+    <div class="stage-box">
+        <h4>Sobivad olukorrad:</h4>
+        <ul>
+            <li><b>Suured ja keerukad projektid:</b> Kus arhitektuur ja skaleeritavus on kriitilised</li>
+            <li><b>Kasutajakesksed rakendused:</b> Kus kasutajakogemus on peamine edukuse tegur</li>
+            <li><b>Regulatiivsed nõuded:</b> Kus on vaja täpset dokumentatsiooni ja valideerimist</li>
+            <li><b>Meeskonnad disaineritega:</b> Kus on olemas spetsialiseerunud disainitiim</li>
+            <li><b>Pikaajalised projektid:</b> Kus hooldatavus ja täiendatavus on olulised</li>
+        </ul>
+        
+        <h4>Ebasobivad olukorrad:</h4>
+        <ul>
+            <li><b>Kiired prototüübid ja MVP-d:</b> Kus kiire toomine turule on olulisem kui täiuslik disain</li>
+            <li><b>Väga väikesed projektid:</b> Kus formaalne disainiprotsess oleks üleliigne</li>
+            <li><b>Eksperimentaalsed projektid:</b> Kus eesmärk on kiiresti testida ideid, mitte luua täiuslikku disaini</li>
+            <li><b>Puuduv disainer:</b> Kui meeskonnas pole spetsialiseerunud disainereid</li>
+            <li><b>Kriisiolukorrad:</b> Kus on vaja kiireid lahendusi, mitte põhjalikku disaini</li>
+        </ul>
+    </div>
 
+    <div class="separator"></div>
 
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://image.slidesharecdn.com/designdrivendevelopment-130528223150-phpapp01/95/design-driven-development-45-638.jpg?cb=1369780522" target="_blank">
+                    Design-Driven Development diagramm - SlideShare
+                </a>
+            </li>
+            <li>
+                <a href="https://en.wikipedia.org/wiki/Design_thinking" target="_blank">
+                    Design Thinking - Wikipedia
+                </a>
+            </li>
+            <li>
+                <a href="https://www.figma.com/" target="_blank">
+                    Figma - Disainitööriist, mis toetab DDD-d
+                </a>
+            </li>
+            <li>
+                <a href="https://www.interaction-design.org/literature/article/design-driven-development-when-should-you-use-it" target="_blank">
+                    Design-Driven Development - Interaction Design Foundation
+                </a>
+            </li>
+        </ul>
+    </div>
 
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
