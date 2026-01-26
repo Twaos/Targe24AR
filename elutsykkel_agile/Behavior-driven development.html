@@ -1,103 +1,509 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Behavior-driven development</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <title>Behavior-driven Development (BDD)</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: #0d0d0d;
-            color: #00ffcc;
             margin: 0;
-            padding: 20px;
-            text-align: center;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        h1, h2 {
-            color: #ff00ff;
-        }
-        p {
-            max-width: 800px;
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
             margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
             line-height: 1.6;
+            color: #cbd5e1;
         }
-        img {
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px #00ffcc;
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
         }
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background-color: #1a1a1a;
-            color: #00ffcc;
-            box-shadow: 0px 0px 10px #00ffcc;
-        }
-        th, td {
-            border: 1px solid #00ffcc;
-            padding: 10px;
-        }
-        tr:nth-child(even) {
-            background-color: #262626;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+
         li {
-            background-color: #1a1a1a;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 5px #00ffcc;
+            margin-bottom: 8px;
         }
+
         a {
-            color: #ff00ff;
+            color: #60a5fa;
+            font-weight: 600;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* BDD efektiga kast */
+        .bdd-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #86efac;
+        }
+
+        /* Koodibloki stiil */
+        .code-block {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .code-keyword {
+            color: #f87171;
+        }
+
+        .code-string {
+            color: #86efac;
+        }
+
+        .code-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-function {
+            color: #60a5fa;
+        }
+
+        /* BDD põhimõtete grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .principle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .principle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #86efac;
+        }
+
+        /* Cucumber teema */
+        .cucumber-feature {
+            background: rgba(134, 239, 172, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #86efac;
+        }
     </style>
 </head>
+
 <body>
-    <h1>Behavior-driven development</h1>
-    <p>
-        Behavior-Driven Development (BDD) on tarkvaraarenduse metoodika, mis keskendub tarkvara käitumise täpsetele määratlusele ja testimisele...
+<div class="glass-box">
+
+    <h1>Behavior-driven Development (BDD)</h1>
+    
+    <div class="bdd-highlight">
+        <p>
+            <b>Behavior-driven Development (BDD)</b> on tarkvaraarenduse metoodika, mis keskendub 
+            tarkvara käitumise täpsetele määratlusele ja testimisele ärimehe perspektiivist. 
+            BDD on laiendus <b>Test-driven Development (TDD)</b>-st, mis rõhutab koostööd 
+            arendajate, testijate ja ärispetsialistide vahel.
+        </p>
+        <p>
+            BDD põhineb kontseptsioonil, et tarkvara peaks tegema seda, mida ärimees ütleb, 
+            et see peaks tegema. See kasutab loomulikku keelt (inglise keelt või muud emakeelt) 
+            kirjeldamaks, kuidas süsteem peaks käituma erinevates stsenaariumites.
+        </p>
+    </div>
+
+    <h2>BDD kolm põhipõhimõtet</h2>
+    
+    <div class="principles-grid">
+        <div class="principle-item">
+            <div class="principle-icon">🤝</div>
+            <h4>1. Koostöö (Collaboration)</h4>
+            <p>Arendajad, testijad ja ärispetsialistid töötavad koos, et luua ühine 
+               arusaam süsteemi ootustest ja käitumisest.</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">📝</div>
+            <h4>2. Tegevused (Activities)</h4>
+            <p>Kõik osapooled osalevad testide kirjutamises, kasutades lihtsat ja 
+               arusaadavat keelt, mida kõik mõistavad.</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">🎯</div>
+            <h4>3. Tulemused (Outcomes)</h4>
+            <p>Testide fookus on äriväärtusel ja sellel, mida süsteem peab tegema, 
+               mitte tehnilistel detailidel.</p>
+        </div>
+    </div>
+
+    <h2>BDD protsessi sammud</h2>
+    
+    <div class="stage-box">
+        <h3>1. Stsenaariumide kirjeldamine (Given-When-Then)</h3>
+        <p>
+            Ärimees kirjeldab stsenaariume loomulikus keeles, kasutades <b>Given-When-Then</b> vormingut:
+            <ul>
+                <li><b>Given</b> (Antud): Kirjeldab algseisundit või konteksti</li>
+                <li><b>When</b> (Kui): Kirjeldab tegevust või sündmust</li>
+                <li><b>Then</b> (Siis): Kirjeldab oodatavat tulemust</li>
+            </ul>
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>2. Testide automatiseerimine</h3>
+        <p>
+            Arendajad kirjutavad koodi, mis viib stsenaariumid testitavaks vormingusse. 
+            Need testid käivitatakse automaatselt ja annavad tagasisidet süsteemi oleku kohta.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>3. Arendus ja refaktoreerimine</h3>
+        <p>
+            Arendajad implementeerivad funktsionaalsuse, et testid läbiks. Pärast testi 
+            läbimist refaktoreeritakse koodi, et parandada selle kvaliteeti ja hooldatavust.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>4. Dokumentatsioon ja elav spetsifikatsioon</h3>
+        <p>
+            Stsenaariumid toimivad nii testimise kui ka dokumentatsioonina. Need on 
+            "elavad spetsifikatsioonid", mis püsivad ajakohased, kuna neid täidetakse 
+            automaattestidega.
+        </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>BDD visuaalne esitus</h2>
+    <img src="https://miro.medium.com/v2/resize:fit:1200/1*lidfLkweF-eawRjil35GQw.jpeg" 
+         alt="Behavior-driven Development diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        BDD tsükkel - koostöö, stsenaariumide kirjeldamine, arendus ja testimine
     </p>
-    <img src="https://miro.medium.com/v2/resize:fit:1200/1*lidfLkweF-eawRjil35GQw.jpeg">
-    <table>
+
+    <div class="separator"></div>
+
+    <h2>BDD eelised ja puudused</h2>
+    
+    <table class="comparison-table">
         <tr>
-            <th>Plussid</th>
-            <th>Vead</th>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
         </tr>
         <tr>
-            <td>Suurem koostöö meeskonnas</td>
-            <td>Alguses keeruline sisse elada</td>
+            <td>
+                <h4>Suurem koostöö meeskonnas</h4>
+                <p>Arendajad, testijad ja ärispetsialistid töötavad tihedalt koos, 
+                   vähendades arusaamatusi ja parandades suhtlust.</p>
+            </td>
+            <td>
+                <h4>Alguses keeruline sisse elada</h4>
+                <p>BDD nõuab kultuurimuutust ja õppimiskõver on mõne meeskonna jaoks 
+                   alguses üsna järsk.</p>
+            </td>
         </tr>
         <tr>
-            <td>Testide kirjutamine enne koodimist</td>
-            <td>Liigne keskendumine testimisele</td>
+            <td>
+                <h4>Testide kirjutamine enne koodimist</h4>
+                <p>Tagab, et arendus on alati suunatud ärivajadustele ja vähendab 
+                   vajadust ümber teha valesti mõistetud funktsionaalsusi.</p>
+            </td>
+            <td>
+                <h4>Liigne keskendumine testimisele</h4>
+                <p>Mõned meeskonnad võivad keskenduda liiga palju testide kirjutamisele, 
+                   unustades tegeliku arenduse.</p>
+            </td>
         </tr>
         <tr>
-            <td>Vähem tõrkeid ja vigu</td>
-            <td>Vajadus ärispetsialistide kaasamiseks</td>
+            <td>
+                <h4>Vähem tõrkeid ja vigu</h4>
+                <p>Kuna nõuded on selged ja testitud juba enne arendust, on tõrgete 
+                   ja vigade arv oluliselt väiksem.</p>
+            </td>
+            <td>
+                <h4>Vajadus ärispetsialistide kaasamiseks</h4>
+                <p>BDD eeldab ärispetsialistide aktiivset osalemist, mis ei pruugi 
+                   alati olla võimalik.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Elavad dokumentatsioonid</h4>
+                <p>Stsenaariumid toimivad dokumendina, mis püsib alati ajakohane, 
+                   sest need on seotud automaattestidega.</p>
+            </td>
+            <td>
+                <h4>Aeglane algus</h4>
+                <p>Protsessi käivitamine võib olla aeganõudev, eriti suurtel 
+                   ja keerukatel projektidel.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Parem kvaliteet ja usaldusväärsus</h4>
+                <p>Pidev testimine ja selged nõuded tagavad kõrge kvaliteedi 
+                   ja usaldusväärse tarkvara.</p>
+            </td>
+            <td>
+                <h4>Lisatööriistad ja koolitus</h4>
+                <p>Vajab spetsiaalseid tööriistu (nt Cucumber) ja koolitust, 
+                   mida kõik meeskonnaliikmed peavad omandama.</p>
+            </td>
         </tr>
     </table>
-    <h2>Näide ühest vahendist, mis toetab BDD:</h2>
-    <p><b>Cucumber</b> on üks populaarne tööriist, mis toetab Behavior-Driven Developmenti...</p>
-    <h2>Peamised omadused:</h2>
-    <ul>
-        <li>Töötab koos erinevate programmeerimiskeeltega</li>
-        <li>Lihtne integreerida pideva integratsiooni (CI) süsteemidega</li>
-        <li>Toetab mitmeid testimistööriistu ja -kaadreid</li>
-    </ul>
-    <h2>Viited</h2>
-    <ul>
-        <li><a href="https://en.wikipedia.org/wiki/Behavior-driven_development">Wikipedia - Behavior-driven development</a></li>
-        <li><a href="https://cucumber.io/">Cucumber</a></li>
-    </ul>
+
+    <div class="separator"></div>
+
+    <h2>Cucumber - BDD tööriist</h2>
+    <div class="cucumber-feature">
+        <h3>Näide Cucumberi kasutamisest BDD-s</h3>
+        <p>
+            <b>Cucumber</b> on üks populaarsemaid tööriistu, mis toetab Behavior-Driven Developmenti. 
+            See kasutab <b>Gherkin</b>-keelt, et kirjutada lihtsaid ja loetavaid stsenaariume.
+        </p>
+        
+        <h4>Cucumberi Gherkin näide:</h4>
+        <div class="code-block">
+            <span class="code-keyword">Feature</span>: Kasutaja ostuprotsess<br>
+            <span class="code-comment">  # Kasutaja peab saama edukalt tooteid osta</span><br><br>
+            
+            <span class="code-keyword">  Scenario Outline</span>: Kasutaja lisab toote ostukorvi<br>
+            <span class="code-keyword">    Given</span> kasutaja on ostukataloogi lehel<br>
+            <span class="code-keyword">    When</span> kasutaja klõpsab tootel "Lisa ostukorvi"<br>
+            <span class="code-keyword">    Then</span> toode peaks olema ostukorvis<br>
+            <span class="code-keyword">    And</span> ostukorvi kogusumma peaks olema <span class="code-string">$&lt;price&gt;</span><br><br>
+            
+            <span class="code-keyword">    Examples</span>:<br>
+            <span class="code-keyword">      |</span> product          <span class="code-keyword">|</span> price <span class="code-keyword">|</span><br>
+            <span class="code-keyword">      |</span> "Raamat"         <span class="code-keyword">|</span> 19.99  <span class="code-keyword">|</span><br>
+            <span class="code-keyword">      |</span> "Kohvimasin"     <span class="code-keyword">|</span> 89.99  <span class="code-keyword">|</span><br>
+            <span class="code-keyword">      |</span> "Arvutihiir"     <span class="code-keyword">|</span> 29.99  <span class="code-keyword">|</span>
+        </div>
+        
+        <h4>Cucumberi peamised omadused:</h4>
+        <ul>
+            <li><b>Töötab koos erinevate programmeerimiskeeltega:</b> Java, Ruby, JavaScript, Python jne</li>
+            <li><b>Lihtne integreerida pideva integratsiooni (CI) süsteemidega:</b> Jenkins, GitLab CI, Travis CI</li>
+            <li><b>Toetab mitmeid testimistööriistu ja -kaadreid:</b> Selenium, JUnit, TestNG, RSpec jne</li>
+            <li><b>Konsolideeritud aruanded:</b> Loob selged ja informatiivsed testiaruanded</li>
+            <li><b>Taaskasutatavad sammud:</b> Testisamme saab taaskasutada erinevates stsenaariumides</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Millal kasutada BDD-d?</h2>
+    <div class="stage-box">
+        <h4>Sobivad olukorrad:</h4>
+        <ul>
+            <li><b>Komplekssed ärilised nõuded:</b> Kui nõuded on keerulised ja vajavad selget arusaama</li>
+            <li><b>Suured meeskonnad:</b> Kui on vaja koordineerida mitme inimese tööd erinevatelt valdkondadelt</li>
+            <li><b>Kriitilised ärifunktsionaalsused:</b> Kus vead võivad põhjustada suuri ärilisi kahjusid</li>
+            <li><b>Regulatiivsed nõuded:</b> Kus on vaja täpselt dokumenteerida, mida süsteem teeb</li>
+        </ul>
+        
+        <h4>Ebasobivad olukorrad:</h4>
+        <ul>
+            <li><b>Kiired prototüübid:</b> Kui on vaja kiirelt midagi töötavat näidata</li>
+            <li><b>Väga väikesed projektid:</b> Kus formaalne protsess võib olla üleliigne</li>
+            <li><b>Puuduv ärimees:</b> Kui pole kättesaadavat ärimeest või klienti</li>
+            <li><b>Tehnilised prototüübid:</b> Kui eesmärk on testida tehnoloogiat, mitte ärifunktsionaalsust</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://miro.medium.com/v2/resize:fit:1200/1*lidfLkweF-eawRjil35GQw.jpeg" target="_blank">
+                    BDD diagramm - Medium
+                </a>
+            </li>
+            <li>
+                <a href="https://en.wikipedia.org/wiki/Behavior-driven_development" target="_blank">
+                    Behavior-driven development - Wikipedia
+                </a>
+            </li>
+            <li>
+                <a href="https://cucumber.io/" target="_blank">
+                    Cucumber - BDD tööriist
+                </a>
+            </li>
+            <li>
+                <a href="https://www.agilealliance.org/glossary/bdd/" target="_blank">
+                    BDD - Agile Alliance
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
