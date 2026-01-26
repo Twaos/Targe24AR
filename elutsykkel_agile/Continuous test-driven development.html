@@ -3,104 +3,538 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agiilne Arendus ja Continuous TDD</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <title>Continuous Test-Driven Development (TDD)</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: #0d0d0d;
-            color: #00ffcc;
             margin: 0;
-            padding: 20px;
-            text-align: center;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        h1, h2, h3, h4, h5 {
-            color: #ff00ff;
-        }
-        p {
-            max-width: 800px;
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
             margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h5 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #22d3ee;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
             line-height: 1.6;
+            color: #cbd5e1;
         }
-        img {
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px #00ffcc;
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+
         li {
-            background-color: #1a1a1a;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 5px #00ffcc;
+            margin-bottom: 8px;
         }
+
         a {
-            color: #ff00ff;
+            color: #60a5fa;
+            font-weight: 600;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Continuous TDD efektiga kast */
+        .continuous-tdd-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #67e8f9;
+        }
+
+        /* TDD tsükli etapipaaride grid */
+        .tdd-cycle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .tdd-cycle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .cycle-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: rgba(103, 232, 249, 0.2);
+            color: #67e8f9;
+            font-weight: 700;
+            border-radius: 50%;
+            line-height: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* Koodibloki stiil */
+        .code-block {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .code-keyword {
+            color: #f87171;
+        }
+
+        .code-string {
+            color: #86efac;
+        }
+
+        .code-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-function {
+            color: #60a5fa;
+        }
+
+        /* JUnit teema */
+        .junit-feature {
+            background: rgba(96, 165, 250, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #60a5fa;
+        }
     </style>
 </head>
+
 <body>
+<div class="glass-box">
 
-    <h1>Agiilne Arendus ja Continuous Test-Driven Development (TDD)</h1>
-
-    <div class="content">
-        <h2>Agiilne Arendus</h2>
+    <h1>Continuous Test-Driven Development (TDD)</h1>
+    
+    <div class="continuous-tdd-highlight">
         <p>
-            Agiilne arendus on paindlik ja iteratiivne lähenemisviis tarkvara arendusele...
+            <b>Continuous Test-Driven Development (Continuous TDD)</b> tähistab pidevat testimise ja 
+            arenduse tsüklit, mis kombineerib traditsioonilist TDD-d pideva integratsiooni ja 
+            pideva juurutamise (CI/CD) põhimõtetega. See lähenemine tagab, et testid 
+            käivitatakse ja kood integreeritakse pidevalt, mitte ainult arendaja töökohal.
         </p>
-
-        <h2>Arendustsüklid ja Meetodid</h2>
-
-        <h3>1. Continuous Test-Driven Development (TDD)</h3>
-
-        <h4>1.1 Kirjeldus</h4>
         <p>
-            Continuous TDD tähistab pidevat testimise ja arenduse tsüklit...
+            Continuous TDD laiendab TDD põhimõtteid kogu arendusmeeskonnale ja arendustsüklile, 
+            tagades, et kõik koodimuudatused läbivad automaattestimise ja integreerimise enne, 
+            kui need jõuavad peaharusse või tootmiskeskkonda.
         </p>
+    </div>
 
-        <h4>1.2 Joonis: Continuous TDD tsükkel</h4>
-        <img src="https://images.spiceworks.com/wp-content/uploads/2022/09/29095630/How-TDD-Works.png">
+    <h2>Agiilne Arendus põhiprintsiibid</h2>
+    
+    <div class="stage-box">
+        <h3>Paindlikkus ja iteratiivsus</h3>
+        <p>
+            Agiilne arendus on paindlik ja iteratiivne lähenemisviis tarkvara arendusele, 
+            mis keskendub lühikestele arendustsüklitele (sprintidele) ja pidevale 
+            täiustamisele. See võimaldab kohaneda muutuvatele nõuetele ja prioriteetidele.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Tihe koostöö ja suhtlus</h3>
+        <p>
+            Arendajad, testijad, ärimehed ja lõppkasutajad töötavad tihedalt koos, 
+            et tagada, et lõpptoode vastab ootustele ja vajadustele. Regulaarsed 
+            koosolekud ja avatud suhtlus on olulised.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Pidev tagasiside ja täiustamine</h3>
+        <p>
+            Iga iteratsiooni (sprinti) lõpus analüüsitakse tulemusi, kogutakse 
+            tagasisidet ja tehakse parandusi nii protsessis kui ka tootes. See 
+            tagab pideva arengu ja kvaliteedi parandamise.
+        </p>
+    </div>
 
-        <h4>1.3 Head ja Vead</h4>
-        <h5>Head:</h5>
+    <div class="separator"></div>
+
+    <h2>TDD põhitsükkel (Red-Green-Refactor)</h2>
+    
+    <div class="tdd-cycle-grid">
+        <div class="tdd-cycle-item">
+            <div class="cycle-number">1</div>
+            <h4>Red - Test ebaõnnestub</h4>
+            <p>Kirjuta test uue funktsionaalsuse jaoks. Test peab algselt ebaõnnestuma, 
+               sest funktsionaalsust pole veel olemas.</p>
+        </div>
+        
+        <div class="tdd-cycle-item">
+            <div class="cycle-number">2</div>
+            <h4>Green - Test õnnestub</h4>
+            <p>Kirjuta minimaalne kogus koodi, et test läbiks. Ära optimeeri ega 
+               täiusta veel – keskendu ainult testi läbimisele.</p>
+        </div>
+        
+        <div class="tdd-cycle-item">
+            <div class="cycle-number">3</div>
+            <h4>Refactor - Paranda koodi</h4>
+            <p>Pärast testi läbimist paranda koodi kvaliteeti – eemalda dubleerimine, 
+               paranda nimed, lihtsusta loogikat, säilitades funktsionaalsuse.</p>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Continuous TDD visuaalne esitus</h2>
+    <img src="https://images.spiceworks.com/wp-content/uploads/2022/09/29095630/How-TDD-Works.png" 
+         alt="Continuous TDD tsükli diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Continuous TDD tsükkel - Red-Green-Refactor koos pideva integratsiooniga
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Continuous TDD eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kvaliteedi tagamine</h4>
+                <p>Pidev testimine ja integreerimine tagab kõrge koodikvaliteedi 
+                   ja vähendab vigade arvu oluliselt.</p>
+            </td>
+            <td>
+                <h4>Aeglane algus</h4>
+                <p>Testide kirjutamine enne koodi võib alguses tunduda aeganõudev 
+                   ja aeglustada arendust.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Varajane viga avastamine</h4>
+                <p>Vead avastatakse ja parandatakse kohe, kui need tekivad, 
+                   mitte alles testimisfaasis või tootmises.</p>
+            </td>
+            <td>
+                <h4>Kõrge õppimiskõver</h4>
+                <p>Nõuab arendajatelt head testikirjutamise oskust ja distsipliini, 
+                   mida võib olla raske omandada.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Ohutu refaktorimine</h4>
+                <p>Kuna kood on hästi testitud, saab seda ohutult refaktoreerida ja 
+                   parandada ilma kartmata, et midagi läheb katki.</p>
+            </td>
+            <td>
+                <h4>Testide liialdamine</h4>
+                <p>Mõned arendajad võivad kirjutada liiga palju teste või teste, 
+                   mis on liiga spetsiifilised ja haprad.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Parema disaini sundimine</h4>
+                <p>Kuna peab testima enne implementatsiooni, sunnib see kirjutama 
+                   paremini disainitud ja lahtiseletavaid liideseid.</p>
+            </td>
+            <td>
+                <h4>Vähene ärifookus</h4>
+                <p>Keskendumine tehnilistele testidele võib viia äriväärtuse 
+                   unarusse jätmiseni.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Pidev integratsiooni toetus</h4>
+                <p>Lihtne integreerida CI/CD töövoogudesse, tagades, et iga 
+                   koodimuudatus on kohe testitud.</p>
+            </td>
+            <td>
+                <h4>Testide hoolduskulud</h4>
+                <p>Suur testimiskomplekt nõuab hooldust ja uuendamist, mis võib 
+                   olla ajamahukas.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>JUnit - Continuous TDD tööriist</h2>
+    <div class="junit-feature">
+        <h3>Näide JUniti kasutamisest Continuous TDD-s</h3>
+        <p>
+            <b>JUnit</b> on Java programmeerimiskeele jaoks mõeldud testimise raamistik, 
+            mida kasutatakse laialdaselt Continuous TDD kontekstis. See võimaldab 
+            kirjutada ja käivitada korduvaid teste automatiseeritud viisil.
+        </p>
+        
+        <h4>JUnit testi näide:</h4>
+        <div class="code-block">
+            <span class="code-keyword">import</span> org.junit.jupiter.api.<span class="code-function">Test</span>;<br>
+            <span class="code-keyword">import static</span> org.junit.jupiter.api.Assertions.<span class="code-function">assertEquals</span>;<br><br>
+            
+            <span class="code-keyword">public class</span> <span class="code-function">CalculatorTest</span> {<br><br>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">@Test</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> <span class="code-function">testAddition</span>() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Arrange - ettevalmistus</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calculator calculator = <span class="code-keyword">new</span> Calculator();<br><br>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Act - tegevus</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> result = calculator.<span class="code-function">add</span>(3, 5);<br><br>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-comment">// Assert - kontroll</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">assertEquals</span>(8, result, <span class="code-string">"3 + 5 peaks olema 8"</span>);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br><br>
+            
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">@Test</span><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">public void</span> <span class="code-function">testSubtraction</span>() {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Calculator calculator = <span class="code-keyword">new</span> Calculator();<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> result = calculator.<span class="code-function">subtract</span>(10, 4);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-function">assertEquals</span>(6, result);<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+            }
+        </div>
+        
+        <h4>Kuidas JUnit aitab meeskonnatöös Continuous TDD kontekstis:</h4>
         <ul>
-            <li>Kvaliteedi tagamine</li>
-            <li>Varajane viga avastamine</li>
-            <li>Refaktorimine</li>
+            <li><b>Ühised testide kogumid:</b> Meeskonnaliikmed saavad jagada ühiseid testide kogumeid, 
+                mis tagavad ühtse kvaliteedistandardi kogu koodibaasi ulatuses.</li>
+            <li><b>Vigade ennetamine:</b> TDD tsüklite järgimine aitab vältida suuri koodibaasi vigade 
+                kuhjumist, kuna iga väike muudatus testitakse kohe.</li>
+            <li><b>Pidev integratsioon:</b> JUnit testid saab integreerida CI/CD töövoogudesse (nt Jenkins, 
+                GitLab CI), tagades, et iga koodimuudatus läbib automaattestid enne integratsiooni.</li>
+            <li><b>Regressioonitestimine:</b> Olemasolevad testid tagavad, et uued muudatused ei riku 
+                olemasolevat funktsionaalsust.</li>
+            <li><b>Dokumentatsioon:</b> Testid toimivad elava dokumentatsioonina, mis näitab, kuidas 
+                kood peaks käituma.</li>
         </ul>
-
-        <h5>Vead:</h5>
+        
+        <h4>JUnit peamised omadused:</h4>
         <ul>
-            <li>Aeglane algus</li>
-            <li>Kõrge õppimiskõver</li>
-            <li>Testide liialdamine</li>
-        </ul>
-
-        <h4>1.4 Näide tööriistast: <strong>JUnit</strong></h4>
-        <p>
-            <strong>JUnit</strong> on Java programmeerimiskeele jaoks mõeldud testimise raamistik...
-        </p>
-
-        <h5>Kuidas see aitab meeskonnatöös:</h5>
-        <ul>
-            <li>Meeskonnaliikmed saavad jagada ühiseid testide kogumeid...</li>
-            <li>TDD tsüklite järgimine aitab vältida suuri koodibaasi vigade kuhjumist...</li>
+            <li><b>Annotatsioonipõhine:</b> Kasutab @Test, @BeforeEach, @AfterEach jne annotatsioone</li>
+            <li><b>Laiendatav:</b> Toetab erinevaid assertion teeke ja laiendusi</li>
+            <li><b>Integratsioon:</b> Lihtne integreerida IDE-dega (IntelliJ, Eclipse) ja CI/CD tööriistadega</li>
+            <li><b>Paralleelne testimine:</b> Võimaldab testide paralleelset käivitamist kiirendamiseks</li>
+            <li><b>Parametriseeritud testid:</b> Toetab erinevate parameetritega testide käivitamist</li>
         </ul>
     </div>
 
-    <h2>Viited</h2>
-    <ul>
-        <li><a href="https://en.wikipedia.org/wiki/Behavior-driven_development">Wikipedia - Behavior-driven development</a></li>
-        <li><a href="https://cucumber.io/">Cucumber</a></li>
-    </ul>
+    <div class="separator"></div>
 
+    <h2>Continuous TDD vs Traditsiooniline TDD</h2>
+    <div class="stage-box">
+        <h4>Traditsiooniline TDD:</h4>
+        <ul>
+            <li><b>Kohalik fookus:</b> Testid käivitatakse arendaja masinas</li>
+            <li><b>Manuaalne integratsioon:</b> Kood integreeritakse peaharusse käsitsi</li>
+            <li><b>Üksikud testitsüklid:</b> Testid käivitatakse nõudluse alusel</li>
+            <li><b>Piirav skaala:</b> Sobib paremini väiksematele projektidele</li>
+        </ul>
+        
+        <h4>Continuous TDD:</h4>
+        <ul>
+            <li><b>Keskserveri fookus:</b> Testid käivitatakse CI/CD serverites</li>
+            <li><b>Automaatne integratsioon:</b> Kood integreeritakse automaatselt iga commit-iga</li>
+            <li><b>Pidev testitsükkel:</b> Testid käivitatakse pidevalt ja automaatselt</li>
+            <li><b>Skaalautav:</b> Sobib suurtele projektidele ja meeskondadele</li>
+            <li><b>Kõrge usaldusväärsus:</b> Tagab, et kood on alati testitud ja valmis juurutamiseks</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://images.spiceworks.com/wp-content/uploads/2022/09/29095630/How-TDD-Works.png" target="_blank">
+                    TDD tsükli diagramm - Spiceworks
+                </a>
+            </li>
+            <li>
+                <a href="https://junit.org/junit5/" target="_blank">
+                    JUnit 5 - Ametlik dokumentatsioon
+                </a>
+            </li>
+            <li>
+                <a href="https://www.agilealliance.org/glossary/tdd/" target="_blank">
+                    Test-Driven Development - Agile Alliance
+                </a>
+            </li>
+            <li>
+                <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank">
+                    Test-Driven Development - Martin Fowler
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
