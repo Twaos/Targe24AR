@@ -1,72 +1,504 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>V-Shape arendusmudel</title>
-</head>
-<body>
-    <p>
-        <!--pealkiri -->
-        <!--lühike omasõnaline kirjeldus -->
-        <!--etappide täpsem kirjeldus -->
-        <!--visuaalne joonis -->
-        <!--tabel mis loetleb head ja vead() -->
-        <!--kustkohast sain info(linkide kujul) -->
-    </p>
-    <ul>
-    <h1>V-Shape arendusmudel</h1>
-    <p>V-mudel on tarkvaraarenduse elutsükli mudel, kus iga arendusfaasi(nagu nõuete kogumine, disain, arendus) järgneb sellele vastav testimisfaas (nt üksuse testimine, süsteemi testimine). See "V-kuju" illustreerib testimisprotsessi, mis algab arenduse algusest ja lõppeb lõpp produktiga. Mudel soodustab struktureeritud ja järkjärgulist lähenemist, kus iga arendusfaas on tihedalt seotud vastava testimisfaasiga, et tagada kvaliteet ja vastavus nõuetele</p>
-    </ul>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h2>V-Shape mudel</h2>
-    <img src="https://wp.testbytes.net//wp-content/uploads/2019/05/v-model-in-software-testing-1.png"width="300">
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
+    <title>V-Shape (V-model) Arendusmudel</title>
+
     <style>
-        table {font-family:arial, sans-serif;
-                border:1px solid #000000;
-                width:100%
-
+        /* Tume taust gradient - sama kui teistel lehtedel */
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        td, th {
-  border: 1px solid #000000;
-  text-align: left;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
 
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* V-mudeli efektiga kast */
+        .vmodel-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #60a5fa;
+            border-right: 4px solid #f87171;
+            position: relative;
+        }
+
+        /* V-mudeli etapipaaride grid */
+        .phase-pairs {
+            display: flex;
+            flex-direction: column;
+            margin: 20px 0;
+        }
+
+        .phase-pair {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-bottom: 15px;
+            background: rgba(30, 41, 59, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .development-phase {
+            flex: 1;
+            padding: 15px;
+            background: rgba(96, 165, 250, 0.1);
+            border-right: 2px solid rgba(96, 165, 250, 0.3);
+            text-align: center;
+        }
+
+        .testing-phase {
+            flex: 1;
+            padding: 15px;
+            background: rgba(248, 113, 113, 0.1);
+            border-left: 2px solid rgba(248, 113, 113, 0.3);
+            text-align: center;
+        }
+
+        .phase-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            color: #94a3b8;
+            font-weight: bold;
+        }
+
+        /* Mobiili jaoks */
+        @media (max-width: 768px) {
+            .phase-pair {
+                flex-direction: column;
+            }
+            
+            .development-phase {
+                border-right: none;
+                border-bottom: 2px solid rgba(96, 165, 250, 0.3);
+            }
+            
+            .testing-phase {
+                border-left: none;
+                border-top: 2px solid rgba(248, 113, 113, 0.3);
+            }
+            
+            .phase-arrow {
+                padding: 10px 0;
+                transform: rotate(90deg);
+            }
+        }
     </style>
-    <table>
-        <tr>
-            <td><b>V-Shape plussid</b></td>
-            <td><b>V-Shape vead</b></td>
-        </tr>
-        <tr>
-            <td>Struktureeritud ja järjestikune lähenemine aitab tagada kvaliteedi ja kontroll igas arendusetapis</td>
-            <td>vähenenud paindlikkus muudatuste tegemiseks hilisemates etappides</td>
-        </tr>
-        <tr>
-            <td>Selge testimisprotsess, mis aitab vigu kiiresti avastada ja lahendada.</td>
-            <td>Aeglane ja raskesti kohandatav kiirete muutuste nõudvates projektides</td>
-        </tr>
-        <tr>
-            <td>Sobib projektidele, kus nõuded on kindlalt määratletud</td>
-            <td>Tundlik muudatuste ja ebatäpsuste suhtes varases faasis</td>
-        </tr>
+</head>
 
+<body>
+<div class="glass-box">
 
+    <h1>V-Shape (V-model) Arendusmudel</h1>
+    
+    <div class="vmodel-highlight">
+        <p>
+            <b>V-mudel (V-model või V-Shape mudel)</b> on tarkvaraarenduse elutsükli mudel, kus 
+            iga arendusfaasi (nagu nõuete kogumine, disain, arendus) järgneb sellele vastav 
+            testimisfaas (nt üksuse testimine, süsteemi testimine). 
+        </p>
+    </div>
+
+    <h2>V-mudeli faaside paarid (arendus vs testimine)</h2>
+    
+    <div class="phase-pairs">
+        <div class="phase-pair">
+            <div class="development-phase">
+                <h4>Nõuete Analüüs</h4>
+                <p>Nõuete kogumine ja analüüs</p>
+            </div>
+            <div class="phase-arrow">⇨</div>
+            <div class="testing-phase">
+                <h4>Kasutaja Aktsepteerimise Testimine</h4>
+                <p>Testimine kasutajate poolt reaalses keskkonnas</p>
+            </div>
+        </div>
+        
+        <div class="phase-pair">
+            <div class="development-phase">
+                <h4>Süsteemi Disain</h4>
+                <p>Süsteemi arhitektuuri ja komponentide disain</p>
+            </div>
+            <div class="phase-arrow">⇨</div>
+            <div class="testing-phase">
+                <h4>Süsteemi Testimine</h4>
+                <p>Terve süsteemi integreeritud testimine</p>
+            </div>
+        </div>
+        
+        <div class="phase-pair">
+            <div class="development-phase">
+                <h4>Arhitektuurne Disain</h4>
+                <p>Üksikute moodulite ja nende suhete disain</p>
+            </div>
+            <div class="phase-arrow">⇨</div>
+            <div class="testing-phase">
+                <h4>Integratsiooni Testimine</h4>
+                <p>Moodulite ja komponentide vahelise koostöö testimine</p>
+            </div>
+        </div>
+        
+        <div class="phase-pair">
+            <div class="development-phase">
+                <h4>Mooduli Disain</h4>
+                <p>Üksikute moodulite sisemine disain</p>
+            </div>
+            <div class="phase-arrow">⇨</div>
+            <div class="testing-phase">
+                <h4>Üksuse Testimine</h4>
+                <p>Üksikute moodulite ja funktsioonide testimine</p>
+            </div>
+        </div>
+        
+        <div class="phase-pair">
+            <div class="development-phase">
+                <h4>Kodeerimine</h4>
+                <p>Koodi kirjutamine vastavalt disainile</p>
+            </div>
+            <div class="phase-arrow">⇨</div>
+            <div class="testing-phase">
+                <h4>Koodi Ülevaatus</h4>
+                <p>Koodi kvaliteedi ja standardite kontrollimine</p>
+            </div>
+        </div>
+    </div>
+
+    <h2>V-mudeli põhiprintsiibid</h2>
+    
+    <div class="stage-box">
+        <h3>Kõrvalekalde ennetamine</h3>
+        <p>
+            Iga arendusfaasi alguses tehtakse testimisplaanid, mis aitavad ennetada 
+            kõrvalekaldeid nõuetest. Testimine ei ole reaktiivne, vaid proaktiivne protsess.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Varasemate vigade avastamine</h3>
+        <p>
+            Testimine algab juba arenduse varajastes etappides, mis võimaldab vigu 
+            avastada ja parandada võimalikult varakult, kui parandamise maksumus on madalaim.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Kvaliteedi tagamine igas etapis</h3>
+        <p>
+            Iga arendusfaasil on vastav testimisfaas, mis tagab, et kvaliteedikontroll 
+            toimub pidevalt, mitte ainult projekti lõpus.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Selge vastavus nõuetele</h3>
+        <p>
+            Iga testimisfaas valideerib, et süsteem vastab konkreetsele arendusfaasi 
+            nõuetele, tagades nõuete tervenisti täitmise.
+        </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>V-Shape mudeli visuaalne esitus</h2>
+    <img src="https://wp.testbytes.net//wp-content/uploads/2019/05/v-model-in-software-testing-1.png" 
+         alt="V-Shape mudeli diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        V-mudeli V-kuju - iga arendusfaas vastab oma testimisfaasile
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>V-mudeli eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Struktureeritud lähenemine</h4>
+                <p>Järjestikune ja struktureeritud lähenemine aitab tagada kvaliteedi 
+                   ja kontrolli igas arendusetapis, vähendades segadust ja vigu.</p>
+            </td>
+            <td>
+                <h4>Vähenenud paindlikkus</h4>
+                <p>Muudatuste tegemine hilisemates etappides on keeruline ja kallis, 
+                   kuna iga faas sõltub eelmiste faaside lõpetamisest.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Selge testimisprotsess</h4>
+                <p>Igale arendusfaasile vastab selge testimisfaas, mis aitab vigu 
+                   kiiresti avastada ja lahendada enne järgmise faasi alustamist.</p>
+            </td>
+            <td>
+                <h4>Aeglane ja raskesti kohandatav</h4>
+                <p>Ei sobi kiirete muutuste nõudvatele projektidele, kuna struktuur 
+                   ei võimalda kergesti kohaneda uutele nõuetele.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Sobib kindlate nõuetega projektidele</h4>
+                <p>Ideaalne projektidele, kus nõuded on alguses täpselt määratletud 
+                   ja ei muutu projekti jooksul oluliselt.</p>
+            </td>
+            <td>
+                <h4>Tundlik varaste vigade suhtes</h4>
+                <p>Vead varajastes faasides (nt nõuete analüüsis) võivad kanduda 
+                   läbi kogu protsessi ja avastada alles lõpus.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Varasemate vigade avastamine</h4>
+                <p>Testimine algab juba projekti alguses, võimaldades vigu avastada 
+                   ja parandada varakult, kui parandamise maksumus on madal.</p>
+            </td>
+            <td>
+                <h4>Klientide vähene kaasatus</h4>
+                <p>Klientidel on vähe võimalusi näha tulemust enne projekti lõppu, 
+                   mis võib viia ootamatute tulemusteni.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Riskide vähendamine</h4>
+                <p>Süstemaatiline lähenemine ja pidev testimine vähendab projekti 
+                   riske, eriti keerukatel ja kriitilistel süsteemidel.</p>
+            </td>
+            <td>
+                <h4>Suuremad algkulud</h4>
+                <p>Kõrge planeerimise ja testimise tase nõuab rohkem ressursse 
+                   projekti alguses võrreldes iteratiivsete mudelitega.</p>
+            </td>
+        </tr>
     </table>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h3>Link kasutatud allikatele</h3>
-    <ul>
-        <li><a href="https://wp.testbytes.net//wp-content/uploads/2019/05/v-model-in-software-testing-1.png">Joonis</a></li>
-        <li><a href="https://www.javatpoint.com/software-engineering-v-model">V-Shape</a></li>
-    </ul>
 
+    <div class="separator"></div>
 
+    <h2>Millal kasutada V-mudelit?</h2>
+    <div class="stage-box">
+        <h4>Sobivad olukorrad:</h4>
+        <ul>
+            <li><b>Kriitilised süsteemid:</b> Meditsiiniseadmed, lennujuhisüsteemid, pangandussüsteemid</li>
+            <li><b>Kindlad nõuded:</b> Projekdid, kus nõuded on täpselt teada ja ei muutu</li>
+            <li><b>Väiksed ja keskmised projektid:</b> Kus meeskond suudab hästi planeerida</li>
+            <li><b>Kvaliteedinõuded:</b> Kõrget kvaliteeti ja usaldusväärsust nõudvad projektid</li>
+        </ul>
+        
+        <h4>Ebasobivad olukorrad:</h4>
+        <ul>
+            <li><b>Muutuvad nõuded:</b> Projektid, kus nõuded muutuvad pidevalt</li>
+            <li><b>Uued tehnoloogiad:</b> Eksperimentaalsed projektid ebaselgete nõuetega</li>
+            <li><b>Kiired prototüübid:</b> Projekdid, mis nõuavad kiiret tulemuste näitamist</li>
+            <li><b>Suured ja keerukad projektid:</b> Kus on raske kõiki nõudeid alguses täpselt määratleda</li>
+        </ul>
+    </div>
 
+    <div class="separator"></div>
 
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://wp.testbytes.net/wp-content/uploads/2019/05/v-model-in-software-testing-1.png" target="_blank">
+                    V-mudeli diagramm - Testbytes
+                </a>
+            </li>
+            <li>
+                <a href="https://www.javatpoint.com/software-engineering-v-model" target="_blank">
+                    V-mudel - JavaTpoint
+                </a>
+            </li>
+            <li>
+                <a href="https://www.geeksforgeeks.org/software-engineering-v-model/" target="_blank">
+                    Software Engineering | V-model - GeeksforGeeks
+                </a>
+            </li>
+            <li>
+                <a href="https://www.tutorialspoint.com/sdlc/sdlc_v_model.htm" target="_blank">
+                    SDLC - V-model - Tutorialspoint
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="index.html" class="back-link">← Tagasi pealehele</a>
+
+</div>
 </body>
 </html>
