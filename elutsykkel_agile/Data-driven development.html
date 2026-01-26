@@ -3,105 +3,572 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data-Driven Development</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <title>Data-Driven Development (DDD)</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: #0d0d0d;
-            color: #00ffcc;
             margin: 0;
-            padding: 20px;
-            text-align: center;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        h1, h2, h3, h4, h5 {
-            color: #ff00ff;
-        }
-        p {
-            max-width: 800px;
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
             margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h5 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #22d3ee;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
             line-height: 1.6;
+            color: #cbd5e1;
         }
-        img {
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px #00ffcc;
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+
         li {
-            background-color: #1a1a1a;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 5px #00ffcc;
+            margin-bottom: 8px;
         }
+
         a {
-            color: #ff00ff;
+            color: #60a5fa;
+            font-weight: 600;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Data-Driven efektiga kast */
+        .data-driven-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #f0abfc;
+        }
+
+        /* DDD tsükli etapipaaride grid */
+        .dd-cycle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .dd-cycle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .cycle-number {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            background: rgba(240, 171, 252, 0.2);
+            color: #f0abfc;
+            font-weight: 700;
+            border-radius: 50%;
+            line-height: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* Andmeanalüüsi näidised */
+        .analytics-example {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Andmemõõdikute grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .metric-item {
+            background: rgba(30, 41, 59, 0.25);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #86efac;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
     </style>
 </head>
+
 <body>
+<div class="glass-box">
 
-    <h1>Data-Driven Development</h1>
-
-    <div class="content">
-        <h2>Data-Driven Development</h2>
+    <h1>Data-Driven Development (DDD)</h1>
+    
+    <div class="data-driven-highlight">
         <p>
-            Data-Driven Development on tarkvara arendusmeetod, kus otsused tehakse andmete analüüsi põhjal...
+            <b>Data-Driven Development (DDD)</b> on tarkvaraarendusmeetod, kus otsused tehakse 
+            andmete kogumise ja analüüsi põhjal, mitte ainult intuitiivselt või eelarvamustel. 
+            See lähenemine kasutab reaalseid andmeid, et informeerida disainiotsuseid, 
+            prioriteetseerida funktsionaalsusi ja mõõta tarkvara edukust.
         </p>
-
-        <h2>Arendustsüklid ja Meetodid</h2>
-
-        <h3>1. Data-Driven Development (DDD)</h3>
-
-        <h4>1.1 Kirjeldus</h4>
         <p>
-            Data-Driven Development keskendub otsuste tegemisele andmete kogumise ja analüüsi kaudu...
+            Data-Driven Development keskendub pidevale andmekogumisele, analüüsile ja 
+            iteratiivsele täiustamisele, tuginedes kvantitatiivsetele tõenditele mitte 
+            kvalitatiivsetele arvamustele. See meetod on eriti efektiivne kasutajakeskses 
+            disainis ja tootearenduses.
         </p>
+    </div>
 
-        <h4>1.2 Joonis: Data-Driven Development tsükkel</h4>
-        <img src="https://otus.com/wp-content/uploads/2022/08/What-is-data-driven-instruction-1024x576.jpeg">
+    <h2>Data-Driven Development põhiprintsiibid</h2>
+    
+    <div class="stage-box">
+        <h3>Andmetel põhinevad otsused</h3>
+        <p>
+            Kõik olulised arendusotsused tehakse kvantitatiivsete andmete põhjal, mitte 
+            ainult intuitiivselt või eelarvamustel. Andmed kogutakse süstemaatiliselt ja 
+            analüüsitakse enne otsuste tegemist.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Pidev mõõtmine ja analüüs</h3>
+        <p>
+            Süsteemi jõudlust, kasutajakäitumist ja ärinäitajaid mõõdetakse pidevalt. 
+            Andmeid analüüsitakse regulaarselt, et tuvastada mustreid, trende ja 
+            täiustamise võimalusi.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Iteratiivne täiustamine</h3>
+        <p>
+            Põhinedes andmete analüüsil, tehakse väikesed, pidevad muudatused ja 
+            täiustused. Iga muudatus mõõdetakse ja hinnatakse, et näha selle mõju.
+        </p>
+    </div>
 
-        <h4>1.3 Head ja Vead</h4>
-        <h5>Head:</h5>
+    <div class="separator"></div>
+
+    <h2>Data-Driven Development tsükkel</h2>
+    
+    <div class="dd-cycle-grid">
+        <div class="dd-cycle-item">
+            <div class="cycle-number">1</div>
+            <h4>Kogu andmeid</h4>
+            <p>Kogu andmeid kasutajate käitumisest, süsteemi jõudlusest ja 
+               ärinäitajatest. Kasuta tööriistu nagu Google Analytics, Mixpanel jne.</p>
+        </div>
+        
+        <div class="dd-cycle-item">
+            <div class="cycle-number">2</div>
+            <h4>Analüüsi andmeid</h4>
+            <p>Analüüsi kogutud andmeid, et tuvastada mustreid, probleeme ja 
+               täiustamise võimalusi. Otsi seoseid ja põhjuseid.</p>
+        </div>
+        
+        <div class="dd-cycle-item">
+            <div class="cycle-number">3</div>
+            <h4>Tee andmepõhiseid otsuseid</h4>
+            <p>Põhinedes analüüsil, tee otsuseid disaini, funktsionaalsuste 
+               prioriteetide ja täiustuste kohta.</p>
+        </div>
+        
+        <div class="dd-cycle-item">
+            <div class="cycle-number">4</div>
+            <h4>Implementeeri ja mõõda</h4>
+            <p>Implementeeri otsused ja hakka kohe uuesti andmeid koguma, 
+               et mõõta muutuste mõju. Tsükkel algab uuesti.</p>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Data-Driven Development visuaalne esitus</h2>
+    <img src="https://otus.com/wp-content/uploads/2022/08/What-is-data-driven-instruction-1024x576.jpeg" 
+         alt="Data-Driven Development tsükli diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Data-Driven Development tsükkel - andmete kogumine, analüüs, otsuste tegemine ja implementatsioon
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Olulised andmemõõdikud tarkvaraarenduses</h2>
+    
+    <div class="metrics-grid">
+        <div class="metric-item">
+            <div class="metric-value">75%</div>
+            <div class="metric-label">Kasutajate säilitus</div>
+        </div>
+        
+        <div class="metric-item">
+            <div class="metric-value">2.3s</div>
+            <div class="metric-label">Lehe laadimisaeg</div>
+        </div>
+        
+        <div class="metric-item">
+            <div class="metric-value">15%</div>
+            <div class="metric-label">Konversioonimäär</div>
+        </div>
+        
+        <div class="metric-item">
+            <div class="metric-value">0.8%</div>
+            <div class="metric-label">Vigade määr</div>
+        </div>
+        
+        <div class="metric-item">
+            <div class="metric-value">4.7/5</div>
+            <div class="metric-label">Kasutajate rahulolu</div>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Data-Driven Development eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Andmetel põhinevad otsused</h4>
+                <p>Otsused põhinevad objektiivsetel andmetel, mitte subjektiivsetel 
+                   arvamustel, mis suurendab õigeid otsuseid ja vähendab riske.</p>
+            </td>
+            <td>
+                <h4>Andmete kvaliteedi probleemid</h4>
+                <p>Kui andmed on ebakvaliteetsed, puudulikud või kallutatud, võivad 
+                   andmepõhised otsused olla ekslikud või kahjulikud.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Täpsus ja usaldusväärsus</h4>
+                <p>Kvantitatiivsed andmed pakuvad täpsemat ja usaldusväärsemat 
+                   infot kui kvalitatiivsed hinnangud või arvamused.</p>
+            </td>
+            <td>
+                <h4>Algne keerukus</h4>
+                <p>Andmete kogumise, salvestamise ja analüüsi süsteemide 
+                   loomine võib olla keeruline ja kulukas alguses.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Pidev täiustamine</h4>
+                <p>Pidev andmekogumine ja analüüs võimaldab pidevalt täiustada 
+                   tarkvarat, reageerides kasutajate vajadustele ja käitumisele.</p>
+            </td>
+            <td>
+                <h4>Liigne keskendumine mõõdikutele</h4>
+                <p>Võib tekkida kalduvus keskenduda liiga palju mõõdetavatele 
+                   näitajatele, unustades kvalitatiivsed aspektid nagu kasutajakogemus.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Proaktiivne probleemide tuvastamine</h4>
+                <p>Andmeanalüüsi abil saab tuvastada probleeme enne, kui need 
+                   muutuvad kriitilisteks, võimaldades proaktiivset parandamist.</p>
+            </td>
+            <td>
+                <h4>Andmete privaatsus ja turvalisus</h4>
+                <p>Kasutajaandmete kogumine ja töötlemine tekitab privaatsus- ja 
+                   turvalisusküsimusi, mis nõuavad tähelepanu.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Mõõdetav tulemus</h4>
+                <p>Kõik muudatused ja täiustused on mõõdetavad, mis võimaldab 
+                   selgelt hinnata nende mõju ja efektiivsust.</p>
+            </td>
+            <td>
+                <h4>Analüüsi paralysis</h4>
+                <p>Liiga palju andmeid või keeruline analüüs võib viia olukorrani, 
+                   kus otsuste tegemine muutub liiga aeglaseks või raskeks.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>Google Analytics - Data-Driven Development tööriist</h2>
+    <div class="analytics-example">
+        <h3>Näide Google Analyticsi kasutamisest DDD-s</h3>
+        <p>
+            <b>Google Analytics</b> on veebianalüütika tööriist, mis võimaldab koguda 
+            ja analüüsida andmeid kasutajate käitumise kohta veebilehtedel ja rakendustes. 
+            See on üks populaarsemaid tööriistu Data-Driven Development kontekstis.
+        </p>
+        
+        <h4>Kuidas Google Analytics aitab meeskonnatöös Data-Driven Development'is:</h4>
         <ul>
-            <li>Otsuste tegemine andmete põhjal</li>
-            <li>Täpsus ja usaldusväärsus</li>
-            <li>Pidev täiustamine</li>
+            <li><b>Andmete jagamine:</b> Meeskond saab jagada olulisi andmeid ja mõõdikuid 
+                reaalajas, mis parandab koostööd ja arusaamist kasutajate vajadustest.</li>
+            <li><b>Kasutuskäitumise analüüs:</b> Google Analytics pakub andmebaase ja aruandeid, 
+                mis aitavad mõista tarkvara kasutust, populaarseimaid funktsioone ja kasutajate 
+                teekondi.</li>
+            <li><b>A/B testimine:</b> Võimaldab testida erinevaid disainilahendusi ja mõõta 
+                nende mõju kasutajakäitumisele ja konversioonidele.</li>
+            <li><b>Reaalajas andmed:</b> Annab võimaluse jälgida kasutajate käitumist reaalajas, 
+                mis võimaldab kiireid reageerimisi ja parandusi.</li>
+            <li><b>Kohandatud aruanded:</b> Meeskond saab luua kohandatud aruandeid, mis 
+                keskenduvad konkreetsetele ärivajadustele ja eesmärkidele.</li>
         </ul>
-
-        <h5>Vead:</h5>
+        
+        <h4>Google Analytics peamised andmemõõdikud arenduse jaoks:</h4>
+        <div class="metrics-grid">
+            <div class="metric-item">
+                <div class="metric-value">Seansi kestus</div>
+                <div class="metric-label">Kui kaua kasutajad veebilehel veedavad</div>
+            </div>
+            
+            <div class="metric-item">
+                <div class="metric-value">Põgenemismäär</div>
+                <div class="metric-label">Protsent kasutajaid, kes lahkuvad kiiresti</div>
+            </div>
+            
+            <div class="metric-item">
+                <div class="metric-value">Lehe külastused</div>
+                <div class="metric-label">Milliseid lehti kasutajad enim külastavad</div>
+            </div>
+            
+            <div class="metric-item">
+                <div class="metric-value">Konversioonid</div>
+                <div class="metric-label">Eesmärkide täitmise määr</div>
+            </div>
+        </div>
+        
+        <h4>Muud olulised Data-Driven Development tööriistad:</h4>
         <ul>
-            <li>Andmete kvaliteedi probleemid</li>
-            <li>Algne keerukus</li>
-            <li>Liigne keskendumine mõõdikutele</li>
-        </ul>
-
-        <h4>1.4 Näide tööriistast: <strong>Google Analytics</strong></h4>
-        <p>
-            <strong>Google Analytics</strong> on veebianalüütika tööriist, mis võimaldab koguda andmeid kasutajate käitumise kohta...
-        </p>
-
-        <h5>Kuidas see aitab meeskonnatöös:</h5>
-        <ul>
-            <li>Meeskond saab jagada olulisi andmeid ja mõõdikuid...</li>
-            <li>Google Analytics pakub andmebaase ja aruandeid, mis aitavad mõista tarkvara kasutust.</li>
+            <li><b>Mixpanel:</b> Kasutajakäitumise analüüs ja sündmepõhine jälgimine</li>
+            <li><b>Hotjar:</b> Soojuskaardid, salvestused ja kasutajaküsimustikud</li>
+            <li><b>Amplitude:</b> Tooteanalüütika kasutajakäitumise jaoks</li>
+            <li><b>Tableau / Power BI:</b> Andmevisualiseerimine ja -aruanded</li>
+            <li><b>SQL andmebaasid:</b> Andmete struktureeritud salvestamine ja päringud</li>
         </ul>
     </div>
 
-    <h2>Viited</h2>
-    <ul>
-        <li><a href="https://en.wikipedia.org/wiki/Data-driven_development">Wikipedia - Data-driven development</a></li>
-        <li><a href="https://analytics.google.com/analytics/web/">Google Analytics</a></li>
-    </ul>
+    <div class="separator"></div>
 
+    <h2>Data-Driven Development vs Intuition-Driven Development</h2>
+    <div class="stage-box">
+        <h4>Intuition-Driven Development:</h4>
+        <ul>
+            <li><b>Otsused:</b> Põhinevad arvamustel, kogemustel ja eelarvamustel</li>
+            <li><b>Kinnitamine:</b> Subjektiivne, kvalitatiivne</li>
+            <li><b>Risk:</b> Kõrge, sest otsused pole tõendatud</li>
+            <li><b>Skaleeritavus:</b> Piiratud, sõltub üksikute inimeste teadmistest</li>
+            <li><b>Kohanemisvõime:</b> Aeglane, sest muutusi ei mõõdeta süstemaatiliselt</li>
+        </ul>
+        
+        <h4>Data-Driven Development:</h4>
+        <ul>
+            <li><b>Otsused:</b> Põhinevad kvantitatiivsetel andmetel ja analüüsil</li>
+            <li><b>Kinnitamine:</b> Objektiivne, mõõdetav</li>
+            <li><b>Risk:</b> Madalam, sest otsused on andmetega toetatud</li>
+            <li><b>Skaleeritavus:</b> Hea, andmeid saab jagada ja analüüsida meeskonnas</li>
+            <li><b>Kohanemisvõime:</b> Kiire, sest muutuste mõju mõõdetakse kohe</li>
+            <li><b>Pidev täiustamine:</b> Süstemaatiline iteratiivne protsess</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://otus.com/wp-content/uploads/2022/08/What-is-data-driven-instruction-1024x576.jpeg" target="_blank">
+                    Data-Driven Development diagramm - Otus.com
+                </a>
+            </li>
+            <li>
+                <a href="https://en.wikipedia.org/wiki/Data-driven_development" target="_blank">
+                    Data-driven development - Wikipedia
+                </a>
+            </li>
+            <li>
+                <a href="https://analytics.google.com/analytics/web/" target="_blank">
+                    Google Analytics - Ametlik veebisait
+                </a>
+            </li>
+            <li>
+                <a href="https://mixpanel.com/" target="_blank">
+                    Mixpanel - Kasutajakäitumise analüütika
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
-
