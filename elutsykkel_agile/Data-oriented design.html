@@ -3,105 +3,575 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data-Oriented Design</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <title>Data-Oriented Design (DOD)</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: 'Orbitron', sans-serif;
-            background-color: #0d0d0d;
-            color: #00ffcc;
             margin: 0;
-            padding: 20px;
-            text-align: center;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        h1, h2, h3, h4, h5 {
-            color: #ff00ff;
-        }
-        p {
-            max-width: 800px;
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
             margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h5 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #22d3ee;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
             line-height: 1.6;
+            color: #cbd5e1;
         }
-        img {
-            width: 80%;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px #00ffcc;
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
+
         li {
-            background-color: #1a1a1a;
-            padding: 10px;
-            margin: 5px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 5px #00ffcc;
+            margin-bottom: 8px;
         }
+
         a {
-            color: #ff00ff;
+            color: #60a5fa;
+            font-weight: 600;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* DOD efektiga kast */
+        .dod-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #fbbf24;
+        }
+
+        /* DOD põhimõtete grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .principle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .principle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #fbbf24;
+        }
+
+        /* DOD vs OOD võrdlus */
+        .comparison-ood-dod {
+            display: flex;
+            justify-content: space-between;
+            margin: 25px 0;
+            gap: 20px;
+        }
+
+        .ood-box, .dod-box {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .ood-box {
+            background: rgba(96, 165, 250, 0.1);
+            border: 1px solid rgba(96, 165, 250, 0.3);
+        }
+
+        .dod-box {
+            background: rgba(251, 191, 36, 0.1);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        /* Koodibloki stiil */
+        .code-block {
+            background: rgba(15, 23, 42, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .code-keyword {
+            color: #f87171;
+        }
+
+        .code-string {
+            color: #86efac;
+        }
+
+        .code-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-function {
+            color: #60a5fa;
+        }
+
+        /* Mobiili jaoks */
+        @media (max-width: 768px) {
+            .comparison-ood-dod {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
+
 <body>
+<div class="glass-box">
 
-    <h1>Data-Oriented Design</h1>
-
-    <div class="content">
-        <h2>Data-Oriented Design</h2>
+    <h1>Data-Oriented Design (DOD)</h1>
+    
+    <div class="dod-highlight">
         <p>
-            Data-Oriented Design (DOD) on tarkvara arendusmeetod, mis keskendub andmete struktuuri ja töötlemise optimeerimisele...
+            <b>Data-Oriented Design (DOD)</b> on tarkvaraarendusmeetod, mis keskendub andmete 
+            struktuuri ja töötlemise optimeerimisele, et saavutada maksimaalne jõudlus. 
+            Erinevalt Object-Oriented Design (OOD)-st, mis keskendub objektidele ja nende 
+            käitumisele, keskendub DOD andmetele ja nende transformatsioonile.
         </p>
-
-        <h2>Arendustsüklid ja Meetodid</h2>
-
-        <h3>1. Data-Oriented Design (DOD)</h3>
-
-        <h4>1.1 Kirjeldus</h4>
         <p>
-            Data-Oriented Design keskendub sellele, kuidas andmed on salvestatud ja kuidas neid töötletakse, et saavutada optimeeritud jõudlus...
+            Data-Oriented Design keskendub sellele, kuidas andmed on salvestatud, kuidas neid 
+            töödeldakse ja kuidas need liiguvad läbi süsteemi, et saavutada optimeeritud jõudlus, 
+            eriti jõudluskriitilistes süsteemides nagu mängumootorid, teaduslikud simulatsioonid 
+            ja reaalajasüsteemid.
         </p>
+    </div>
 
-        <h4>1.2 Joonis: Data-Oriented Design tsükkel</h4>
-        <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*vtIyJksRNsV0iv7HAhWLnQ.gif">
+    <h2>Data-Oriented Design põhiprintsiibid</h2>
+    
+    <div class="principles-grid">
+        <div class="principle-item">
+            <div class="principle-icon">💾</div>
+            <h4>Andmete paigutus</h4>
+            <p>Andmed paigutatakse mällu nii, et neid saaks töödelda tõhusalt, 
+               kasutades tehnikaid nagu Array of Structs (AoS) vs Struct of Arrays (SoA).</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">⚡</div>
+            <h4>Vahemälu efektiivsus</h4>
+            <p>Optimeeritakse vahemälu kasutust, vähendades vahemäpu puudumisi 
+               ja tagades, et andmed on mälus koos, mida koos vaja.</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">📊</div>
+            <h4>Andmete transformatsioon</h4>
+            <p>Keskendutakse andmete transformatsioonile massina, mitte üksikute 
+               andmetöötlustena, et ära kasutada paralleelseid arvutusvõimalusi.</p>
+        </div>
+    </div>
 
-        <h4>1.3 Head ja Vead</h4>
-        <h5>Head:</h5>
+    <div class="separator"></div>
+
+    <h2>Object-Oriented Design vs Data-Oriented Design</h2>
+    
+    <div class="comparison-ood-dod">
+        <div class="ood-box">
+            <h3>Object-Oriented Design (OOD)</h3>
+            <ul>
+                <li><b>Fookus:</b> Objektid ja nende käitumine</li>
+                <li><b>Andmete paigutus:</b> Hajutatud, objektikeskne</li>
+                <li><b>Töötlemine:</b> Üksikute objektide meetodid</li>
+                <li><b>Mälu:</b> Sageli ebaefektiivne, palju viiteid</li>
+                <li><b>Jõudlus:</b> Tavaliselt aeglasem, rohkem vahemäpu puudumisi</li>
+                <li><b>Sobivus:</b> Ärilogika, kasutajaliidesed</li>
+            </ul>
+        </div>
+        
+        <div class="dod-box">
+            <h3>Data-Oriented Design (DOD)</h3>
+            <ul>
+                <li><b>Fookus:</b> Andmed ja nende transformatsioon</li>
+                <li><b>Andmete paigutus:</b> Tihe, andmekeskne</li>
+                <li><b>Töötlemine:</b> Massiivide transformatsioonid</li>
+                <li><b>Mälu:</b> Optimeeritud, vähe viiteid</li>
+                <li><b>Jõudlus:</b> Kiirem, vähem vahemäpu puudumisi</li>
+                <li><b>Sobivus:</b> Jõudluskriitilised süsteemid, simulatsioonid</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Data-Oriented Design visuaalne esitus</h2>
+    <img src="https://miro.medium.com/v2/resize:fit:720/format:webp/1*vtIyJksRNsV0iv7HAhWLnQ.gif" 
+         alt="Data-Oriented Design tsükli diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Data-Oriented Design tsükkel - andmete paigutus, transformatsioon ja optimeerimine
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Data-Oriented Design eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Jõudlus</h4>
+                <p>Oluliselt parem jõudlus tänu optimeeritud mälukasutusele, 
+                   vähendatud vahemäpu puudumistele ja efektiivsele andmetöötlusele.</p>
+            </td>
+            <td>
+                <h4>Keerukus</h4>
+                <p>Nõuab sügavat arusaamist riistvarast, mälustruktuuridest ja 
+                   kompilaatori optimeerimistest, mis võib olla keeruline.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Skaleeritavus</h4>
+                <p>Paranenud skaleeritavus multi-core protsessoritel, kuna 
+                   andmeid saab töödelda paralleelselt massina.</p>
+            </td>
+            <td>
+                <h4>Üksikandmete töötlemine</h4>
+                <p>Ei sobi hästi üksikute andmete või dünaamiliste andmestruktuuride 
+                   töötlemisele, mis nõuab palju viiteid.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Mälu ja CPU optimeerimine</h4>
+                <p>Optimeeritud mälu kasutus ja CPU kasutamine, vähendades 
+                   mäluliiklust ja parandades vahemäku efektiivsust.</p>
+            </td>
+            <td>
+                <h4>Tehnilise võimekuse nõuded</h4>
+                <p>Nõuab arendajatelt kõrget tehnilist oskustaset riistvara, 
+                   mälu ja kompilaatori töö mõistmises.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Ennustatav jõudlus</h4>
+                <p>Jõudlus on paremini ennustatav ja stabiilne, kuna vähem 
+                   sõltuvusi ja parem mälukontroll.</p>
+            </td>
+            <td>
+                <h4>Halvem abstraktsioon</h4>
+                <p>Vähem abstraktsiooni võimalusi võrreldes OOP-ga, mis 
+                   võib teha koodi raskemini loetavaks ja hooldatavaks.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Energiatõhusus</h4>
+                <p>Parem energiatõhusus tänu optimeeritud mälukasutusele 
+                   ja vähematele vahemäpu puudumistele.</p>
+            </td>
+            <td>
+                <h4>Piiratud kasutusvaldkonnad</h4>
+                <p>Ei sobi kõigile tarkvaratüüpidele, eriti mitte ärirakendustele 
+                   või rakendustele, kus jõudlus pole kriitiline.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>Array of Structs (AoS) vs Struct of Arrays (SoA)</h2>
+    <div class="stage-box">
+        <h4>Array of Structs (AoS) - traditsiooniline OOP lähenemine:</h4>
+        <div class="code-block">
+            <span class="code-keyword">struct</span> <span class="code-function">Player</span> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">float</span> x, y, z;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">float</span> health;<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> score;<br>
+            };<br><br>
+            
+            Player players[1000]; <span class="code-comment">// 1000 Player objekti järjestikku</span>
+        </div>
+        
+        <h4>Struct of Arrays (SoA) - DOD lähenemine:</h4>
+        <div class="code-block">
+            <span class="code-keyword">struct</span> <span class="code-function">Players</span> {<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">float</span> x[1000];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">float</span> y[1000];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">float</span> z[1000];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">float</span> health[1000];<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">int</span> score[1000];<br>
+            };<br><br>
+            
+            Players allPlayers; <span class="code-comment">// Kõik andmed on eraldi massiivides</span>
+        </div>
+        
+        <h4>Miks SoA on DOD-s parem:</h4>
         <ul>
-            <li>Jõudlus</li>
-            <li>Skaleeritavus</li>
-            <li>Mälu ja CPU optimeerimine</li>
-        </ul>
-
-        <h5>Vead:</h5>
-        <ul>
-            <li>Keerukus</li>
-            <li>Üksikandmete töötlemine</li>
-            <li>Tehnilise võimekuse nõuded</li>
-        </ul>
-
-        <h4>1.4 Näide tööriistast: <strong>Intel VTune Profiler</strong></h4>
-        <p>
-            <strong>Intel VTune Profiler</strong> on tööriist, mis võimaldab arendajatel analüüsida ja optimeerida tarkvara jõudlust...
-        </p>
-
-        <h5>Kuidas see aitab meeskonnatöös:</h5>
-        <ul>
-            <li>Meeskonnaliikmed saavad kasutada VTune Profilerit jõudlusprobleemide lahendamiseks...</li>
-            <li>Tööriist pakub ülevaadet andmete töötlemise ja optimeerimise võimalustest.</li>
+            <li><b>Vahemäpu efektiivsus:</b> Kui vaja ainult koordinaate (x, y, z), saab kõik need kätte ilma tervise ja skoori andmeid vahemällu toomata</li>
+            <li><b>Vektoriseerimine:</b> Kompilaator saab lihtsamalt vektoriseerida operatsioone (SIMD)</li>
+            <li><b>Paralleelsus:</b> Lihtsam töödelda paralleelselt eraldi massiive</li>
+            <li><b>Mälu kokkuhoid:</b> Vähem viiteid ja mäluauguprobleeme</li>
         </ul>
     </div>
 
-    <h2>Viited</h2>
-    <ul>
-        <li><a href="https://en.wikipedia.org/wiki/Data-oriented_design">Wikipedia - Data-oriented design</a></li>
-        <li><a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html">Intel VTune Profiler</a></li>
-    </ul>
+    <div class="separator"></div>
 
+    <h2>Intel VTune Profiler - DOD tööriist</h2>
+    <div class="stage-box">
+        <h3>Näide Intel VTune Profileri kasutamisest DOD-s</h3>
+        <p>
+            <b>Intel VTune Profiler</b> on tööriist, mis võimaldab arendajatel analüüsida ja 
+            optimeerida tarkvara jõudlust. See on eriti kasulik Data-Oriented Design kontekstis, 
+            kus jõudlus ja mälukasutus on kriitilised.
+        </p>
+        
+        <h4>Kuidas Intel VTune Profiler aitab meeskonnatöös Data-Oriented Design'is:</h4>
+        <ul>
+            <li><b>Jõudlusprobleemide lahendamine:</b> Meeskonnaliikmed saavad kasutada VTune Profilerit 
+                jõudlusprobleemide lahendamiseks, identifitseerides vahemäpu puudumisi, 
+                mäluaugud ja CPU kasutuse probleemid.</li>
+            <li><b>Andmetöötluse analüüs:</b> Tööriist pakub ülevaadet andmete töötlemise ja 
+                optimeerimise võimalustest, näidates, kuidas andmed liiguvad läbi süsteemi.</li>
+            <li><b>Mälukasutuse analüüs:</b> Võimaldab analüüsida mälukasutust, tuvastada 
+                mäluaugud ja optimeerida andmete paigutust.</li>
+            <li><b>Soojuskaardid:</b> Näitab, millised koodiosad on kõige rohkem CPU-d kasutavad, 
+                mis aitab identifitseerida optimeerimise võimalusi.</li>
+            <li><b>Paralleelsuse analüüs:</b> Analüüsib paralleelse koodi efektiivsust ja 
+                identifitseerib võimalusi paremaks skaleerimiseks.</li>
+        </ul>
+        
+        <h4>Intel VTune Profileri peamised funktsioonid DOD jaoks:</h4>
+        <ul>
+            <li><b>Microarchitecture Exploration:</b> Analüüsib CPU kasutust ja identifitseerib jõudluse takistusi</li>
+            <li><b>Memory Access Analysis:</b> Analüüsib mälukasutust ja vahemäpu efektiivsust</li>
+            <li><b>Threading Analysis:</b> Analüüsib paralleelse koodi efektiivsust</li>
+            <li><b>Platform Profiling:</b> Analüüsib süsteemi tasemel jõudlust (CPU, GPU, mälu)</li>
+            <li><b>GPU Offload Analysis:</b> Analüüsib GPU kasutust ja andmeedastust</li>
+        </ul>
+        
+        <h4>Muud olulised Data-Oriented Design tööriistad:</h4>
+        <ul>
+            <li><b>perf (Linux):</b> Süsteemi tasemel jõudluse analüüsitööriist</li>
+            <li><b>Valgrind:</b> Mälu ja vahemäpu analüüsi tööriist</li>
+            <li><b>AMD μProf (endine CodeXL):</b> AMD protsessorite jõudluse analüüs</li>
+            <li><b>NVIDIA Nsight:</b> GPU jõudluse analüüs ja debugimine</li>
+            <li><b>Unity Profiler / Unreal Profiler:</b> Mängumootorite spetsiifilised profilerid</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Millal kasutada Data-Oriented Designi?</h2>
+    <div class="stage-box">
+        <h4>Sobivad olukorrad:</h4>
+        <ul>
+            <li><b>Mängumootorid:</b> Jõudluskriitilised graafika- ja füüsika süsteemid</li>
+            <li><b>Teaduslikud simulatsioonid:</b> Suured andmekogumid ja arvutused</li>
+            <li><b>Reaalajasüsteemid:</b> Finantstehingud, telekommunikatsioon</li>
+            <li><b>Andmetöötlusrakendused:</b> Suured andmebaasid, analüütika</li>
+            <li><b>Süsteemiprogrammeerimine:</b> OS tuumad, draiverid, sulamikroprotsessorid</li>
+        </ul>
+        
+        <h4>Ebasobivad olukorrad:</h4>
+        <ul>
+            <li><b>Ärirakendused:</b> Kus jõudlus pole kriitiline</li>
+            <li><b>Kiired prototüübid:</b> Kus kiire arendus on olulisem kui jõudlus</li>
+            <li><b>Väikesed projektid:</b> Kus jõudlusoptimiseeringud on ülemäärased</li>
+            <li><b>Dünaamilised süsteemid:</b> Kus andmestruktuurid muutuvad pidevalt</li>
+            <li><b>Meeskonnad ilma riistvara ekspertidega:</b> Kus puudub vajalik tehniline oskus</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://miro.medium.com/v2/resize:fit:720/format:webp/1*vtIyJksRNsV0iv7HAhWLnQ.gif" target="_blank">
+                    Data-Oriented Design diagramm - Medium
+                </a>
+            </li>
+            <li>
+                <a href="https://en.wikipedia.org/wiki/Data-oriented_design" target="_blank">
+                    Data-oriented design - Wikipedia
+                </a>
+            </li>
+            <li>
+                <a href="https://www.intel.com/content/www/us/en/developer/tools/oneapi/vtune-profiler.html" target="_blank">
+                    Intel VTune Profiler - Ametlik dokumentatsioon
+                </a>
+            </li>
+            <li>
+                <a href="https://www.dataorienteddesign.com/dodbook/" target="_blank">
+                    Data-Oriented Design raamat
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
-
