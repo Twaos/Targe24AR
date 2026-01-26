@@ -1,72 +1,458 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevOps arendusmudel</title>
-</head>
-<body>
-    <p>
-        <!--pealkiri -->
-        <!--lühike omasõnaline kirjeldus -->
-        <!--etappide täpsem kirjeldus -->
-        <!--visuaalne joonis -->
-        <!--tabel mis loetleb head ja vead() -->
-        <!--kustkohast sain info(linkide kujul) -->
-    </p>
-    <ul>
-    <h1>DevOps arendusmudel</h1>
-    <p>DevOps on arendus- ja IT- operatsioonide integratsioonimeetod, mille eesmärk on sujuvam ja kiire tootearendus. See ühendab arenduse (Development) ja haldustoimingud (Operations), et parandada meeskondade koostööd, kiirendada tarkvara väljalaskeid ja automatiseerida juurutusprotsesse. devOps hõlmab pidevat integreerimist, testimist ja juurutamist, et tagada kvaliteet ja võimaldab kiireid muudatusi vastavalt vajadusele.</p>
-    </ul>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h2>DevOps mudel</h2>
-    <img src="https://shalb.com/wp-content/uploads/2019/11/Devops1.jpeg"width="300">
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
+    <title>DevOps Arendusmudel</title>
+
     <style>
-        table {font-family:arial, sans-serif;
-                border:1px solid #000000;
-                width:100%
-
+        /* Tume taust gradient - sama kui teistel lehtedel */
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        td, th {
-  border: 1px solid #000000;
-  text-align: left;
-  padding: 8px;
-}
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
 
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* DevOps efektiga kast */
+        .devops-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #86efac;
+            border-right: 4px solid #fca5a5;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .devops-highlight::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(134, 239, 172, 0.05) 0%, 
+                rgba(252, 165, 165, 0.05) 100%);
+            z-index: 0;
+        }
+
+        .devops-highlight > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* DevOps praktikate grid */
+        .practices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .practice-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .practice-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #60a5fa;
+        }
     </style>
-    <table>
-        <tr>
-            <td><b>DevOps plussid</b></td>
-            <td><b>DevOps vead</b></td>
-        </tr>
-        <tr>
-            <td>Kiirem tarkvara tarnimine pideva integreerimise ja juurutamise kaudu</td>
-            <td>Nõuab märkimisväärseid investeeringuid automatiseerimise ja pilveinfrastruktuuri osas </td>
-        </tr>
-        <tr>
-            <td>Paranenud meeskonnatöö ja koostöö arendus- ja IT-operatsioonide vahel.</td>
-            <td>Tiimiliikmetelt on vaja nii arenduse kui ka IT-operatsioonide oskusi, mis võib nõuda koolitusi.</td>
-        </tr>
-        <tr>
-            <td>Väiksemate vigade võimalus tänu automatiseeritud testimisele ja monitooringule.</td>
-            <td>Halvasti rakendatune võib põhjustada ebajärjekindlalt töövoogu ja ülekoormust.</td>
-        </tr>
+</head>
 
+<body>
+<div class="glass-box">
 
+    <h1>DevOps Arendusmudel</h1>
+    
+    <div class="devops-highlight">
+        <p>
+            <b>DevOps</b> on arendus- ja IT-operatsioonide integratsioonimeetod, mille eesmärk on 
+            tagada sujuvam ja kiirem tootearendus. See ühendab arenduse (<b>Development</b>) ja 
+            haldustoimingud (<b>Operations</b>), et parandada meeskondade koostööd, kiirendada 
+            tarkvara väljalaskeid ja automatiseerida juurutusprotsesse.
+        </p>
+        <p>
+            DevOps hõlmab <b>pidevat integreerimist, testimist ja juurutamist</b>, et tagada kvaliteet 
+            ja võimaldada kiireid muudatusi vastavalt vajadusele. See kultuur, filosoofia ja 
+            praktikate kogum põhineb võtmetehnikatel, mis automatiseerivad tarkvaraarenduse 
+            ja infrastruktuuri protsesse.
+        </p>
+    </div>
+
+    <h2>DevOps'i põhipõhimõtted</h2>
+    
+    <div class="stage-box">
+        <h3>Pidev integratsioon ja pidev juurutamine (CI/CD)</h3>
+        <p>
+            Koodi muudatused automaatselt testitakse ja juurutatakse tootmiskeskkonda, 
+            võimaldades kiiremaid ja usaldusväärsemaid uuendusi. See vähendab manuaalsete 
+            protsesside vajadust ja suurendab tarnimise sagedust.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Automatiseerimine</h3>
+        <p>
+            Kõik võimalikud protsessid automatiseeritakse - testimine, juurutamine, 
+            infrastruktuuri ettevalmistamine, jälgimine. See vähendab inimveid, 
+            suurendab efektiivsust ja võimaldab meeskonnal keskenduda innovatsioonile.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Mõõtmine ja jälgimine</h3>
+        <p>
+            Süsteemide jõudlust, vigade sagedust ja kasutajate käitumist pidevalt mõõdetakse 
+            ja analüüsitakse. See võimaldab proaktiivselt tuvastada probleeme ja optimeerida 
+            süsteemi jõudlust.
+        </p>
+    </div>
+    
+    <div class="stage-box">
+        <h3>Meeskonnatöö ja koostöökultuur</h3>
+        <p>
+            Arendajad ja operatsioonide spetsialistid töötavad koos ühiselt eesmärgist 
+            lähtuvalt, jagades vastutust ja teadmisi. See lõhub traditsioonilised 
+            siloteid ja parandab suhtlust.
+        </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>DevOps'i praktikad ja tööriistad</h2>
+    
+    <div class="practices-grid">
+        <div class="practice-item">
+            <div class="practice-icon">🔄</div>
+            <h4>Pidev Integratsioon</h4>
+            <p>Git, Jenkins, GitLab CI, Travis CI</p>
+        </div>
+        
+        <div class="practice-item">
+            <div class="practice-icon">🚀</div>
+            <h4>Pidev Juurutamine</h4>
+            <p>Docker, Kubernetes, Ansible, Terraform</p>
+        </div>
+        
+        <div class="practice-item">
+            <div class="practice-icon">🧪</div>
+            <h4>Automaattestimine</h4>
+            <p>Selenium, JUnit, pytest, Postman</p>
+        </div>
+        
+        <div class="practice-item">
+            <div class="practice-icon">📊</div>
+            <h4>Jälgimine ja Logimine</h4>
+            <p>Prometheus, Grafana, ELK Stack, Splunk</p>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>DevOps'i visuaalne esitus</h2>
+    <img src="https://shalb.com/wp-content/uploads/2019/11/Devops1.jpeg" 
+         alt="DevOps mudeli diagramm" 
+         class="model-image">
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        DevOps lõputu tsükkel - arendus, testimine, juurutamine, jälgimine ja tagasiside
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>DevOps'i eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kiirem tarkvara tarnimine</h4>
+                <p>Pideva integreerimise ja juurutamise kaudu saab uusi funktsionaalsusi 
+                   klientideni kiiremini, mis annab konkurentsieelise.</p>
+            </td>
+            <td>
+                <h4>Märkimisväärsed investeeringud</h4>
+                <p>Nõuab olulisi investeeringuid automatiseerimise, pilveinfrastruktuuri 
+                   ja tööriistade osas, mis võib olla kallis väikestele ettevõtetele.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Paranenud meeskonnatöö ja koostöö</h4>
+                <p>Arendus- ja IT-operatsioonide meeskonnad töötavad koos, vähendades 
+                   konflikte ja parandades suhtlust ning vastutustunnet.</p>
+            </td>
+            <td>
+                <h4>Koolituse vajadus</h4>
+                <p>Tiimiliikmetelt on vaja nii arenduse kui ka IT-operatsioonide oskusi, 
+                   mis võib nõuda pikki ja kulukaid koolitusi.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Väiksemate vigade võimalus</h4>
+                <p>Tänu automatiseeritud testimisele ja pidevale monitooringule tuvastatakse 
+                   vead varakult ja need parandatakse kiiremini.</p>
+            </td>
+            <td>
+                <h4>Halvasti rakendatuna põhjustab probleeme</h4>
+                <p>Kui DevOps ei rakendata õigesti, võib see põhjustada ebajärjekindlat 
+                   töövoogu, ülekoormust ja segadust meeskonnas.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Suurenenud usaldusväärsus ja stabiilsus</h4>
+                <p>Automatiseeritud testimine, juurutamine ja taastamisprotsessid tagavad 
+                   süsteemi stabiilsuse ja kiire taastumise rikete korral.</p>
+            </td>
+            <td>
+                <h4>Turvalisuse väljakutsed</h4>
+                <p>Kiired muudatused ja automatiseerimine võivad suurendada turvariske, 
+                   kui turvameetmeid ei integreerita DevOps protsessi.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Parema kvaliteedi tagamine</h4>
+                <p>Pidev testimine ja tagasiside võimaldavad tuvastada kvaliteediprobleeme 
+                   varakult ja parandada neid enne tootmisse jõudmist.</p>
+            </td>
+            <td>
+                <h4>Kultuurilised takistused</h4>
+                <p>Traditsioonilised organisatsioonid võivad pidada kinni vanadest 
+                   struktuuridest, mis takistab DevOps'i edukat rakendamist.</p>
+            </td>
+        </tr>
     </table>
-    -----------------------------------------------------------------------------------------------------------------------------------------------------
-    <h3>Link kasutatud allikatele</h3>
-    <ul>
-        <li><a href="https://shalb.com/wp-content/uploads/2019/11/Devops1.jpeg">Joonis</a></li>
-        <li><a href="https://www.atlassian.com/devops">DevOps</a></li>
-    </ul>
 
+    <div class="separator"></div>
 
+    <h2>DevOps vs Traditsiooniline IT</h2>
+    <div class="stage-box">
+        <h4>Traditsiooniline IT:</h4>
+        <ul>
+            <li><b>Eraldatud meeskonnad:</b> Arendus ja operatsioonid töötavad eraldi</li>
+            <li><b>Manuaalsed protsessid:</b> Palju käsitsi tehtavat tööd</li>
+            <li><b>Pikkad tsüklid:</b> Väljalaske tsüklid nädalaid või kuuid</li>
+            <li><b>Reageerimine probleemidele:</b> Probleemidele reageeritakse pärast nende tekkimist</li>
+        </ul>
+        
+        <h4>DevOps:</h4>
+        <ul>
+            <li><b>Integreeritud meeskonnad:</b> Ühine vastutus ja koostöö</li>
+            <li><b>Automatiseerimine:</b> Võimalikult palju protsesse automatiseeritud</li>
+            <li><b>Kiired iteratsioonid:</b> Väljalaske tsüklid tunde või päevi</li>
+            <li><b>Proaktiivne lähenemine:</b> Probleemide ennetamine ja pidev parandamine</li>
+        </ul>
+    </div>
 
+    <div class="separator"></div>
 
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://shalb.com/wp-content/uploads/2019/11/Devops1.jpeg" target="_blank">
+                    DevOps mudeli diagramm - shalb.com
+                </a>
+            </li>
+            <li>
+                <a href="https://www.atlassian.com/devops" target="_blank">
+                    DevOps - Atlassian
+                </a>
+            </li>
+            <li>
+                <a href="https://aws.amazon.com/devops/what-is-devops/" target="_blank">
+                    Mis on DevOps? - AWS
+                </a>
+            </li>
+            <li>
+                <a href="https://www.redhat.com/en/topics/devops" target="_blank">
+                    DevOps teemad - Red Hat
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="index.html" class="back-link">← Tagasi pealehele</a>
+
+</div>
 </body>
 </html>
