@@ -1,78 +1,384 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agiilsed programmeerimisstiilid</title>
+    <title>Agiilsed Programmeerimisstiilid</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+        }
+
+        h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
             text-align: center;
         }
-        h1 {
-            color: #6a1b9a;
-            font-size: 2.5em;
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            text-align: center;
         }
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
         }
-        th, td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #6a1b9a;
-            color: white;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:hover {
-            background-color: #e1bee7;
-        }
+
         a {
+            color: #60a5fa;
+            font-weight: 600;
             text-decoration: none;
-            color: #6a1b9a;
-            font-weight: bold;
         }
+
         a:hover {
             text-decoration: underline;
-            color: #4a148c;
+            color: #93c5fd;
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+            text-decoration: none;
+        }
+
+        /* Tabeli stiil */
+        .styles-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 1rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .styles-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: left;
+            padding: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .styles-table td {
+            padding: 18px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: middle;
+        }
+
+        .styles-table tr {
+            background-color: rgba(30, 41, 59, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .styles-table tr:hover {
+            background-color: rgba(30, 41, 59, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .styles-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.35);
+        }
+
+        .styles-table tr:nth-child(even):hover {
+            background-color: rgba(30, 41, 59, 0.55);
+        }
+
+        /* Numbrivälja stiil */
+        .number-cell {
+            width: 50px;
+            text-align: center;
+            font-weight: 700;
+            color: #67e8f9;
+            background: rgba(103, 232, 249, 0.1);
+        }
+
+        /* Stiilide kategooriate grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .category-card {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #60a5fa;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            background: rgba(30, 41, 59, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-title {
+            color: #7dd3fc;
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        /* Agiilne efektiga kast */
+        .agile-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 1px solid rgba(147, 197, 253, 0.2);
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Mobiili optimiseerimine */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            
+            .glass-box {
+                padding: 20px;
+            }
+            
+            .styles-table {
+                font-size: 0.95rem;
+            }
+            
+            .styles-table td, .styles-table th {
+                padding: 12px 15px;
+            }
+            
+            .number-cell {
+                width: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .styles-table {
+                display: block;
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
+
 <body>
-    <h1>Agiilsed programmeerimisstiilid</h1>
-    <table>
+<div class="glass-box">
+
+    <h1>Agiilsed Programmeerimisstiilid</h1>
+    
+    <div class="agile-highlight">
+        <p>
+            Agiilsed programmeerimisstiilid on arendusmetoodikad ja lähenemisviisid, mis toetavad 
+            Agile'i põhimõtteid – paindlikkust, iteratiivset arendust, tihedat koostööd ja pidevat 
+            täiustamist. Need stiilid aitavad luua kvaliteetset tarkvara, mis vastab kasutajate 
+            vajadustele ja muutuvatele nõuetele.
+        </p>
+        <p>
+            Igal stiilil on oma fookus ja eesmärgid – mõni keskendub testimisele, teine disainile, 
+            kolmas andmetele või turvalisusele. Valik õiget stiili sõltub projekti tüübist, 
+            meeskonna oskustest ja ärivajadustest.
+        </p>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Programmeerimisstiilide kategooriad</h2>
+    
+    <div class="categories-grid">
+        <div class="category-card">
+            <h3 class="category-title">📋 Testimispõhised stiilid</h3>
+            <ul>
+                <li>Test-driven development (TDD)</li>
+                <li>Acceptance test-driven development (ATDD)</li>
+                <li>Behavior-driven development (BDD)</li>
+                <li>Continuous test-driven development</li>
+            </ul>
+        </div>
+        
+        <div class="category-card">
+            <h3 class="category-title">🎨 Disainipõhised stiilid</h3>
+            <ul>
+                <li>Design-driven development</li>
+                <li>Domain-driven design (DDD)</li>
+                <li>Data-oriented design</li>
+            </ul>
+        </div>
+        
+        <div class="category-card">
+            <h3 class="category-title">🔒 Turvalisuspõhised stiilid</h3>
+            <ul>
+                <li>Secure by design</li>
+                <li>Security-driven development</li>
+            </ul>
+        </div>
+        
+        <div class="category-card">
+            <h3 class="category-title">📊 Andmepõhised stiilid</h3>
+            <ul>
+                <li>Data-driven development</li>
+                <li>Specification by example</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Agiilsete programmeerimisstiilide loend</h2>
+    
+    <table class="styles-table">
         <thead>
             <tr>
-                <th>#</th>
+                <th class="number-cell">#</th>
                 <th>Stiil</th>
+                <th>Lühikirjeldus</th>
             </tr>
         </thead>
         <tbody>
-            <tr><td>1</td><td><a href="Behavior-driven development.html">Behavior-driven development</a></td></tr>
-            <tr><td>2</td><td><a href="Design-driven development.html">Design-driven development</a></td></tr>
-            <tr><td>3</td><td><a href="Domain-driven design.html">Domain-driven design</a></td></tr>
-            <tr><td>4</td><td><a href="Secure by design.html">Secure by design</a></td></tr>
-            <tr><td>5</td><td><a href="Test-driven development.html">Test-driven development</a></td></tr>
-            <tr><td>6</td><td><a href="Acceptance test-driven development.html">Acceptance test-driven development</a></td></tr>
-            <tr><td>7</td><td><a href="Continuous test-driven development.html">Continuous test-driven development</a></td></tr>
-            <tr><td>8</td><td><a href="Specification by example.html">Specification by example</a></td></tr>
-            <tr><td>9</td><td><a href="Data-driven development.html">Data-driven development</a></td></tr>
-            <tr><td>10</td><td><a href="Data-oriented design.html">Data-oriented design</a></td></tr>
+            <tr>
+                <td class="number-cell">1</td>
+                <td><a href="Behavior-driven%20development.html">Behavior-driven development (BDD)</a></td>
+                <td>Keskendub süsteemi käitumisele ärimehe perspektiivist, kasutades loomulikku keelt</td>
+            </tr>
+            <tr>
+                <td class="number-cell">2</td>
+                <td><a href="Design-driven%20development.html">Design-driven development</a></td>
+                <td>Rõhutab kasutajakeskset disaini ja kasutajakogemust juba arenduse alguses</td>
+            </tr>
+            <tr>
+                <td class="number-cell">3</td>
+                <td><a href="Domain-driven%20design.html">Domain-driven design (DDD)</a></td>
+                <td>Keskendub ärivaldkonna (domain) mudelile ja selle keerukusele</td>
+            </tr>
+            <tr>
+                <td class="number-cell">4</td>
+                <td><a href="Secure%20by%20design.html">Secure by design</a></td>
+                <td>Integreerib turvalisuse põhiliste disainiotsustena juba algusest peale</td>
+            </tr>
+            <tr>
+                <td class="number-cell">5</td>
+                <td><a href="Test-driven%20development.html">Test-driven development (TDD)</a></td>
+                <td>Kirjutab testid enne koodi, tagades kvaliteedi ja väikeste sammudega arenduse</td>
+            </tr>
+            <tr>
+                <td class="number-cell">6</td>
+                <td><a href="Acceptance%20test-driven%20development.html">Acceptance test-driven development (ATDD)</a></td>
+                <td>Kirjutab aktsepteerimistestid enne arendust, kaasates ärimehi</td>
+            </tr>
+            <tr>
+                <td class="number-cell">7</td>
+                <td><a href="Continuous%20test-driven%20development.html">Continuous test-driven development</a></td>
+                <td>Kombineerib TDD pideva integratsiooni ja juurutamisega</td>
+            </tr>
+            <tr>
+                <td class="number-cell">8</td>
+                <td><a href="Specification%20by%20example.html">Specification by example</a></td>
+                <td>Kasutab konkreetseid näiteid nõuete selgitamiseks ja testide alusena</td>
+            </tr>
+            <tr>
+                <td class="number-cell">9</td>
+                <td><a href="Data-driven%20development.html">Data-driven development</a></td>
+                <td>Põhineb andmetel ja analüüsil otsuste tegemisel arenduse käigus</td>
+            </tr>
+            <tr>
+                <td class="number-cell">10</td>
+                <td><a href="Data-oriented%20design.html">Data-oriented design</a></td>
+                <td>Optimeerib disaini andmete paigutuse ja töötluse jaoks, eriti jõudluskriitilistes süsteemides</td>
+            </tr>
         </tbody>
     </table>
+
+    <div class="separator"></div>
+
+    <h2>Agiilsete stiilide valimise juhised</h2>
+    <div class="agile-highlight">
+        <h3>Kuidas valida õiget stiili?</h3>
+        
+        <h4>Vali Test-driven development (TDD) kui:</h4>
+        <ul>
+            <li>Soovid kõrget koodikvaliteeti ja väheseid vigu</li>
+            <li>Projekt on tehniliselt keeruline või kriitiline</li>
+            <li>Meeskond on kogenud ja oskab kirjutada häid teste</li>
+        </ul>
+        
+        <h4>Vali Behavior-driven development (BDD) kui:</h4>
+        <ul>
+            <li>Vajad tihedat koostööd ärimeestega</li>
+            <li>Nõuded on keerulised ja vajavad selget arusaama</li>
+            <li>Soovid, et kõik osapooled mõistaksid, mida süsteem tegema peab</li>
+        </ul>
+        
+        <h4>Vali Domain-driven design (DDD) kui:</h4>
+        <ul>
+            <li>Ärivaldkond on keeruline ja nõuab sügavat mõistmist</li>
+            <li>Projekt on suur ja pikaajaline</li>
+            <li>Vajad selget arhitektuuri ja piiranguid</li>
+        </ul>
+        
+        <h4>Vali Secure by design kui:</h4>
+        <ul>
+            <li>Töötad tundlike andmetega või kriitiliste süsteemidega</li>
+            <li>Turvalisus on oluline ärinõue</li>
+            <li>Soovid vältida turvavigasid juba disaini faasis</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <a href="index.html" class="back-link">← Tagasi pealehele</a>
+
+</div>
 </body>
 </html>
