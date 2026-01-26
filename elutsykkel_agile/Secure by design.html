@@ -4,97 +4,555 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure by Design</title>
+
     <style>
+        /* Tume taust gradient - sama kui teistel lehtedel */
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 20px;
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        h1, h2, h3 {
-            color: #2c3e50;
+
+        /* Tume klaasi efekt - sama kui teistel lehtedel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
         }
+
         h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
             text-align: center;
         }
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
         }
-        ul {
-            list-style-type: disc;
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h5 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #22d3ee;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
             margin-left: 20px;
+            padding-left: 0;
         }
-        pre {
-            background-color: #e6e6e6;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            white-space: pre-wrap;
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Turvakastid */
+        .security-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* Secure by Design efektiga kast */
+        .sbd-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #f87171;
+        }
+
+        /* Põhimõtete grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .principle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .principle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #f87171;
+        }
+
+        /* OWASP ZAP teema */
+        .zap-feature {
+            background: rgba(245, 158, 11, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #f59e0b;
+        }
+
+        /* Ohukategooriad */
+        .threat-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .threat-item {
+            background: rgba(220, 38, 38, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            text-align: center;
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Kerge hover efekti kastidele */
+        .security-box:hover, .sbd-highlight:hover, .zap-feature:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Turvaprinsiipide markerid */
+        .security-principle {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
         }
     </style>
 </head>
+
 <body>
+<div class="glass-box">
 
     <h1>Secure by Design</h1>
-
-    <div class="content">
-        <h2>Secure by Design</h2>
+    
+    <div class="sbd-highlight">
         <p>
-            Secure by Design on tarkvara arenduse lähenemine, mille eesmärk on tagada turvalisus alates tarkvara arendamise esimestest
-            sammudest. Selle mõtteviisi järgi ei saa turvalisust lihtsalt lisada tarkvarale arenduse lõpus, vaid see peab olema integreeritud
-            igasse arendusprotsessi faasi. Secure by Design hõlmab turvalisuse arvestamist juba algusest peale, et vältida
-            turvahaavatavusi ja tagada, et lõppkasutajad saavad usaldusväärse ja kaitstud süsteemi.
+            <b>Secure by Design</b> on tarkvaraarenduse lähenemine, mille eesmärk on tagada turvalisus 
+            alates tarkvara arendamise esimestest sammudest. Selle mõtteviisi järgi ei saa turvalisust 
+            lihtsalt lisada tarkvarale arenduse lõpus, vaid see peab olema integreeritud igasse arendusprotsessi faasi.
         </p>
-
-        <h2>Arendustsüklid ja Meetodid</h2>
-
-        <h3>1. Secure by Design</h3>
-
-        <h4>1.1 Kirjeldus</h4>
         <p>
-            Secure by Design on mõtteviis, mille kohaselt turvalisus peab olema arenduse igas etapis, mitte ainult lõpptootes. Arendajad
-            loovad tarkvara, mille arhitektuur, disain ja funktsioonid on turvalised alates esimesest päevast. See lähenemine keskendub
-            ennetavale turvameetmete rakendamisele, et vältida turvavigade ilmumist hiljem. Selles lähenemises arvestatakse kõiki
-            potentsiaalseid ohte ja haavatavusi ning arendatakse lahendusi, et neid ennetada juba tarkvara algstaadiumides.
+            Secure by Design hõlmab turvalisuse arvestamist juba algusest peale, et vältida turvahaavatavusi 
+            ja tagada, et lõppkasutajad saavad usaldusväärse ja kaitstud süsteemi. See on proaktiivne lähenemine, 
+            mis keskendub turvaprobleemide ennetamisele, mitte reageerimisele.
         </p>
+    </div>
 
-        <h4>1.2 Joonis: Secure by Design tsükkel</h4>
-       <img src="https://cetome.com/images/security-by-design.png">
+    <h2>Secure by Design põhiprintsiibid</h2>
+    
+    <div class="principles-grid">
+        <div class="principle-item">
+            <div class="principle-icon">🛡️</div>
+            <h4>Proaktiivne turvalisus</h4>
+            <p>Turvameetmed rakendatakse juba disaini ja arenduse algfaasis, mitte reageeritakse probleemidele pärast nende ilmnemist.</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">🔒</div>
+            <h4>Kõigi kihtide turvalisus</h4>
+            <p>Turvalisus integreeritakse kõigisse süsteemi kihtidesse - infrastruktuur, andmed, rakendus ja kasutajaliides.</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">📐</div>
+            <h4>Minimaalne privileeg</h4>
+            <p>Süsteemi komponendid ja kasutajad saavad ainult minimaalsed õigused, mis on vajalikud nende ülesannete täitmiseks.</p>
+        </div>
+    </div>
 
-        <h4>1.3 Head ja Vead</h4>
-        <h5>Head:</h5>
+    <h2>Secure by Design tsükkel</h2>
+    
+    <img src="https://cetome.com/images/security-by-design.png" 
+         alt="Secure by Design tsükkel" 
+         class="model-image">
+    
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Secure by Design tsükkel - turvanõuete määratlemine, disain, implementatsioon, testimine ja hooldus
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>Secure by Design eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Proaktiivne turvalisus</h4>
+                <p>Secure by Design tagab, et turvaprobleemide ilmnemine on vähenenud, kuna turvalisus on 
+                   arendatud algusest peale. See aitab vältida kulukaid turvaparandusi hiljem arendusprotsessis.</p>
+            </td>
+            <td>
+                <h4>Aeganõudev</h4>
+                <p>Turvalisuse integreerimine igasse arendusfaasi võib muuta arendusprotsessi pikemaks ja keerukamaks. 
+                   Algfaasis kulub rohkem aega turvaanalüüsile ja disainile.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Vähendatud haavatavused</h4>
+                <p>Kuna turvalisus on integreeritud kogu arendusprotsessi, on tarkvara vähem vastuvõtlik 
+                   rünnakutele. Turvahaavatavused tuvastatakse ja lahendatakse varem.</p>
+            </td>
+            <td>
+                <h4>Vajadus spetsialiseeritud teadlikkusele</h4>
+                <p>Arendajad ja meeskonnaliikmed peavad olema teadlikud ja koolitatud turvalisuse praktikatest, 
+                   et neid tõhusalt rakendada. See nõuab pidevat koolitust ja uuendamist.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Üldine usaldusväärsus</h4>
+                <p>Lõpptootes on suurem usaldusväärsus ja kaitse, kuna süsteem on üles ehitatud turvalisuse 
+                   põhjalikult arvestades. Kasutajate usaldus süsteemi vastu on suurem.</p>
+            </td>
+            <td>
+                <h4>Kulud</h4>
+                <p>Secure by Design võib algselt olla kulukam, kuna turvalisuse sisseviimine nõuab rohkem 
+                   ressursse ja investeeringuid, eriti algusfaasis. Tööriistad, koolitus ja auditid lisavad kulusid.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Parema koodikvaliteedi tagamine</h4>
+                <p>Turvalise koodi kirjutamine sunnib arendajaid mõtlema läbi oma lahendused põhjalikumalt, 
+                   mis viib üldiselt parema koodikvaliteedini ja vähemale veadele.</p>
+            </td>
+            <td>
+                <h4>Paindlikkuse vähenemine</h4>
+                <p>Ranged turvanõuded võivad piirata disaini ja arhitektuuri valikuid, muutes süsteemi vähem 
+                   paindlikuks muutustele ja uute funktsioonide lisamisele.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Pikemaajaline sääst</h4>
+                <p>Kuigi alginvesteering on suurem, säästab Secure by Design pikas perspektiivis raha, 
+                   kuna vähendab turvainidentide tõrgete arvu ja nendega seotud kahjusid.</p>
+            </td>
+            <td>
+                <h4>Keerukuse suurenemine</h4>
+                <p>Turvalisuse nõuete lisamine võib muuta süsteemi arhitektuuri ja koodibaasi keerukamaks, 
+                   mis võib raskendada uute arendajate sisseelamist ja hooldust.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>OWASP ZAP - Secure by Design tööriist</h2>
+    <div class="zap-feature">
+        <h3>Näide OWASP ZAP kasutamisest Secure by Design'is</h3>
+        <p>
+            <b>OWASP ZAP (Zed Attack Proxy)</b> on avatud lähtekoodiga turvaskanner, mis on mõeldud veebirakenduste 
+            testimiseks haavatavuste ja turvariskide suhtes. ZAP võimaldab arendajatel testida oma rakenduste turvalisust 
+            juba arendamise faasis, et tuvastada ja lahendada turvaprobleemid enne, kui need muutuvad tõsiseks probleemiks.
+        </p>
+        
+        <h4>Kuidas OWASP ZAP aitab meeskonnatöös:</h4>
         <ul>
-            <li><strong>Proaktiivne turvalisus:</strong> Secure by Design tagab, et turvaprobleemide ilmnemine on vähenenud, kuna turvalisus on arendatud algusest peale.</li>
-            <li><strong>Vähendatud haavatavused:</strong> Kuna turvalisus on integreeritud kogu arendusprotsessi, siis on tarkvara vähem vastuvõtlik rünnakutele.</li>
-            <li><strong>Üldine usaldusväärsus:</strong> Lõpptootes on suurem usaldusväärsus ja kaitse, kuna süsteem on üles ehitatud turvalisuse põhjalikult arvestades.</li>
+            <li><b>Varajane turvatuvastus:</b> Meeskond saab kasutada ZAP-i, et tuvastada veebirakendustes turvaprobleeme, 
+                mis võiksid jääda märkamata arenduse hilisemates etappides. See võimaldab parandada vigu enne toote väljalaskmist.</li>
+            <li><b>Pidev testimine:</b> ZAP-i saab integreerida CI/CD (Continuous Integration/Continuous Deployment) voogudesse, 
+                et automatiseerida turvatestimist iga koodimuutuse korral.</li>
+            <li><b>Arendajate enesekontroll:</b> Arendajad saavad ise testida oma koodi turvalisust enne selle üleandmist, 
+                vähendades vajadust eraldi testimistegevuste järele.</li>
+            <li><b>Standardsete turvahaavatavuste tuvastamine:</b> ZAP testib automaatselt levinumaid turvahaavatavusi nagu 
+                SQL süstimine, XSS (Cross-Site Scripting) ja CSRF (Cross-Site Request Forgery).</li>
         </ul>
-
-        <h5>Vead:</h5>
+        
+        <h4>OWASP ZAP peamised omadused:</h4>
+        <div class="principles-grid">
+            <div class="principle-item">
+                <div class="principle-icon">🔍</div>
+                <h4>Automaatne skaneerimine</h4>
+                <p>Automaatselt tuvastab levinud turvahaavatavusi</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">🎯</div>
+                <h4>Sihtskaneerimine</h4>
+                <p>Võimaldab testida konkreetseid rakenduse osi</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">📊</div>
+                <h4>Detailne raport</h4>
+                <p>Genereerib üksikasjalikud turvaraportid</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">🔄</div>
+                <h4>API tugi</h4>
+                <p>Võimaldab integreerida teiste tööriistadega</p>
+            </div>
+        </div>
+        
+        <h4>Teised olulised Secure by Design tööriistad:</h4>
         <ul>
-            <li><strong>Aeganõudev:</strong> Turvalisuse integreerimine igasse arendusfaasi võib muuta arendusprotsessi pikemaks ja keerukamaks.</li>
-            <li><strong>Vajadus spetsialiseeritud teadlikkusele:</strong> Arendajad ja meeskonnaliikmed peavad olema teadlikud ja koolitatud turvalisuse praktikatest, et neid tõhusalt rakendada.</li>
-            <li><strong>Kulud:</strong> Secure by Design võib algselt olla kulukam, kuna turvalisuse sisseviimine nõuab rohkem ressursse ja investeeringuid, eriti algusfaasis.</li>
-        </ul>
-
-        <h4>1.4 Näide tööriistast: <strong>OWASP ZAP (Zed Attack Proxy)</strong></h4>
-        <p>
-            <strong>OWASP ZAP</strong> on avatud lähtekoodiga turvaskanner, mis on mõeldud veebirakenduste testimiseks haavatavuste ja turvariskide suhtes.
-            ZAP võimaldab arendajatel testida oma rakenduste turvalisust juba arendamise faasis, et tuvastada ja lahendada turvaprobleemid
-            enne, kui need muutuvad tõsiseks probleemiks lõppkasutajatele.
-        </p>
-
-        <h5>Kuidas see aitab meeskonnatöös:</h5>
-        <ul>
-            <li>Meeskond saab kasutada ZAP-i, et tuvastada veebirakendustes turvaprobleeme, mis võiksid jääda märkamata arenduse hilisemates etappides.</li>
-            <li>See tööriist võimaldab meeskonnaliikmetel teha turvatestimist kiirelt ja varakult, et ennetada haavatavuste tekkimist.</li>
+            <li><b>SonarQube:</b> Koodi kvaliteedi ja turvalisuse analüüs, sealhulgas turvahaavatavuste tuvastamine</li>
+            <li><b>Burp Suite:</b> Professionaalne veebirakenduste turvatestimise tööriist</li>
+            <li><b>Snyk:</b> Avatud lähtekoodiga sõltuvuste turvahaavatavuste tuvastamine</li>
+            <li><b>Checkmarx:</b> Staatiline rakenduse turvatestimine (SAST)</li>
+            <li><b>Veracode:</b> Pilvepõhine rakenduste turvatestimine</li>
+            <li><b>Nessus:</b> Võrgu- ja süsteemide turvahaavatavuste skaneerimine</li>
         </ul>
     </div>
 
+    <div class="separator"></div>
+
+    <h2>Secure by Design turvaprinsiibid</h2>
+    
+    <div class="security-box">
+        <div class="security-principle">
+            <h4>1. Kaitse sügavuses (Defense in Depth)</h4>
+            <p>Mitmetasandiline turvalisus, kus ühe kihi rikkumine ei pruukida tähendada kogu süsteemi rikkumist.</p>
+        </div>
+        
+        <div class="security-principle">
+            <h4>2. Väikseim võimalik privileeg (Least Privilege)</h4>
+            <p>Igal süsteemi komponendil, protsessil ja kasutajal peaks olema ainult minimaalsed õigused, mis on vajalikud töö tegemiseks.</p>
+        </div>
+        
+        <div class="security-principle">
+            <h4>3. Faili suletus (Fail Secure)</h4>
+            <p>Süsteem peaks rikke korral minema turvalisse olekusse, blokeerides ligipääsu või keelates teenuseid.</p>
+        </div>
+        
+        <div class="security-principle">
+            <h4>4. Usalda, kuid kontrolli (Trust but Verify)</h4>
+            <p>Isegi usaldusväärsete allikate puhul tuleks kontrollida autentimist ja autoriseerimist.</p>
+        </div>
+        
+        <div class="security-principle">
+            <h4>5. Salastatuse, terviklikkuse ja kättesaadavuse tagamine (CIA)</h4>
+            <p>Informatsiooni salastatus (confidentiality), terviklikkus (integrity) ja kättesaadavus (availability) peavad olema tagatud.</p>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Turvaohud, mida Secure by Design aitab ennetada</h2>
+    
+    <div class="threat-categories">
+        <div class="threat-item">
+            <h4>SQL Süstimine</h4>
+            <p>Andmebaasi päringute manipuleerimine läbi kasutajasisendi</p>
+        </div>
+        
+        <div class="threat-item">
+            <h4>XSS</h4>
+            <p>Cross-Site Scripting - pahatahtliku koodi sisestamine veebilehtedele</p>
+        </div>
+        
+        <div class="threat-item">
+            <h4>CSRF</h4>
+            <p>Cross-Site Request Forgery - kasutaja sundimine soovimatute tegevuste tegemiseks</p>
+        </div>
+        
+        <div class="threat-item">
+            <h4>Autentimise rikked</h4>
+            <p>Nõrkade paroolide, sessioonimajanduse või MFA puudumisega seotud probleemid</p>
+        </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Millal kasutada Secure by Design lähenemist?</h2>
+    <div class="security-box">
+        <h4>Sobivad olukorrad:</h4>
+        <ul>
+            <li><b>Tundlikud andmed:</b> Rakendused, mis töötlevad isikuandmeid, finantsteavet või meditsiinilist informatsiooni</li>
+            <li><b>Kriitilised süsteemid:</b> Tervishoiu, panganduse, energia või transpordi süsteemid</li>
+            <li><b>Seaduslikud nõuded:</b> Kui kohustuslik on vastavus standarditele nagu GDPR, HIPAA või PCI DSS</li>
+            <li><b>Suured ettevõtted:</b> Kus turvainidentide tagajärjed võivad olla eriti kahjulikud</li>
+            <li><b>Pikaajalised projektid:</b> Kus on vaja tagada pikaajaline turvalisus ja hooldatavus</li>
+        </ul>
+        
+        <h4>Ebasobivad olukorrad:</h4>
+        <ul>
+            <li><b>Kiired prototüübid:</b> Kus on oluline kiiresti turule jõudmine, mitte täiuslik turvalisus</li>
+            <li><b>Väga väikesed projektid:</b> Kus turvameetmete rakendamine oleks üleliigne kulutuse suhtes</li>
+            <li><b>Eksperimentaalsed projektid:</b> Kus eesmärk on testida ideid, mitte luua turvalist toodet</li>
+            <li><b>Piiratud eelarve:</b> Kui puuduvad ressursid põhjaliku turvaanalüüsi ja rakendamiseks</li>
+            <li><b>Üksikud arendajad:</b> Kellel puuduvad turvalisuse spetsiifilised teadmised ja kogemused</li>
+        </ul>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://cetome.com/images/security-by-design.png" target="_blank">
+                    Secure by Design tsükli diagramm - Cetome
+                </a>
+            </li>
+            <li>
+                <a href="https://owasp.org/www-project-zap/" target="_blank">
+                    OWASP ZAP - Zed Attack Proxy
+                </a>
+            </li>
+            <li>
+                <a href="https://owasp.org/www-project-top-ten/" target="_blank">
+                    OWASP Top 10 - Levinumad veebirakenduste turvahaavatavused
+                </a>
+            </li>
+            <li>
+                <a href="https://www.sans.org/cyber-security-courses/secure-software-design/" target="_blank">
+                    SANS Secure Software Design Course
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
