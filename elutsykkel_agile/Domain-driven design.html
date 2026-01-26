@@ -3,99 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Domain-Driven Design</title>
+    <title>Domain-Driven Design (DDD)</title>
+
     <style>
+        /* Tume taust gradient - sama kui esimesel lehel */
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 20px;
+            margin: 0;
+            padding: 40px;
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b, #0f172a);
+            background-attachment: fixed;
+            color: #e2e8f0;
+            min-height: 100vh;
         }
-        h1, h2, h3 {
-            color: #2c3e50;
+
+        /* Tume klaasi efekt - sama kui esimesel lehel */
+        .glass-box {
+            max-width: 900px;
+            margin: auto;
+            background: rgba(15, 23, 42, 0.45);
+            padding: 30px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
         }
+
         h1 {
+            font-weight: 700;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(147, 197, 253, 0.3);
+            padding-bottom: 10px;
             text-align: center;
         }
-        .content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        h2 {
+            margin-top: 40px;
+            font-weight: 600;
+            color: #93c5fd;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
         }
-        ul {
-            list-style-type: disc;
+
+        h3 {
+            margin-top: 30px;
+            font-weight: 600;
+            color: #7dd3fc;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            margin-top: 25px;
+            font-weight: 600;
+            color: #67e8f9;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        h5 {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #22d3ee;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        p, li {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        ul, ol {
             margin-left: 20px;
+            padding-left: 0;
         }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        a {
+            color: #60a5fa;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Piltide stiil */
+        .model-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Tagasi link */
+        .back-link {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 10px 20px;
+            background: rgba(96, 165, 250, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .back-link:hover {
+            background: rgba(96, 165, 250, 0.2);
+        }
+
+        /* Tabeli stiil */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .comparison-table th {
+            background-color: rgba(30, 41, 59, 0.7);
+            color: #93c5fd;
+            text-align: center;
+            padding: 18px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: rgba(30, 41, 59, 0.3);
+        }
+
+        .comparison-table tr:nth-child(odd) {
+            background-color: rgba(15, 23, 42, 0.3);
+        }
+
+        .pros {
+            color: #86efac;
+            font-weight: 600;
+        }
+
+        .cons {
+            color: #fca5a5;
+            font-weight: 600;
+        }
+
+        /* Eraldajad */
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
+            margin: 40px 0;
+        }
+
+        /* Etappide kastid */
+        .stage-box {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #60a5fa;
+        }
+
+        /* DDD efektiga kast */
+        .ddd-highlight {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.4), rgba(15, 23, 42, 0.4));
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 4px solid #f0abfc;
+        }
+
+        /* Põhimõtete grid */
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .principle-item {
+            background: rgba(30, 41, 59, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .principle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #f0abfc;
+        }
+
+        /* EventStorming teema */
+        .eventstorming-feature {
+            background: rgba(245, 158, 11, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #f59e0b;
+        }
+
+        /* Koodiblokk */
         pre {
-            background-color: #e6e6e6;
-            padding: 10px;
-            border-radius: 4px;
-            font-size: 14px;
-            white-space: pre-wrap;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: "Courier New", monospace;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Allikate loend */
+        .sources-list {
+            background: rgba(30, 41, 59, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        /* Kerge hover efekti kastidele */
+        .stage-box:hover, .ddd-highlight:hover, .eventstorming-feature:hover {
+            transform: translateY(-2px);
+            transition: transform 0.2s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
         }
     </style>
 </head>
+
 <body>
+<div class="glass-box">
 
-    <h1>Domain-Driven Design</h1>
-
-    <div class="content">
-        <h2>Domain-Driven Design</h2>
+    <h1>Domain-Driven Design (DDD)</h1>
+    
+    <div class="ddd-highlight">
         <p>
-            Domain-Driven Design (DDD) on tarkvara arenduse lähenemine, mille keskmes on valdkond (domain), mille jaoks tarkvara
-            arendatakse. DDD eesmärgiks on teha tarkvara arendus tihedas koostöös valdkonnaekspertide ja arendustiimi vahel,
-            et luua süsteem, mis peegeldab ja lahendab valdkonna keerukust. DDD keskendub sellele, et tarkvara arendamine oleks
-            läbinägelik ja tihedalt seotud tegelike äriprotsesside ja probleemidega.
+            <b>Domain-Driven Design (DDD)</b> on tarkvaraarenduse lähenemine, mille keskmes on 
+            valdkond (domain), mille jaoks tarkvara arendatakse. DDD eesmärgiks on teha tarkvara 
+            arendus tihedas koostöös valdkonnaekspertide ja arendustiimi vahel, et luua süsteem, 
+            mis peegeldab ja lahendab valdkonna keerukust.
         </p>
-
-        <h2>Arendustsüklid ja Meetodid</h2>
-
-        <h3>1. Domain-Driven Design (DDD)</h3>
-
-        <h4>1.1 Kirjeldus</h4>
         <p>
-            Domain-Driven Design põhineb ideel, et tarkvara peaks olema üles ehitatud valdkonna mõistete ja protsesside ümber.
-            Selle asemel, et keskenduda tehnilistele lahendustele ja üldisele süsteemi arhitektuurile, lähtub DDD arendamine
-            sellest, kuidas valdkonnaeksperdid mõistavad ja defineerivad äriülesandeid. Oluline osa DDD-s on keerukate valdkondade
-            mudelite loomine, mille kaudu arendajad saavad edasi arendada tarkvara, mis lahendab reaalseid probleeme ja täidab
-            ärinõudeid.
+            DDD keskendub sellele, et tarkvara arendamine oleks läbinägelik ja tihedalt seotud 
+            tegelike äriprotsesside ja probleemidega. See põhineb ideel, et tarkvara peaks olema 
+            üles ehitatud valdkonna mõistete ja protsesside ümber.
         </p>
+    </div>
 
-        <h4>1.2 Joonis: Domain-Driven Design tsükkel</h4>
-        <img src="https://blob.jacobsdata.com/software-alchemy/entry8/clean-domain-driven-design-jacobs-510.png">
+    <h2>Domain-Driven Design põhiprintsiibid</h2>
+    
+    <div class="principles-grid">
+        <div class="principle-item">
+            <div class="principle-icon">🎯</div>
+            <h4>Valdkonna keskne mõtlemine</h4>
+            <p>Tarkvara arendamine keskendub valdkonna mõistetele ja protsessidele, mitte tehnilistele lahendustele.</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">🤝</div>
+            <h4>Ubiikvitsuskeel</h4>
+            <p>Luuakse ühine keel, mida kasutavad nii arendajad kui ka valdkonnaeksperdid, et vähendada arusaamatusi.</p>
+        </div>
+        
+        <div class="principle-item">
+            <div class="principle-icon">🧩</div>
+            <h4>Piiritud kontekstid</h4>
+            <p>Suur süsteem jagatakse väiksemateks, iseseisvateks kontekstideks, et hallata keerukust.</p>
+        </div>
+    </div>
 
-        <h4>1.3 Head ja Vead</h4>
-        <h5>Head:</h5>
+    <h2>Domain-Driven Design tsükkel</h2>
+    
+    <img src="https://blob.jacobsdata.com/software-alchemy/entry8/clean-domain-driven-design-jacobs-510.png" 
+         alt="Domain-Driven Design tsükkel" 
+         class="model-image">
+    
+    <p style="text-align: center; font-style: italic; color: #94a3b8;">
+        Domain-Driven Design tsükkel - valdkonna mõistmine, modelleerimine, arendus ja iteratsioon
+    </p>
+
+    <div class="separator"></div>
+
+    <h2>DDD eelised ja puudused</h2>
+    
+    <table class="comparison-table">
+        <tr>
+            <th style="width: 50%;"><span class="pros">Eelised (Plussid)</span></th>
+            <th style="width: 50%;"><span class="cons">Puudused (Miinused)</span></th>
+        </tr>
+        <tr>
+            <td>
+                <h4>Selge ärimudel</h4>
+                <p>DDD aitab tagada, et tarkvara lahendus kajastab täpselt ärinõudeid ja valdkonna reaalsusi. 
+                   Valdkonna mõistete põhjal ehitatud süsteem on intuitiivne ja vastab tegelikele äriprotsessidele.</p>
+            </td>
+            <td>
+                <h4>Algne keerukus</h4>
+                <p>DDD rakendamine nõuab põhjalikku valdkonnateadmiste mõistmist ja võib alguses tunduda keeruline 
+                   ja aeganõudev, eriti kui valdkond on väga kompleksne.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Koostöö ja kommunikatsioon</h4>
+                <p>Tihe koostöö arendustiimi ja valdkonnaekspertide vahel aitab vältida arusaamatusi ja tagada, 
+                   et lahendused on seotud tegelike probleemidega. Ubiikvitsuskeel loob ühise arusaamise.</p>
+            </td>
+            <td>
+                <h4>Üksik valdkond võib olla liiga keeruline</h4>
+                <p>Kui valdkond on väga keeruline või dünaamiline, võib DDD mudel olla liiga tihe või keeruline 
+                   süsteemi arendamiseks, mis võib viia ülekomplitseeritud lahendusteni.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Paindlikkus</h4>
+                <p>DDD võimaldab süsteemi arendada ja täiustada järk-järgult, et see suudaks kiirelt kohaneda 
+                   muutuvate ärinõudmistega. Piiritud kontekstid muudavad süsteemi modulaarseks ja hõlpsasti muudetavaks.</p>
+            </td>
+            <td>
+                <h4>Kõrge lävendi nõudlus</h4>
+                <p>DDD nõuab, et kõik meeskonnaliikmed oleksid hästi kursis valdkonna teadmustega, mis võib olla 
+                   harjumatu või raske neile, kes pole valdkonna eksperdid. See võib suurendada õppimiskõverat.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Kvaliteetne koodi struktuur</h4>
+                <p>DDD juhised ja mustrid (nt Aggregate, Entity, Value Object) aitavad luua hästi struktureeritud 
+                   ja hooldatavat koodi, mis peegeldab valdkonna loogikat.</p>
+            </td>
+            <td>
+                <h4>Ülemääriline keerukus lihtsatele projektidele</h4>
+                <p>Lihtsatele projektidele võib DDD tuua kaasa ülemäärase keerukuse ja formalismi, mis ei ole 
+                   vajalik või isegi takistav.</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h4>Pikaajaline skaleeritavus</h4>
+                <p>Hästi disainitud domeenimudelid võimaldavad süsteemi lihtsalt laiendada ja uusi funktsioone lisada, 
+                   ilma et oleks vaja olemasolevat koodi ümber kirjutada.</p>
+            </td>
+            <td>
+                <h4>Pikem arendusaeg alguses</h4>
+                <p>Valdkonna sügav analüüs ja modelleerimine enne koodi kirjutamist võib pikendada algset arendusaega, 
+                   mis ei pruugi sobida kiirete MVP-de puhul.</p>
+            </td>
+        </tr>
+    </table>
+
+    <div class="separator"></div>
+
+    <h2>EventStorming - Domain-Driven Design tööriist</h2>
+    <div class="eventstorming-feature">
+        <h3>Näide EventStorming kasutamisest DDD-s</h3>
+        <p>
+            <b>EventStorming</b> on tehnika, mis aitab arendajatel ja valdkonnaekspertidel koos luua domeeni 
+            mudeleid, visualiseerides ja arutades sündmusi, mis juhtuvad süsteemis. Selle abil saab luua selge 
+            arusaama süsteemi toimimisest, mis aitab arendustiimil ja valdkonnaekspertidel jõuda ühtse arusaamale.
+        </p>
+        
+        <h4>Kuidas EventStorming aitab meeskonnatöös:</h4>
         <ul>
-            <li><strong>Selge ärimudel:</strong> DDD aitab tagada, et tarkvara lahendus kajastab täpselt ärinõudeid ja valdkonna reaalsusi.</li>
-            <li><strong>Koostöö ja kommunikatsioon:</strong> Tihe koostöö arendustiimi ja valdkonnaekspertide vahel aitab vältida arusaamatusi ja tagada, et lahendused on seotud tegelike probleemidega.</li>
-            <li><strong>Paindlikkus:</strong> DDD võimaldab süsteemi arendada ja täiustada järk-järgult, et see suudaks kiirelt kohaneda muutuvate ärinõudmistega.</li>
+            <li><b>Visuaalne suhtluskeel:</b> Võimaldab meeskonnal ja valdkonnaekspertidel jagada oma arusaamu 
+                ja ideid süsteemi toimimisest läbi värviliste post-it märkmete ja diagrammide.</li>
+            <li><b>Koostööline avastusprotsess:</b> Meetod soodustab arutelu ja loob visuaalse esitluse, mis 
+                aitab mõista, kuidas kõik süsteemi osad omavahel seotud on.</li>
+            <li><b>Kiire iteratsioon:</b> Võimaldab kiiresti prototüüpida ja testida erinevaid valdkonna 
+                mudeleid enne koodi kirjutamist.</li>
+            <li><b>Komplekssuse vähendamine:</b> Aitab jagada suuri ja keerukaid süsteeme väiksemateks, 
+                mõistetavateks osadeks (piirituks kontekstideks).</li>
         </ul>
+        
+        <h4>EventStorming etapid:</h4>
+        <div class="principles-grid">
+            <div class="principle-item">
+                <div class="principle-icon">📝</div>
+                <h4>Sündmuste tuvastamine</h4>
+                <p>Kõik olulised sündmused süsteemis kirjeldatakse post-it märkmetel</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">🔗</div>
+                <h4>Järjestuse loomine</h4>
+                <p>Sündmused paigutatakse ajajoontele ja tuletatakse seoseid</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">👥</div>
+                <h4>Rollide määratlemine</h4>
+                <p>Tuvastatakse, kes või mis põhjustab sündmusi (käsklused)</p>
+            </div>
+            
+            <div class="principle-item">
+                <div class="principle-icon">🧩</div>
+                <h4>Kontekstide jagamine</h4>
+                <p>Süsteem jagatakse piirituteks kontekstideks vastavalt äriloogikale</p>
+            </div>
+        </div>
+        
+        <h4>Näide EventStorming tulemusest:</h4>
+        <div class="stage-box">
+            <p><strong>Valdkond:</strong> E-poe tellimuste haldus</p>
+            <ul>
+                <li><b>Sündmus:</b> "Tellimus esitatud"</li>
+                <li><b>Käsklus:</b> "Esita tellimus" (kasutaja)</li>
+                <li><b>Poliitika:</b> "Kui kauba laos piisavalt, siis reserveeri"</li>
+                <li><b>Sündmus:</b> "Kaubad reserveeritud"</li>
+                <li><b>Käsklus:</b> "Arvuta kohaletoimetamine" (süsteem)</li>
+            </ul>
+        </div>
+    </div>
 
-        <h5>Vead:</h5>
+    <div class="separator"></div>
+
+    <h2>DDD põhimõisted ja mustrid</h2>
+    
+    <div class="stage-box">
+        <h3>Ubiikvitsuskeel (Ubiquitous Language)</h3>
+        <p>Ühine keel, mida kasutavad nii arendajad kui ka valdkonnaeksperdid. See vähendab 
+           arusaamatusi ja tagab, et kood peegeldab täpselt valdkonna mõisteid.</p>
+        
+        <h3>Piiritud kontekstid (Bounded Contexts)</h3>
+        <p>Suure süsteemi jagamine väiksemateks, iseseisvateks osadeks, millest igaühel on oma 
+           selgelt määratletud piirid ja responssiivsus.</p>
+        
+        <h3>Aggregaadid (Aggregates)</h3>
+        <p>Objekti kogum, mida käsitletakse üksusena andmete muutmiseks. Aggregaadil on juhtobjekt 
+           (aggregate root), mis kontrollib ligipääsu teistele objektidele.</p>
+        
+        <h3>Väärtusobjektid (Value Objects)</h3>
+        <p>Objektid, millel pole identiteeti, vaid nad on defineeritud oma atribuutide väärtuste 
+           kaudu. Neid saab vahetada, kui väärtused on samad.</p>
+        
+        <h3>Entiteedid (Entities)</h3>
+        <p>Objektid, millel on identiteet, mis jääb muutumatuks nende atribuutide muutumisel. 
+           Entiteedid on järjestikustatavad ja neil on elutsükkel.</p>
+    </div>
+
+    <div class="separator"></div>
+
+    <h2>Millal kasutada Domain-Driven Designi?</h2>
+    <div class="stage-box">
+        <h4>Sobivad olukorrad:</h4>
         <ul>
-            <li><strong>Algne keerukus:</strong> DDD rakendamine nõuab põhjalikku valdkonnateadmiste mõistmist ja võib alguses tunduda keeruline ja aeganõudev.</li>
-            <li><strong>Üksik valdkond võib olla liiga keeruline:</strong> Kui valdkond on väga keeruline või dünaamiline, võib DDD mudel olla liiga tihe või keeruline süsteemi arendamiseks.</li>
-            <li><strong>Kõrge lävendi nõudlus:</strong> DDD nõuab, et kõik meeskonnaliikmed oleksid hästi kursis valdkonna teadmustega, mis võib olla harjumatu või raske neile, kes pole valdkonna eksperdid.</li>
+            <li><b>Keerukad ärivaldkonnad:</b> Kus on palju ärireegleid ja -loogikat</li>
+            <li><b>Pikaajalised projektid:</b> Kus on oluline skaleeritavus ja hooldatavus</li>
+            <li><b>Tihe koostöö valdkonnaekspertidega:</b> Kui need on saadaval ja aktiivsed</li>
+            <li><b>Suured meeskonnad:</b> Kus on vaja jagada vastutust ja tööd</li>
+            <li><b>Süsteemid, mis muutuvad:</b> Kus ärinõuded muutuvad sageli ja tuleb kiiresti kohaneda</li>
         </ul>
-
-        <h4>1.4 Näide tööriistast: <strong>EventStorming</strong></h4>
-        <p>
-            <strong>EventStorming</strong> on tehnika, mis aitab arendajatel ja valdkonnaekspertidel koos luua domeeni mudeleid,
-            visualiseerides ja arutades sündmusi, mis juhtuvad süsteemis. Selle abil saab luua selge arusaama süsteemi toimimisest,
-            mis aitab arendustiimil ja valdkonnaekspertidel jõuda ühtse arusaamale ja lahendada keerulisi äriülesandeid.
-        </p>
-
-        <h5>Kuidas see aitab meeskonnatöös:</h5>
+        
+        <h4>Ebasobivad olukorrad:</h4>
         <ul>
-            <li>EventStorming aitab meeskonnal ja valdkonnaekspertidel jagada oma arusaamu ja ideid süsteemi toimimisest.</li>
-            <li>Meetod soodustab arutelu ja loob visuaalse esitluse, mis aitab mõista, kuidas kõik süsteemi osad omavahel seotud on.</li>
+            <li><b>Lihtsad CRUD rakendused:</b> Kus on vähe äriloogikat ja palju lihtsat andmehaldust</li>
+            <li><b>Kiired prototüübid ja MVP-d:</b> Kus on oluline kiiresti turule jõudmine</li>
+            <li><b>Puuduvad valdkonnaeksperdid:</b> Kellelt pole võimalik põhjalikku teavet saada</li>
+            <li><b>Väga väikesed projektid:</b> Kus DDD formalism oleks üleliigne</li>
+            <li><b>Kriisiolukorrad:</b> Kus on vaja kiireid lahendusi, mitte põhjalikke mudeleid</li>
         </ul>
     </div>
 
+    <div class="separator"></div>
+
+    <div class="sources-list">
+        <h3>Kasutatud allikad</h3>
+        <ul>
+            <li>
+                <a href="https://blob.jacobsdata.com/software-alchemy/entry8/clean-domain-driven-design-jacobs-510.png" target="_blank">
+                    Domain-Driven Design tsükli diagramm - Jacobs Data
+                </a>
+            </li>
+            <li>
+                <a href="https://martinfowler.com/bliki/DomainDrivenDesign.html" target="_blank">
+                    Domain-Driven Design - Martin Fowler
+                </a>
+            </li>
+            <li>
+                <a href="https://www.eventstorming.com/" target="_blank">
+                    EventStorming - DDD tööriist
+                </a>
+            </li>
+            <li>
+                <a href="https://dddcommunity.org/" target="_blank">
+                    DDD Community - Domain-Driven Design kogukond
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="Agiilsed%20programmeerimisstiilid.html" class="back-link">← Tagasi Agiilsete programmeerimisstiilide lehele</a>
+
+</div>
 </body>
 </html>
