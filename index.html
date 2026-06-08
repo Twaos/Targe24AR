@@ -214,12 +214,47 @@
             background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.3), transparent);
             margin: 40px 0;
         }
+
+        /* AI-ga tehtud prompt */
+        .theme-btn {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: .3s;
+        }
+        .theme-btn:hover {
+            transform: translateY(-2px);
+        }
+        body.light-theme {
+            background: #f1f5f9;
+            color: #0f172a;
+        }
+        body.light-theme .glass-box,
+        body.light-theme .card,
+        body.light-theme .info-box {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #0f172a;
+        }
+        body.light-theme .theme-btn {
+            background: rgba(255, 255, 255, 0.8);
+            color: #0f172a;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
 <body>
 <div class="main-container">
     <div class="glass-box">
+        <button id="theme-toggle" class="theme-btn">
+        🌙 Tume režiim
+        </button>
         <h1>Tarkvara Arendusprotsessi Tehtud Tööde Konspekt</h1>
 
         <div class="info-box">
@@ -303,5 +338,28 @@
         </footer>
     </div>
 </div>
+<script>
+const themeButton = document.getElementById("theme-toggle");
+
+if(localStorage.getItem("theme") === "light"){
+    document.body.classList.add("light-theme");
+    themeButton.textContent = "☀️ Hele režiim";
+}
+
+themeButton.addEventListener("click", () => {
+
+    document.body.classList.toggle("light-theme");
+
+    if(document.body.classList.contains("light-theme")){
+        localStorage.setItem("theme", "light");
+        themeButton.textContent = "☀️ Hele režiim";
+    }
+    else{
+        localStorage.setItem("theme", "dark");
+        themeButton.textContent = "🌙 Tume režiim";
+    }
+
+});
+</script>
 </body>
 </html>
