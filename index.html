@@ -246,6 +246,72 @@
             color: #0f172a;
             border: 1px solid rgba(0, 0, 0, 0.1);
         }
+
+        /* Networking linkide stiil */
+        .networking-section {
+            margin: 20px 0;
+        }
+        .networking-section ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .networking-section ul li {
+            margin: 0;
+            padding: 0;
+        }
+        .networking-section ul li a {
+            display: block;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            text-decoration: none;
+            color: #93c5fd;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        .networking-section ul li a:hover {
+            background: rgba(147, 197, 253, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            border-color: rgba(147, 197, 253, 0.2);
+            text-decoration: none;
+        }
+        .networking-section ul li a::before {
+            content: '🔗 ';
+            opacity: 0.7;
+        }
+        .networking-title {
+            color: #93c5fd;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 10px 0 5px 0;
+        }
+        .networking-subtitle {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+        body.light-theme .networking-section ul li a {
+            color: #1e3a8a;
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+        body.light-theme .networking-section ul li a:hover {
+            background: rgba(37, 99, 235, 0.08);
+            border-color: rgba(37, 99, 235, 0.15);
+        }
+        body.light-theme .networking-title {
+            color: #1e3a8a;
+        }
     </style>
 </head>
 
@@ -278,6 +344,38 @@
                     </td>
                 </tr>
             </table>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- NETWORKING SECTION - siia on lisatud networking.html sisu -->
+        <h2>🌐 Networking</h2>
+        <div class="networking-section">
+            <div class="networking-title">Õpilaste portfooliod TARge25</div>
+            <div class="networking-subtitle"><i class="fas fa-users" style="margin-right: 6px;"></i> 21 õpilast</div>
+            <ul>
+                <li><a href="https://marcusgrunberg24.thkit.ee/" target="_blank">Marcus Grünberg</a></li>
+                <li><a href="https://sergeihuvenen25.thkit.ee/" target="_blank">Sergei Hüvenen</a></li>
+                <li><a href="https://vladkangur25.thkit.ee/" target="_blank">Vlad Kangur</a></li>
+                <li><a href="https://ristokivistik25.thkit.ee/" target="_blank">Risto Kivistik</a></li>
+                <li><a href="https://anvarkubja25.thkit.ee/" target="_blank">Anvar Kubja</a></li>
+                <li><a href="https://kristokundrats25.thkit.ee/" target="_blank">Kristo Kundrats</a></li>
+                <li><a href="https://henrykuningas25.thkit.ee/" target="_blank">Henry Kuningas</a></li>
+                <li><a href="https://villemmannard25.thkit.ee/" target="_blank">Villem Männard</a></li>
+                <li><a href="https://lieramishkurova25.thkit.ee/" target="_blank">Liera Mishkurova</a></li>
+                <li><a href="https://liisinurk25.thkit.ee/" target="_blank">Liisi Nurk</a></li>
+                <li><a href="https://rasmusolesk25.thkit.ee/" target="_blank">Rasmus Olesk</a></li>
+                <li><a href="https://stiivenottens25.thkit.ee/" target="_blank">Stiiven Ottens</a></li>
+                <li><a href="https://martingertpuura25.thkit.ee/" target="_blank">Martin Gert Puura</a></li>
+                <li><a href="https://kerlyritsu25.thkit.ee/" target="_blank">Kerly Ritsu</a></li>
+                <li><a href="https://jurisarki25.thkit.ee/" target="_blank">Juri Särki</a></li>
+                <li><a href="https://rihosepp25.thkit.ee/" target="_blank">Riho Sepp</a></li>
+                <li><a href="https://romeosergejev25.thkit.ee/" target="_blank">Romeo Sergejev</a></li>
+                <li><a href="https://stenronansiiman25.thkit.ee/" target="_blank">Sten Ronan Siiman</a></li>
+                <li><a href="https://sigridsormus25.thkit.ee/" target="_blank">Sigrid Sõrmus</a></li>
+                <li><a href="https://robinmarcussusi25.thkit.ee/" target="_blank">Robin Marcus Susi</a></li>
+                <li><a href="https://aleksandrvassiljuk25.thkit.ee/" target="_blank">Aleksandr Vassiljuk</a></li>
+            </ul>
         </div>
 
         <div class="separator"></div>
@@ -315,10 +413,10 @@
         <div class="separator"></div>
 
         <h2>Praktilised Projektid</h2>
-<div class="cards-grid">
-    <div class="card"><a href="btc/bitcoin.html">💰 Bitcoin-app</a></div>
-    <div class="card"><a href="ProjectLibre/ProjectLibre.html">📊 ProjectLibre – Veebipoe digiturbe projekt</a></div>
-</div>
+        <div class="cards-grid">
+            <div class="card"><a href="btc/bitcoin.html">💰 Bitcoin-app</a></div>
+            <div class="card"><a href="ProjectLibre/ProjectLibre.html">📊 ProjectLibre – Veebipoe digiturbe projekt</a></div>
+        </div>
 
         <div class="separator"></div>
 
